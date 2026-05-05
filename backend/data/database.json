@@ -1,0 +1,142 @@
+{
+  "users": [
+    {
+      "id": "admin_001",
+      "fullName": "Administrator",
+      "username": "admin",
+      "email": "admin@cineverse.com",
+      "password": "$2a$10$EMTvw0VTYFYJj/KQI8dHNexYF8L.19g/1f7c9aSfJGqR82LQtAZl.",
+      "phone": "0123456789",
+      "role": "admin",
+      "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "user_001",
+      "fullName": "Nguyễn Văn A",
+      "username": "user1",
+      "email": "user1@example.com",
+      "password": "$2a$10$K.D90CgRIxZKrtKcg8v44ucWXTH3j4bDJHBaTJg.79o6MJaqGZTgW",
+      "phone": "0987654321",
+      "role": "user",
+      "avatar": "https://randomuser.me/api/portraits/men/2.jpg",
+      "createdAt": "2024-01-15T00:00:00.000Z",
+      "status": "active"
+    }
+  ],
+  "movies": [
+    {
+      "id": "movie_001",
+      "title": "Jolly LLB",
+      "category": "Comedy",
+      "duration": "2h 10m",
+      "rating": 8.5,
+      "image": "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763490901238-12829.png",
+      "description": "A hilarious courtroom comedy.",
+      "price": 159,
+      "status": "now_showing",
+      "director": "Subhash Kapoor",
+      "cast": ["Akshay Kumar", "Huma Qureshi"]
+    },
+    {
+      "id": "movie_002",
+      "title": "Dhurandhar",
+      "category": "Action",
+      "duration": "2h 20m",
+      "rating": 8.4,
+      "image": "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1773906581802-13826.jfif",
+      "description": "A high-octane action thriller.",
+      "price": 159,
+      "status": "now_showing",
+      "director": "S. S. Rajamouli",
+      "cast": ["Ram Charan", "Jr NTR"]
+    }
+  ],
+  "showtimes": [
+    {
+      "id": "st_001",
+      "movieId": "movie_001",
+      "movieTitle": "Jolly LLB",
+      "date": "2025-05-07",
+      "time": "10:30",
+      "auditorium": "Phòng A1",
+      "occupiedSeats": ["A1", "A2"]
+    },
+    {
+      "id": "st_002",
+      "movieId": "movie_001",
+      "movieTitle": "Jolly LLB",
+      "date": "2025-05-07",
+      "time": "14:30",
+      "auditorium": "Phòng A2",
+      "occupiedSeats": ["C1"]
+    },
+    {
+      "id": "st_003",
+      "movieId": "movie_001",
+      "movieTitle": "Jolly LLB",
+      "date": "2025-05-07",
+      "time": "19:30",
+      "auditorium": "Phòng A3",
+      "occupiedSeats": []
+    },
+    {
+      "id": "st_004",
+      "movieId": "movie_002",
+      "movieTitle": "Dhurandhar",
+      "date": "2025-05-07",
+      "time": "10:30",
+      "auditorium": "Phòng B1",
+      "occupiedSeats": []
+    },
+    {
+      "id": "st_005",
+      "movieId": "movie_002",
+      "movieTitle": "Dhurandhar",
+      "date": "2025-05-07",
+      "time": "15:30",
+      "auditorium": "Phòng B2",
+      "occupiedSeats": ["D5"]
+    },
+    {
+      "id": "st_006",
+      "movieId": "movie_002",
+      "movieTitle": "Dhurandhar",
+      "date": "2025-05-07",
+      "time": "20:30",
+      "auditorium": "Phòng B3",
+      "occupiedSeats": []
+    }
+  ],
+  "bookings": [
+    {
+      "id": "BKG1778002645384",
+      "userId": "user_001",
+      "movieId": "movie_003",
+      "movie": "Until Dawn",
+      "date": "2026-05-05T17:37:25.369Z",
+      "auditorium": "Audi 3",
+      "seats": [
+        "A4"
+      ],
+      "total": 159,
+      "status": "confirmed",
+      "bookingDate": "2026-05-05T17:37:25.384Z"
+    },
+    {
+      "id": "BKG1778003125868",
+      "userId": "user_001",
+      "movieId": "movie_001",
+      "movie": "Jolly LLB",
+      "date": "2026-05-05T17:45:25.856Z",
+      "auditorium": "Audi 3",
+      "seats": [
+        "C4"
+      ],
+      "total": 159,
+      "status": "confirmed",
+      "bookingDate": "2026-05-05T17:45:25.868Z"
+    }
+  ]
+}

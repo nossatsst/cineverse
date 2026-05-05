@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Select Seats - CineVerse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #eef2ff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Seat grid styles */
+    .seat-grid {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: repeat(8, minmax(3.2rem, 5rem));
+    }
+
+    .seat-btn {
+      width: 100%;
+      height: 3.5rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .seat-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+    }
+
+    .seat-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+      .seat-grid {
+        grid-template-columns: repeat(8, minmax(2.6rem, 4rem));
+        gap: 0.6rem;
+      }
+      .seat-btn {
+        height: 3rem;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .seat-grid {
+        grid-template-columns: repeat(8, minmax(1.4rem, 1fr));
+        gap: 0.45rem;
+      }
+      .seat-btn {
+        height: 2.2rem;
+        font-size: 0.625rem;
+        border-radius: 0.5rem;
+      }
+      .seat-icon {
+        transform: scale(0.85);
+      }
+      .seat-num {
+        font-size: 0.6rem;
+      }
+    }
+
+    /* Small mobile */
+    @media (max-width: 420px) {
+      .seat-grid {
+        grid-template-columns: repeat(8, minmax(1.1rem, 1fr));
+        gap: 0.35rem;
+      }
+      .seat-btn {
+        height: 1.9rem;
+        font-size: 0.55rem;
+      }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      top: 24px;
+      z-index: 50;
+      transition: all 0.3s;
+      padding: 12px 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+    }
+
+    .navbar.scrolled {
+      padding: 8px 0;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      background: #000;
+      padding: 10px;
+      border-radius: 50%;
+      border: 1px solid #dc2626;
+    }
+
+    .logo-icon i {
+      font-size: 18px;
+      color: #ef4444;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ef4444, #fca5a5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 9999px;
+      padding: 6px 12px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: #d1d5db;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      color: #f5c518;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #374151, #1f2937);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      padding: 8px 20px;
+      border-radius: 9999px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    .footer {
+      background: #050608;
+      margin-top: 60px;
+      padding: 40px 0 20px;
+      border-top: 1px solid #1f212e;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-col h4 {
+      color: #f5c518;
+      margin-bottom: 15px;
+    }
+
+    .footer-col p, .footer-col a {
+      color: #888;
+      font-size: 0.85rem;
+      text-decoration: none;
+      line-height: 1.8;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .legal {
+      text-align: center;
+      padding-top: 30px;
+      font-size: 0.7rem;
+      color: #5a5e77;
+      border-top: 1px solid #1a1c26;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+        border-radius: 20px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
+        <div class="logo-text">CineVerse</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="movies.html" class="nav-link">Movies</a>
+        <a href="releases.html" class="nav-link">Releases</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="bookings.html" class="nav-link">Bookings</a>
+      </div>
+      <button class="login-btn" onclick="window.location.href='login.html'"><i class="fas fa-user"></i> Login</button>
+    </div>
+  </nav>
+
+  <!-- Seat Selector Content -->
+  <div style="min-height: 100vh; background: linear-gradient(to bottom, #0a0c10, #000); padding-top: 100px; padding-bottom: 60px;">
+    <div class="container">
+      <!-- Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button onclick="window.location.href='movies.html'" style="display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: #f87171; cursor: pointer; padding: 12px 16px; border-radius: 12px; transition: all 0.3s;">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <h1 id="movieTitle" style="font-size: 2rem; font-weight: 700; letter-spacing: 0.06em; background: linear-gradient(135deg, #fff, #f5c518); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Jolly LLb</h1>
+          <div id="showtimeInfo" style="font-size: 0.875rem; color: #6b7280; margin-top: 6px;">Fri, 21 Nov, 2025, 05:15 pm</div>
+        </div>
+        <div style="min-width: 100px;">
+          <div style="background: linear-gradient(90deg, #111, #222); color: #ef4444; padding: 6px 12px; border-radius: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fas fa-film"></i> Audi 3
+          </div>
+        </div>
+      </div>
+
+      <!-- Curved Screen -->
+      <div style="margin-bottom: 32px; text-align: center;">
+        <div style="background: linear-gradient(180deg, #1f2937, #111827); max-width: 900px; margin: 0 auto; padding: 20px; border-radius: 20px 20px 12px 12px; transform: perspective(120px) rotateX(6deg);">
+          <div style="font-weight: 600; letter-spacing: 2px; color: #9ca3af;">CURVED SCREEN</div>
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 8px;">Please face the screen — enjoy the show</div>
+        </div>
+      </div>
+
+      <!-- Seat Map -->
+      <div style="background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(17,24,39,0.9)); border-radius: 24px; padding: 32px; border: 1px solid rgba(220,38,38,0.1);">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2 style="font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #fff, #9ca3af); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Select Your Seats</h2>
+          <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #ef4444, transparent); margin: 8px auto 0;"></div>
+        </div>
+
+        <div id="seatMapContainer"></div>
+
+        <!-- Booking Summary & Pricing -->
+        <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px;">
+          <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-ticket-alt"></i> Booking Summary</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
+              <span style="color: #9ca3af;">Selected Seats:</span>
+              <span id="selectedCount" style="font-weight: 700; color: #f87171; font-size: 1.125rem;">0</span>
+            </div>
+            <div id="emptyState" style="text-align: center; padding: 24px; color: #6b7280;">
+              <div style="font-size: 1rem; margin-bottom: 4px;">No seats selected</div>
+              <div style="font-size: 0.875rem;">Select seats from the grid to continue</div>
+            </div>
+            <div id="selectedSeatsContainer" style="display: none; margin-top: 16px;">
+              <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px;">
+                <div style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 8px;">Selected Seats:</div>
+                <div id="selectedSeatsList" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+              </div>
+              <div style="background: linear-gradient(90deg, rgba(220,38,38,0.2), transparent); padding: 12px; border-radius: 12px; margin-top: 12px; display: flex; justify-content: space-between;">
+                <span style="color: #9ca3af;">Total Amount:</span>
+                <span id="totalAmount" style="font-weight: 700; color: #f5c518; font-size: 1.25rem;">₹0</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 20px;">
+              <button id="clearBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: #374151; border: none; color: white; cursor: pointer; transition: all 0.3s;">Clear</button>
+              <button id="confirmBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: linear-gradient(135deg, #dc2626, #991b1b); border: none; color: white; font-weight: 700; cursor: pointer; transition: all 0.3s;">Confirm Booking</button>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-credit-card"></i> Pricing Info</h3>
+            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span>Standard</span>
+                <span style="color: #f87171; font-weight: 700;">₹159</span>
+              </div>
+            </div>
+            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span>Recliner</span>
+                <span style="color: #4ade80; font-weight: 700;">₹239</span>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 16px; text-align: center;">All prices include taxes. No hidden charges.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>CineVerse</h4>
+          <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="releases.html">Releases</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Genres</h4>
+          <ul class="footer-links">
+            <li><a href="movies.html">Horror</a></li>
+            <li><a href="movies.html">Thriller</a></li>
+            <li><a href="movies.html">Action</a></li>
+            <li><a href="movies.html">Drama</a></li>
+            <li><a href="movies.html">Comedy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+          <p><i class="fas fa-phone"></i> +91 8299431275</p>
+          <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <div class="legal">
+        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script duy nhất - đã xóa script trùng lặp, giữ nguyên icon -->
+    <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Lấy thông tin từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieName = urlParams.get('movie') || 'Jolly LLb';
+    const showTime = urlParams.get('time') || '05:15 PM';
+    const ticketPrice = parseInt(urlParams.get('price')) || 159;
+    const movieId = urlParams.get('movieId') || '';
+    const showtimeId = urlParams.get('showtimeId') || '';
+    const auditorium = urlParams.get('auditorium') || 'Audi 3';
+    
+    // Cập nhật tiêu đề
+    const movieTitleEl = document.getElementById('movieTitle');
+    const showtimeInfoEl = document.getElementById('showtimeInfo');
+    if (movieTitleEl) movieTitleEl.innerText = movieName;
+    if (showtimeInfoEl) showtimeInfoEl.innerHTML = `<i class="far fa-calendar-alt"></i> ${showTime} | ${movieName}`;
+    
+    // Cập nhật badge hiển thị phòng
+    const auditoriumBadge = document.querySelector('.min-width\\:100px div');
+    if (auditoriumBadge) auditoriumBadge.innerHTML = `<i class="fas fa-film"></i> ${auditorium}`;
+    
+    // Cấu hình ghế theo từng phòng
+    function getSeatConfig(auditoriumName) {
+      const configs = {
+        'Audi 3': {
+          rows: [
+            { label: "A", type: "standard", seats: 8, price: ticketPrice },
+            { label: "B", type: "standard", seats: 8, price: ticketPrice },
+            { label: "C", type: "standard", seats: 8, price: ticketPrice },
+            { label: "D", type: "recliner", seats: 8, price: ticketPrice + 80 },
+            { label: "E", type: "recliner", seats: 8, price: ticketPrice + 80 }
+          ],
+          occupiedSeats: ["A1", "A2", "D5", "D6", "E1"]
+        },
+        'Phòng A1': {
+          rows: [
+            { label: "A", type: "standard", seats: 8, price: ticketPrice },
+            { label: "B", type: "standard", seats: 8, price: ticketPrice },
+            { label: "C", type: "standard", seats: 8, price: ticketPrice },
+            { label: "D", type: "recliner", seats: 8, price: ticketPrice + 80 },
+            { label: "E", type: "recliner", seats: 8, price: ticketPrice + 80 }
+          ],
+          occupiedSeats: ["A1", "A2", "B3", "D5", "D6"]
+        },
+        'Phòng A2': {
+          rows: [
+            { label: "A", type: "standard", seats: 6, price: ticketPrice },
+            { label: "B", type: "standard", seats: 6, price: ticketPrice },
+            { label: "C", type: "recliner", seats: 6, price: ticketPrice + 80 },
+            { label: "D", type: "recliner", seats: 6, price: ticketPrice + 80 }
+          ],
+          occupiedSeats: ["C1", "C2"]
+        },
+        'Phòng A3': {
+          rows: [
+            { label: "A", type: "standard", seats: 7, price: ticketPrice },
+            { label: "B", type: "standard", seats: 7, price: ticketPrice },
+            { label: "C", type: "recliner", seats: 7, price: ticketPrice + 80 },
+            { label: "D", type: "recliner", seats: 7, price: ticketPrice + 80 }
+          ],
+          occupiedSeats: []
+        },
+        'Phòng B1': {
+          rows: [
+            { label: "A", type: "standard", seats: 10, price: ticketPrice },
+            { label: "B", type: "standard", seats: 10, price: ticketPrice },
+            { label: "C", type: "standard", seats: 10, price: ticketPrice },
+            { label: "D", type: "recliner", seats: 10, price: ticketPrice + 80 },
+            { label: "E", type: "recliner", seats: 10, price: ticketPrice + 80 }
+          ],
+          occupiedSeats: []
+        }
+      };
+      return configs[auditoriumName] || configs['Audi 3'];
+    }
+    
+    // Lấy cấu hình theo phòng
+    const seatConfig = getSeatConfig(auditorium);
+    const SEAT_ROWS = seatConfig.rows;
+    const OCCUPIED_SEATS = seatConfig.occupiedSeats;
+    let selectedSeats = [];
+    
+    function renderSeatMap() {
+      const container = document.getElementById('seatMapContainer');
+      if (!container) return;
+      let html = '<div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">';
+      
+      SEAT_ROWS.forEach(row => {
+        html += `
+          <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; width: 100%;">
+            <div style="width: 45px; font-weight: 700; color: #f87171; text-align: center;">${row.label}</div>
+            <div class="seat-grid" style="flex: 1; max-width: 720px;">
+        `;
+        
+        for (let i = 1; i <= row.seats; i++) {
+          const seatId = `${row.label}${i}`;
+          const isOccupied = OCCUPIED_SEATS.includes(seatId);
+          const isSelected = selectedSeats.includes(seatId);
+          
+          let bgStyle = '';
+          let iconHtml = '';
+          
+          if (isOccupied) {
+            bgStyle = 'background: #374151; opacity: 0.4; cursor: not-allowed;';
+            iconHtml = row.type === 'recliner' 
+              ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
+              : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
+          } else if (isSelected) {
+            if (row.type === 'recliner') {
+              bgStyle = 'background: linear-gradient(135deg, #22c55e, #166534);';
+            } else {
+              bgStyle = 'background: linear-gradient(135deg, #dc2626, #991b1b);';
+            }
+            iconHtml = row.type === 'recliner' 
+              ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
+              : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
+          } else {
+            if (row.type === 'recliner') {
+              bgStyle = 'background: #166534;';
+              iconHtml = '<i class="fas fa-couch" style="font-size: 12px;"></i>';
+            } else {
+              bgStyle = 'background: #1f2937;';
+              iconHtml = '<i class="fas fa-chair" style="font-size: 10px;"></i>';
+            }
+          }
+          
+          html += `<button class="seat-btn" style="${bgStyle}" ${!isOccupied ? `onclick="toggleSeat('${row.label}', ${i})"` : 'disabled'}>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              ${iconHtml}
+              <div class="seat-num" style="font-size: 0.7rem; margin-top: 2px; font-weight: bold;">${i}</div>
+            </div>
+          </button>`;
+        }
+        
+        html += `</div><div style="width: 70px; font-size: 0.7rem; color: #6b7280; text-transform: capitalize;">${row.type}</div></div>`;
+      });
+      
+      html += '</div>';
+      container.innerHTML = html;
+      updateSummary();
+    }
+    
+    window.toggleSeat = (row, num) => {
+      const seatId = `${row}${num}`;
+      if (OCCUPIED_SEATS.includes(seatId)) return;
+      if (selectedSeats.includes(seatId)) {
+        selectedSeats = selectedSeats.filter(s => s !== seatId);
+      } else {
+        selectedSeats.push(seatId);
+      }
+      renderSeatMap();
+    };
+    
+    function updateSummary() {
+      const count = selectedSeats.length;
+      document.getElementById('selectedCount').innerHTML = count;
+      
+      if (count === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        document.getElementById('selectedSeatsContainer').style.display = 'none';
+      } else {
+        document.getElementById('emptyState').style.display = 'none';
+        document.getElementById('selectedSeatsContainer').style.display = 'block';
+        
+        const container = document.getElementById('selectedSeatsList');
+        container.innerHTML = selectedSeats.map(seat => `<span style="background:rgba(239,68,68,0.2); padding:4px 12px; border-radius:20px;">${seat}</span>`).join('');
+        
+        let total = 0;
+        selectedSeats.forEach(seat => {
+          const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
+          total += row?.price || 0;
+        });
+        document.getElementById('totalAmount').innerHTML = `₹${total}`;
+      }
+    }
+    
+    function clearAllSeats() {
+      selectedSeats = [];
+      renderSeatMap();
+    }
+    
+    async function confirmBooking() {
+      if (selectedSeats.length === 0) {
+        alert('Vui lòng chọn ghế!');
+        return;
+      }
+      
+      if (!requireAuth()) return;
+      
+      let total = 0;
+      selectedSeats.forEach(seat => {
+        const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
+        total += row?.price || 0;
+      });
+      
+      const bookingData = {
+        showtimeId: showtimeId,
+        movieId: movieId,
+        movie: movieName,
+        date: new Date().toISOString(),
+        auditorium: auditorium,
+        seats: selectedSeats,
+        total: total
+      };
+      
+      try {
+        const result = await api.createBooking(bookingData);
+        alert(`Đặt vé thành công!\nPhim: ${movieName}\nPhòng: ${auditorium}\nGhế: ${selectedSeats.join(', ')}\nTổng: ₹${total}\nMã vé: ${result.id}`);
+        window.location.href = `checkout-demo.html?movie=${encodeURIComponent(movieName)}&total=${total}&seats=${selectedSeats.join(',')}&bookingId=${result.id}`;
+      } catch (error) {
+        alert('Đặt vé thất bại: ' + error.message);
+      }
+    }
+    
+    function updateAuthButton() {
+      const user = getCurrentUser();
+      const authBtn = document.querySelector('.login-btn');
+      if (authBtn) {
+        if (user) {
+          authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
+          authBtn.onclick = () => window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+        } else {
+          authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
+          authBtn.onclick = () => window.location.href = 'login.html';
+        }
+      }
+    }
+    
+    document.getElementById('clearBtn').addEventListener('click', clearAllSeats);
+    document.getElementById('confirmBtn').addEventListener('click', confirmBooking);
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+    
+    updateAuthButton();
+    renderSeatMap();
+  </script>
+</body>
+</html>

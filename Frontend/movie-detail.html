@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Movie Details - CineVerse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #eef2ff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      top: 24px;
+      z-index: 50;
+      transition: all 0.3s;
+      padding: 12px 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+    }
+
+    .navbar.scrolled {
+      padding: 8px 0;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      background: #000;
+      padding: 10px;
+      border-radius: 50%;
+      border: 1px solid #dc2626;
+    }
+
+    .logo-icon i {
+      font-size: 18px;
+      color: #ef4444;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ef4444, #fca5a5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 9999px;
+      padding: 6px 12px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: #d1d5db;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-link.active {
+      color: white;
+      background: rgba(220, 38, 38, 0.2);
+    }
+
+    .nav-link:hover {
+      color: #f5c518;
+    }
+
+    .pill-border {
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255, 59, 59, 0.14), rgba(255, 87, 87, 0.06));
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.28s ease;
+    }
+
+    .nav-link:hover .pill-border,
+    .nav-link.active .pill-border {
+      transform: scaleX(1);
+    }
+
+    .pill-underline {
+      height: 2px;
+      width: 40%;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #ff3b3b);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.28s ease;
+    }
+
+    .nav-link:hover .pill-underline,
+    .nav-link.active .pill-underline {
+      transform: scaleX(1);
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #374151, #1f2937);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      padding: 8px 20px;
+      border-radius: 9999px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ========== MOVIE DETAIL PAGE ========== */
+    .movie-detail-page {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #0a0c10, #000);
+      padding-top: 100px;
+      padding-bottom: 60px;
+    }
+
+    /* Back button */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      color: #f87171;
+      font-size: 0.875rem;
+      cursor: pointer;
+      margin-bottom: 24px;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      color: #ef4444;
+      transform: translateX(-4px);
+    }
+
+    /* Movie title */
+    .movie-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .movie-title h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #fff, #f5c518);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-family: 'Cinzel', serif;
+      text-shadow: 0 4px 20px rgba(220, 38, 38, 0.6);
+    }
+
+    @media (min-width: 768px) {
+      .movie-title h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .movie-title h1 {
+        font-size: 4rem;
+      }
+    }
+
+    .movie-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 12px;
+      color: #9ca3af;
+    }
+
+    .movie-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .movie-meta i.fa-star {
+      color: #fbbf24;
+    }
+
+    .movie-meta i.fa-clock {
+      color: #ef4444;
+    }
+
+    .genre-badge {
+      background: rgba(220, 38, 38, 0.4);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Main grid */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .movie-grid {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+
+    /* Poster section */
+    .poster-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(17, 24, 39, 0.9));
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .poster-img {
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .trailer-btn {
+      width: 100%;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      border: none;
+      padding: 12px;
+      border-radius: 9999px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .trailer-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    /* Showtimes section */
+    .showtimes-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(17, 24, 39, 0.9));
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #f87171;
+      text-align: center;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Cinzel', serif;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Day selection */
+    .day-selection {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+    }
+
+    .day-btn {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      background: rgba(31, 41, 55, 0.6);
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .day-btn.active {
+      background: #dc2626;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    }
+
+    .day-name {
+      font-size: 0.7rem;
+    }
+
+    .day-date {
+      font-size: 0.9rem;
+    }
+
+    /* Showtimes grid */
+    .showtimes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .showtimes-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .showtimes-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    .time-btn {
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid rgba(75, 85, 99, 0.5);
+      color: #e5e7eb;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .time-btn:hover {
+      background: #dc2626;
+      color: white;
+      border-color: rgba(220, 38, 38, 0.5);
+    }
+
+    /* Cast section */
+    .cast-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(17, 24, 39, 0.9));
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+
+    .cast-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .cast-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .cast-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .cast-item {
+      text-align: center;
+    }
+
+    .cast-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 8px;
+      border: 2px solid rgba(220, 38, 38, 0.3);
+      transition: all 0.3s;
+    }
+
+    .cast-item:hover .cast-img {
+      border-color: #f87171;
+    }
+
+    @media (min-width: 640px) {
+      .cast-img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .cast-name {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .cast-role {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    /* Story section */
+    .story-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(17, 24, 39, 0.9));
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .story-text {
+      color: #d1d5db;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Crew section */
+    .crew-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .crew-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .crew-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(17, 24, 39, 0.9));
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      text-align: center;
+    }
+
+    .crew-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #f87171;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .crew-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 12px;
+      border: 2px solid rgba(220, 38, 38, 0.3);
+    }
+
+    @media (min-width: 640px) {
+      .crew-img {
+        width: 96px;
+        height: 96px;
+      }
+    }
+
+    .crew-name {
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+      background: #050608;
+      margin-top: 60px;
+      padding: 40px 0 20px;
+      border-top: 1px solid #1f212e;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-col h4 {
+      color: #f5c518;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: #888;
+      font-size: 0.85rem;
+      text-decoration: none;
+      line-height: 1.8;
+    }
+
+    .footer-col a:hover {
+      color: #f5c518;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .legal {
+      text-align: center;
+      padding-top: 30px;
+      font-size: 0.7rem;
+      color: #5a5e77;
+      border-top: 1px solid #1a1c26;
+      margin-top: 30px;
+    }
+
+    /* Trailer Modal */
+    .trailer-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      display: none;
+    }
+
+    .trailer-container {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+    }
+
+    .trailer-container iframe {
+      width: 100%;
+      height: 500px;
+      border-radius: 16px;
+    }
+
+    .close-trailer {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+        border-radius: 20px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .movie-detail-page {
+        padding-top: 80px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .trailer-container iframe {
+        height: 250px;
+      }
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .movie-title h1 {
+        font-size: 1.25rem;
+        line-height: 1.05;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo"><div class="logo-icon"><i class="fas fa-clapperboard"></i></div><div class="logo-text">CineVerse</div></div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="movies.html" class="nav-link">Movies</a>
+        <a href="releases.html" class="nav-link">Releases</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="bookings.html" class="nav-link">Bookings</a>
+      </div>
+      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
+    </div>
+  </nav>
+
+  <div class="movie-detail-page">
+    <div class="container">
+      <a href="movies.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Movies</a>
+      <div id="movieDetailContainer"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col"><h4>CineVerse</h4><p>Experience the dark side of cinema.</p></div>
+        <div class="footer-col"><h4>Explore</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="movies.html">Movies</a></li><li><a href="releases.html">Releases</a></li><li><a href="contact.html">Contact</a></li><li><a href="login.html">Login</a></li></ul></div>
+        <div class="footer-col"><h4>Contact Us</h4><p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p><p><i class="fas fa-phone"></i> +91 8299431275</p></div>
+      </div>
+      <div class="legal"><p>Designed by Hexagon Digital Services</p></div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    let currentMovie = null;
+
+    async function loadMovieDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const movieId = urlParams.get('id');
+      if (!movieId) {
+        window.location.href = 'movies.html';
+        return;
+      }
+      
+      try {
+        currentMovie = await api.getMovieById(movieId);
+        if (!currentMovie) throw new Error('Movie not found');
+        renderMovieDetail();
+        await loadShowtimes();
+      } catch (error) {
+        console.log('Using mock data');
+        currentMovie = {
+          id: movieId,
+          title: "Until Dawn",
+          rating: 7.5,
+          duration: "1h 55m",
+          category: "Horror",
+          image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763486290718-6833.png",
+          description: "A terrifying horror experience.",
+          director: "David F. Sandberg",
+          price: 159,
+          cast: ["Ella Rubin"]
+        };
+        renderMovieDetail();
+        renderMockShowtimes();
+      }
+    }
+    
+    function renderMovieDetail() {
+      const container = document.getElementById('movieDetailContainer');
+      container.innerHTML = `
+        <div class="movie-title"><h1>${currentMovie.title}</h1><div class="movie-meta"><span><i class="fas fa-star"></i> ${currentMovie.rating}/10</span><span><i class="fas fa-clock"></i> ${currentMovie.duration}</span><span class="genre-badge">${currentMovie.category}</span></div></div>
+        <div class="movie-grid-detail">
+          <div class="poster-card"><img class="poster-img" src="${currentMovie.image}" onerror="this.src='https://via.placeholder.com/320x480?text=${currentMovie.title}'"><button class="trailer-btn" id="watchTrailerBtn"><i class="fas fa-play"></i> Watch Trailer</button></div>
+          <div><div class="showtimes-card"><h3 class="section-title"><i class="fas fa-calendar"></i> Showtimes</h3><div class="day-selection" id="daySelection"></div><div class="showtimes-grid" id="showtimesGrid"></div></div><div class="cast-card"><h3 class="section-title"><i class="fas fa-users"></i> Cast</h3><div class="cast-grid" id="castGrid"></div></div></div>
+        </div>
+        <div class="story-card"><h2 class="section-title">Story</h2><p class="story-text">${currentMovie.description || 'No description available.'}</p></div>
+        <div class="crew-grid"><div class="crew-card"><div class="section-title"><i class="fas fa-user"></i> Director</div><img class="crew-img" src="https://randomuser.me/api/portraits/men/1.jpg"><div class="crew-name">${currentMovie.director || 'Unknown'}</div></div><div class="crew-card"><div class="section-title"><i class="fas fa-user"></i> Producer</div><img class="crew-img" src="https://randomuser.me/api/portraits/men/2.jpg"><div class="crew-name">Producer Name</div></div></div>
+      `;
+      
+      const castGrid = document.getElementById('castGrid');
+      if (castGrid && currentMovie.cast) {
+        castGrid.innerHTML = currentMovie.cast.map(member => `
+          <div class="cast-item">
+            <img class="cast-img" src="https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg">
+            <div class="cast-name">${member}</div>
+            <div class="cast-role">Actor</div>
+          </div>
+        `).join('');
+      }
+      
+      document.getElementById('watchTrailerBtn').addEventListener('click', () => alert('Trailer coming soon!'));
+    }
+    
+    async function loadShowtimes() {
+      try {
+        const showtimes = await api.getShowtimesByMovie(currentMovie.id);
+        if (showtimes && showtimes.length > 0) {
+          renderShowtimesFromAPI(showtimes);
+        } else {
+          renderMockShowtimes();
+        }
+      } catch (error) {
+        console.log('Lỗi API, dùng dữ liệu mẫu');
+        renderMockShowtimes();
+      }
+    }
+    
+    function renderShowtimesFromAPI(showtimes) {
+      const groupedByDate = {};
+      showtimes.forEach(st => {
+        if (!groupedByDate[st.date]) groupedByDate[st.date] = [];
+        groupedByDate[st.date].push(st);
+      });
+      
+      const days = Object.keys(groupedByDate);
+      const daySelection = document.getElementById('daySelection');
+      const showtimesGrid = document.getElementById('showtimesGrid');
+      
+      daySelection.innerHTML = days.map((date, idx) => `
+        <button class="day-btn ${idx === 0 ? 'active' : ''}" data-date="${date}">
+          <div class="day-name">${new Date(date).toLocaleDateString('vi', { weekday: 'short' })}</div>
+          <div class="day-date">${date}</div>
+        </button>
+      `).join('');
+      
+      const renderTimes = (date) => {
+        const times = groupedByDate[date];
+        showtimesGrid.innerHTML = times.map(st => `
+          <button class="time-btn" data-showtime-id="${st.id}" data-time="${st.time}" data-auditorium="${st.auditorium}">
+            ${st.time}<br><small>${st.auditorium}</small>
+          </button>
+        `).join('');
+        
+        document.querySelectorAll('.time-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+            const showtimeId = this.dataset.showtimeId;
+            const time = this.dataset.time;
+            const auditorium = this.dataset.auditorium;
+            goToSeatSelector(showtimeId, time, auditorium);
+          });
+        });
+      };
+      
+      if (days.length > 0) renderTimes(days[0]);
+      
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderTimes(this.dataset.date);
+        });
+      });
+    }
+    
+    function renderMockShowtimes() {
+      const days = [
+        { name: "Hôm nay", date: "2025-05-07", times: [
+          { time: "10:30", auditorium: "Phòng A1", showtimeId: "st_001" },
+          { time: "14:30", auditorium: "Phòng A2", showtimeId: "st_002" },
+          { time: "19:30", auditorium: "Phòng A3", showtimeId: "st_003" }
+        ]},
+        { name: "Ngày mai", date: "2025-05-08", times: [
+          { time: "10:30", auditorium: "Phòng B1", showtimeId: "st_004" },
+          { time: "15:30", auditorium: "Phòng B2", showtimeId: "st_005" },
+          { time: "20:30", auditorium: "Phòng B3", showtimeId: "st_006" }
+        ]}
+      ];
+      
+      const daySelection = document.getElementById('daySelection');
+      const showtimesGrid = document.getElementById('showtimesGrid');
+      
+      daySelection.innerHTML = days.map((day, idx) => `
+        <button class="day-btn ${idx === 0 ? 'active' : ''}" data-day="${idx}">
+          <div class="day-name">${day.name}</div>
+          <div class="day-date">${day.date}</div>
+        </button>
+      `).join('');
+      
+      const renderTimes = (dayIndex) => {
+        const day = days[dayIndex];
+        showtimesGrid.innerHTML = day.times.map(st => `
+          <button class="time-btn" data-showtime-id="${st.showtimeId}" data-time="${st.time}" data-auditorium="${st.auditorium}">
+            ${st.time}<br><small>${st.auditorium}</small>
+          </button>
+        `).join('');
+        
+        document.querySelectorAll('.time-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+            const showtimeId = this.dataset.showtimeId;
+            const time = this.dataset.time;
+            const auditorium = this.dataset.auditorium;
+            goToSeatSelector(showtimeId, time, auditorium);
+          });
+        });
+      };
+      
+      renderTimes(0);
+      
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderTimes(parseInt(this.dataset.day));
+        });
+      });
+    }
+    
+    function goToSeatSelector(showtimeId, time, auditorium) {
+      window.location.href = `seat-selector.html?showtimeId=${showtimeId}&movie=${encodeURIComponent(currentMovie.title)}&time=${encodeURIComponent(time)}&auditorium=${encodeURIComponent(auditorium)}&price=${currentMovie.price}&movieId=${currentMovie.id}`;
+    }
+    
+    function updateAuthButton() {
+      const user = getCurrentUser();
+      const authBtn = document.getElementById('authBtn');
+      if (authBtn) {
+        if (user) {
+          authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
+          authBtn.onclick = () => window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+        } else {
+          authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
+          authBtn.onclick = () => window.location.href = 'login.html';
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+    
+    loadMovieDetail();
+    updateAuthButton();
+  </script>
+</body>
+</html>

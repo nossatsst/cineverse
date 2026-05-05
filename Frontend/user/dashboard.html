@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - CineVerse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(8px);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .logo { font-family: 'Pacifico', cursive; font-size: 1.5rem; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .nav-links a { color: #9ca3af; text-decoration: none; margin-left: 24px; }
+        .nav-links a:hover { color: #f5c518; }
+        .logout-btn { background: #dc2626; border: none; padding: 8px 20px; border-radius: 40px; color: white; cursor: pointer; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 24px 40px; }
+        .welcome-card {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(220,38,38,0.3);
+        }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; color: #ef4444; }
+        .bookings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
+        .booking-card {
+            background: #1f2937;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(220,38,38,0.2);
+        }
+        .card-header { background: rgba(0,0,0,0.3); padding: 16px; display: flex; justify-content: space-between; }
+        .card-body { padding: 16px; }
+        .seat-badge { background: rgba(239,68,68,0.2); color: #f87171; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin: 4px; }
+        .cancel-btn { background: #dc2626; border: none; padding: 8px 16px; border-radius: 40px; color: white; cursor: pointer; margin-top: 12px; width: 100%; }
+        .empty-state { text-align: center; padding: 60px; background: #1f2937; border-radius: 16px; }
+        .browse-btn { background: #f5c518; border: none; padding: 12px 24px; border-radius: 40px; color: #000; font-weight: 600; cursor: pointer; margin-top: 16px; }
+        
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 16px; }
+            .nav-links a { margin-left: 12px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-clapperboard"></i> CineVerse</div>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="../movies.html">Movies</a>
+            <a href="../bookings.html">My Bookings</a>
+        </div>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </nav>
+    
+    <div class="container">
+        <div class="welcome-card" id="welcomeCard"></div>
+        <h2 class="section-title"><i class="fas fa-ticket-alt"></i> My Recent Bookings</h2>
+        <div id="bookingsContainer"></div>
+    </div>
+    
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!requireAuth()) throw new Error('Unauthorized');
+        
+        const user = getCurrentUser();
+        document.getElementById('welcomeCard').innerHTML = `
+            <h2>Welcome back, ${user.fullName || user.username}! <i class="fas fa-smile-wink"></i></h2>
+            <p style="color:#9ca3af; margin-top:8px;">Ready for another cinematic experience? Book your tickets now!</p>
+            <button class="browse-btn" onclick="window.location.href='../movies.html'"><i class="fas fa-film"></i> Browse Movies</button>
+        `;
+        
+        async function loadBookings() {
+            try {
+                const bookings = await api.getMyBookings();
+                const container = document.getElementById('bookingsContainer');
+                if (!bookings.length) {
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-film" style="font-size:48px; opacity:0.5;"></i><h3>No bookings yet</h3><p>Book your first movie ticket now!</p><button class="browse-btn" onclick="window.location.href='../movies.html'">Browse Movies</button></div>`;
+                    return;
+                }
+                container.innerHTML = `<div class="bookings-grid">${bookings.map(booking => `
+                    <div class="booking-card">
+                        <div class="card-header"><span><i class="fas fa-film"></i> ${booking.movie}</span><span style="background:#10b981; padding:4px 12px; border-radius:20px; font-size:0.7rem;">${booking.status}</span></div>
+                        <div class="card-body">
+                            <div><i class="fas fa-calendar"></i> ${new Date(booking.date).toLocaleString('vi-VN')}</div>
+                            <div><i class="fas fa-building"></i> ${booking.auditorium}</div>
+                            <div style="margin:12px 0;">${booking.seats.map(s => `<span class="seat-badge">${s}</span>`).join('')}</div>
+                            <div><strong>Total: ₹${booking.total.toLocaleString()}</strong></div>
+                            <button class="cancel-btn" onclick="cancelBooking('${booking.id}')"><i class="fas fa-times"></i> Cancel Booking</button>
+                        </div>
+                    </div>
+                `).join('')}</div>`;
+            } catch (error) { console.error(error); }
+        }
+        
+        window.cancelBooking = async (id) => {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                try {
+                    await api.cancelBooking(id);
+                    alert('Booking cancelled successfully!');
+                    loadBookings();
+                } catch (error) {
+                    alert(error.message);
+                }
+            }
+        };
+        
+        loadBookings();
+    </script>
+</body>
+</html>

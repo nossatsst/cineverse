@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Movies - CineVerse</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Pacifico&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; overflow-x: hidden; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    
+    /* ========== NAVBAR ========== */
+    .navbar { position: fixed; left: 16px; right: 16px; top: 24px; z-index: 50; transition: all 0.3s; padding: 12px 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .navbar.scrolled { padding: 8px 0; background: rgba(0,0,0,0.9); border-radius: 20px; }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { background: #000; padding: 10px; border-radius: 50%; border: 1px solid #dc2626; }
+    .logo-icon i { font-size: 18px; color: #ef4444; }
+    .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
+    .nav-links { display: flex; gap: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 9999px; padding: 6px 12px; }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; position: relative; }
+    .nav-link.active { color: white; background: rgba(220,38,38,0.2); }
+    .nav-link:hover { color: #f5c518; }
+    .pill-border { position: absolute; inset: -2px; border-radius: 9999px; pointer-events: none; background: linear-gradient(90deg, rgba(255,59,59,0.14), rgba(255,87,87,0.06)); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
+    .nav-link:hover .pill-border, .nav-link.active .pill-border { transform: scaleX(1); }
+    .pill-underline { height: 2px; width: 40%; border-radius: 999px; margin-top: 4px; background: linear-gradient(90deg, #ff6b6b, #ff3b3b); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
+    .nav-link:hover .pill-underline, .nav-link.active .pill-underline { transform: scaleX(1); }
+    .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    
+    /* ========== MOVIES PAGE ========== */
+    .movies-page { min-height: 100vh; padding-top: 100px; background: linear-gradient(to bottom, #111827, #0a0c10); }
+    .filter-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 40px; }
+    .filter-btn { padding: 12px 24px; border-radius: 9999px; background: #1f2937; color: #9ca3af; border: none; cursor: pointer; font-weight: 500; transition: all 0.3s; }
+    .filter-btn.active, .filter-btn:hover { background: #dc2626; color: white; box-shadow: 0 4px 15px rgba(220,38,38,0.3); }
+    
+    .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; }
+    .movie-card { text-decoration: none; color: inherit; }
+    .movie-card-inner { background: #1f2937; border-radius: 12px; overflow: hidden; transition: all 0.3s; }
+    .movie-card-inner:hover { transform: translateY(-5px); }
+    .movie-img { width: 100%; aspect-ratio: 2/3; object-fit: cover; transition: transform 0.5s; }
+    .movie-card-inner:hover .movie-img { transform: scale(1.05); }
+    .movie-info { padding: 12px; text-align: center; }
+    .movie-title { font-weight: 500; font-family: 'Pacifico', cursive; font-size: 0.9rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .movie-category { font-size: 0.7rem; color: #9ca3af; text-transform: capitalize; }
+    
+    /* Footer */
+    .footer { background: #050608; margin-top: 60px; padding: 50px 0 30px; border-top: 1px solid #1f212e; }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
+    .footer-col h4 { color: #f5c518; margin-bottom: 15px; font-size: 1rem; }
+    .footer-col p, .footer-col a { color: #888; font-size: 0.85rem; text-decoration: none; line-height: 1.8; }
+    .footer-col a:hover { color: #f5c518; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .legal { text-align: center; padding-top: 30px; font-size: 0.7rem; color: #5a5e77; border-top: 1px solid #1a1c26; margin-top: 30px; }
+    
+    @media (max-width: 768px) {
+      .navbar { left: 8px; right: 8px; top: 8px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .movies-page { padding-top: 80px; }
+      .movie-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+    }
+    @media (min-width: 769px) and (max-width: 1023px) {
+      .nav-links a span { display: none; }
+      .nav-links a i { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
+        <div class="logo-text">CineVerse</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="movies.html" class="nav-link active">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="releases.html" class="nav-link">Releases<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="contact.html" class="nav-link">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
+      </div>
+      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
+    </div>
+  </nav>
+
+  <!-- Movies Page -->
+  <main class="movies-page">
+    <div class="container">
+      <!-- Filter Buttons -->
+      <div class="filter-buttons" id="filterButtons">
+        <button class="filter-btn active" data-category="all">All Movies</button>
+        <button class="filter-btn" data-category="Action">Action</button>
+        <button class="filter-btn" data-category="Horror">Horror</button>
+        <button class="filter-btn" data-category="Comedy">Comedy</button>
+        <button class="filter-btn" data-category="Adventure">Adventure</button>
+      </div>
+
+      <!-- Movies Grid -->
+      <div class="movie-grid" id="moviesGrid"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>CineVerse</h4>
+          <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="releases.html">Releases</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Genres</h4>
+          <ul class="footer-links">
+            <li><a href="movies.html">Horror</a></li>
+            <li><a href="movies.html">Thriller</a></li>
+            <li><a href="movies.html">Action</a></li>
+            <li><a href="movies.html">Drama</a></li>
+            <li><a href="movies.html">Comedy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+          <p><i class="fas fa-phone"></i> +91 8299431275</p>
+          <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <div class="legal">
+        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script kết nối backend -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Biến lưu dữ liệu phim
+    let moviesData = [];
+
+    // Render movies based on category
+    function renderMovies(category) {
+      const grid = document.getElementById('moviesGrid');
+      if (!grid) return;
+      
+      let filtered = moviesData;
+      if (category !== 'all') {
+        filtered = moviesData.filter(movie => movie.category === category);
+      }
+      
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="text-align:center; padding:60px;">Không có phim nào</div>';
+        return;
+      }
+      
+      grid.innerHTML = filtered.map(movie => `
+        <a href="movie-detail.html?id=${movie.id}" class="movie-card">
+          <div class="movie-card-inner">
+            <img src="${movie.image}" alt="${movie.title}" class="movie-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(movie.title)}'">
+            <div class="movie-info">
+              <h3 class="movie-title">${movie.title}</h3>
+              <div class="movie-category">${movie.category}</div>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // Load movies từ API
+    async function loadMovies() {
+      try {
+        moviesData = await api.getMovies();
+        renderMovies('all');
+      } catch (error) {
+        console.error('Error loading movies:', error);
+        // Nếu API lỗi, dùng dữ liệu mẫu
+        moviesData = [
+          { id: "1", title: "Dhurandhar", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1773906581802-13826.jfif" },
+          { id: "2", title: "HOV", category: "Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1772121075437-43848.jpeg" },
+          { id: "3", title: "Jolly LLb", category: "Comedy", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763490901238-12829.png" }
+        ];
+        renderMovies('all');
+      }
+    }
+
+    // Filter buttons functionality
+    function initFilters() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const category = btn.getAttribute('data-category');
+          renderMovies(category);
+        });
+      });
+    }
+
+    // Update login button
+    function updateAuthButton() {
+      const user = getCurrentUser();
+      const authBtn = document.getElementById('authBtn');
+      if (authBtn) {
+        if (user) {
+          authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
+          authBtn.onclick = () => {
+            window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+          };
+        } else {
+          authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
+          authBtn.onclick = () => window.location.href = 'login.html';
+        }
+      }
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // Initialize
+    loadMovies();
+    initFilters();
+    updateAuthButton();
+  </script>
+</body>
+</html>

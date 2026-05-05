@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phim - CineVerse Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(180deg, #111827, #0a0c10);
+            border-right: 1px solid rgba(220,38,38,0.2);
+            padding: 24px 0;
+        }
+        .sidebar-logo { text-align: center; margin-bottom: 32px; }
+        .sidebar-logo h2 { font-family: 'Pacifico', cursive; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .sidebar-menu li a:hover,
+        .sidebar-menu li.active a {
+            background: rgba(220,38,38,0.2);
+            color: #ef4444;
+            border-left: 3px solid #ef4444;
+        }
+        
+        .main-content { margin-left: 260px; padding: 24px 32px; }
+        .navbar {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .add-btn {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logout-btn {
+            background: #dc2626;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background: #1f2937;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(220,38,38,0.2);
+        }
+        .movie-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .movie-info { padding: 16px; }
+        .movie-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+        .movie-price { color: #f5c518; font-weight: 700; margin: 8px 0; }
+        .movie-actions { display: flex; gap: 12px; margin-top: 12px; }
+        .edit-btn, .delete-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-btn { background: #3b82f6; color: white; }
+        .delete-btn { background: #dc2626; color: white; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #1f2937;
+            border-radius: 16px;
+            padding: 24px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(220,38,38,0.3);
+        }
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            color: white;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .save-btn { background: #22c55e; color: white; padding: 10px; border: none; border-radius: 40px; flex: 1; cursor: pointer; }
+        .cancel-btn { background: #6b7280; color: white; padding: 10px; border: none; border-radius: 40px; flex: 1; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; }
+            .sidebar span { display: none; }
+            .main-content { margin-left: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo"><h2><i class="fas fa-clapperboard"></i> <span>CineVerse</span></h2></div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li class="active"><a href="movies.html"><i class="fas fa-film"></i> <span>Quản lý phim</span></a></li>
+            <li><a href="bookings.html"><i class="fas fa-ticket-alt"></i> <span>Quản lý đặt vé</span></a></li>
+            <li><a href="users.html"><i class="fas fa-users"></i> <span>Quản lý người dùng</span></a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div class="navbar">
+            <h3><i class="fas fa-film"></i> Quản lý phim</h3>
+            <div><button class="add-btn" onclick="openAddModal()"><i class="fas fa-plus"></i> Thêm phim</button>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button></div>
+        </div>
+        
+        <div class="movies-grid" id="moviesGrid">Đang tải...</div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Thêm phim mới</h3>
+            <input type="text" id="movieTitle" placeholder="Tên phim">
+            <select id="movieCategory">
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Horror">Horror</option>
+                <option value="Adventure">Adventure</option>
+            </select>
+            <input type="text" id="movieDuration" placeholder="Thời lượng (VD: 2h 20m)">
+            <textarea id="movieDescription" rows="3" placeholder="Mô tả"></textarea>
+            <input type="number" id="moviePrice" placeholder="Giá vé">
+            <input type="text" id="movieImage" placeholder="URL hình ảnh">
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="saveMovie()">Lưu</button>
+                <button class="cancel-btn" onclick="closeModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        if (!requireAdmin()) throw new Error('Unauthorized');
+        
+        let editingMovieId = null;
+        
+        async function loadMovies() {
+            try {
+                const movies = await api.getMovies();
+                const grid = document.getElementById('moviesGrid');
+                if (!movies.length) {
+                    grid.innerHTML = '<div style="text-align:center; padding:60px;">Chưa có phim nào</div>';
+                    return;
+                }
+                grid.innerHTML = movies.map(movie => `
+                    <div class="movie-card">
+                        <img src="${movie.image}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'" alt="${movie.title}">
+                        <div class="movie-info">
+                            <div class="movie-title">${movie.title}</div>
+                            <div class="movie-category" style="color:#9ca3af; font-size:0.8rem;">${movie.category} • ${movie.duration}</div>
+                            <div class="movie-price">₹${movie.price.toLocaleString()}</div>
+                            <div class="movie-actions">
+                                <button class="edit-btn" onclick="editMovie('${movie.id}')"><i class="fas fa-edit"></i> Sửa</button>
+                                <button class="delete-btn" onclick="deleteMovie('${movie.id}')"><i class="fas fa-trash"></i> Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        
+        function openAddModal() {
+            editingMovieId = null;
+            document.getElementById('modalTitle').innerText = 'Thêm phim mới';
+            document.getElementById('movieTitle').value = '';
+            document.getElementById('movieCategory').value = 'Action';
+            document.getElementById('movieDuration').value = '';
+            document.getElementById('movieDescription').value = '';
+            document.getElementById('moviePrice').value = '';
+            document.getElementById('movieImage').value = '';
+            document.getElementById('movieModal').style.display = 'flex';
+        }
+        
+        async function editMovie(id) {
+            try {
+                const movies = await api.getMovies();
+                const movie = movies.find(m => m.id === id);
+                if (movie) {
+                    editingMovieId = id;
+                    document.getElementById('modalTitle').innerText = 'Sửa phim';
+                    document.getElementById('movieTitle').value = movie.title;
+                    document.getElementById('movieCategory').value = movie.category;
+                    document.getElementById('movieDuration').value = movie.duration;
+                    document.getElementById('movieDescription').value = movie.description;
+                    document.getElementById('moviePrice').value = movie.price;
+                    document.getElementById('movieImage').value = movie.image;
+                    document.getElementById('movieModal').style.display = 'flex';
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        
+        async function saveMovie() {
+            const movieData = {
+                title: document.getElementById('movieTitle').value,
+                category: document.getElementById('movieCategory').value,
+                duration: document.getElementById('movieDuration').value,
+                description: document.getElementById('movieDescription').value,
+                price: parseInt(document.getElementById('moviePrice').value),
+                image: document.getElementById('movieImage').value
+            };
+            
+            try {
+                if (editingMovieId) {
+                    await api.updateMovie(editingMovieId, movieData);
+                    alert('Cập nhật phim thành công!');
+                } else {
+                    await api.addMovie(movieData);
+                    alert('Thêm phim thành công!');
+                }
+                closeModal();
+                loadMovies();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+        
+        async function deleteMovie(id) {
+            if (confirm('Bạn có chắc muốn xóa phim này?')) {
+                try {
+                    await api.deleteMovie(id);
+                    alert('Xóa phim thành công!');
+                    loadMovies();
+                } catch (error) {
+                    alert(error.message);
+                }
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('movieModal').style.display = 'none';
+        }
+        
+        loadMovies();
+    </script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Contact Us - CineVerse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Pacifico&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #eef2ff;
+      overflow-x: hidden;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      top: 24px;
+      z-index: 50;
+      transition: all 0.3s;
+      padding: 12px 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+    }
+
+    .navbar.scrolled {
+      padding: 8px 0;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      background: #000;
+      padding: 10px;
+      border-radius: 50%;
+      border: 1px solid #dc2626;
+    }
+
+    .logo-icon i {
+      font-size: 18px;
+      color: #ef4444;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ef4444, #fca5a5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 9999px;
+      padding: 6px 12px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: #d1d5db;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-link.active {
+      color: white;
+      background: rgba(220, 38, 38, 0.2);
+    }
+
+    .nav-link:hover {
+      color: #f5c518;
+    }
+
+    .pill-border {
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255, 59, 59, 0.14), rgba(255, 87, 87, 0.06));
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.28s ease;
+    }
+
+    .nav-link:hover .pill-border,
+    .nav-link.active .pill-border {
+      transform: scaleX(1);
+    }
+
+    .pill-underline {
+      height: 2px;
+      width: 40%;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #ff3b3b);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.28s ease;
+    }
+
+    .nav-link:hover .pill-underline,
+    .nav-link.active .pill-underline {
+      transform: scaleX(1);
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #374151, #1f2937);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      padding: 8px 20px;
+      border-radius: 9999px;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ========== CONTACT PAGE ========== */
+    .contact-page {
+      min-height: 100vh;
+      padding-top: 100px;
+      background: #000;
+      padding-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-gradient-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 192px;
+      background: linear-gradient(to bottom, rgba(220, 38, 38, 0.1), transparent);
+    }
+
+    .bg-blob1 {
+      position: absolute;
+      top: 160px;
+      right: 40px;
+      width: 128px;
+      height: 128px;
+      background: rgba(239, 68, 68, 0.05);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .bg-blob2 {
+      position: absolute;
+      bottom: 80px;
+      left: 32px;
+      width: 96px;
+      height: 96px;
+      background: rgba(185, 28, 28, 0.05);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .film-strip {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 16px;
+      display: flex;
+      gap: 32px;
+      overflow-x: hidden;
+    }
+
+    .film-strip-top {
+      top: 0;
+    }
+
+    .film-strip-bottom {
+      bottom: 0;
+    }
+
+    .film-segment {
+      width: 32px;
+      height: 16px;
+      background: #1f2937;
+      flex-shrink: 0;
+    }
+
+    .contact-container {
+      max-width: 1152px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      padding-top: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .contact-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .contact-header h1 span:first-child {
+      color: #f87171;
+    }
+
+    .contact-header h1 span:last-child {
+      color: white;
+    }
+
+    @media (min-width: 768px) {
+      .contact-header h1 {
+        font-size: 3.5rem;
+      }
+    }
+
+    .contact-header p {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      max-width: 768px;
+      margin: 16px auto 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Card styles */
+    .card-wrapper {
+      position: relative;
+    }
+
+    .card-glow {
+      position: absolute;
+      inset: -8px;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      border-radius: 16px;
+      filter: blur(12px);
+      opacity: 0.5;
+    }
+
+    .card {
+      position: relative;
+      background: #1f2937;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: -12px;
+      left: 24px;
+      background: #dc2626;
+      color: white;
+      padding: 4px 16px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 8px;
+      font-family: 'Pacifico', cursive;
+    }
+
+    /* Form styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 16px;
+      background: #374151;
+      border: 1px solid #4b5563;
+      border-radius: 12px;
+      color: white;
+      transition: all 0.3s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      ring: 2px solid #ef4444;
+      border-color: #ef4444;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Contact info styles */
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-icon {
+      background: #dc2626;
+      padding: 8px;
+      border-radius: 9999px;
+      transition: transform 0.3s;
+    }
+
+    .info-icon i {
+      width: 20px;
+      height: 20px;
+    }
+
+    .info-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .info-text {
+      color: #9ca3af;
+    }
+
+    .sub-location {
+      font-size: 0.875rem;
+      color: #f87171;
+      margin-top: 4px;
+    }
+
+    /* Emergency card */
+    .emergency-wrapper {
+      position: relative;
+      margin-top: 24px;
+    }
+
+    .emergency-glow {
+      position: absolute;
+      inset: -8px;
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-radius: 16px;
+      filter: blur(12px);
+      opacity: 0.5;
+    }
+
+    .emergency-card {
+      position: relative;
+      background: #1f2937;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .emergency-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .emergency-text {
+      color: #9ca3af;
+      font-size: 0.875rem;
+      margin-bottom: 12px;
+    }
+
+    .emergency-hotline {
+      background: #d97706;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+
+    .emergency-note {
+      margin-left: 12px;
+      font-size: 0.75rem;
+      color: #fbbf24;
+    }
+
+    /* Footer */
+    .footer {
+      background: #050608;
+      margin-top: 60px;
+      padding: 50px 0 30px;
+      border-top: 1px solid #1f212e;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-col h4 {
+      color: #f5c518;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: #888;
+      font-size: 0.85rem;
+      text-decoration: none;
+      line-height: 1.8;
+    }
+
+    .footer-col a:hover {
+      color: #f5c518;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .legal {
+      text-align: center;
+      padding-top: 30px;
+      font-size: 0.7rem;
+      color: #5a5e77;
+      border-top: 1px solid #1a1c26;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        left: 8px;
+        right: 8px;
+        top: 8px;
+        border-radius: 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .contact-page {
+        padding-top: 80px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
+        <div class="logo-text">CineVerse</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="movies.html" class="nav-link">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="releases.html" class="nav-link">Releases<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="contact.html" class="nav-link active">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
+      </div>
+      <button class="login-btn" onclick="window.location.href='login.html'"><i class="fas fa-user"></i> Login</button>
+    </div>
+  </nav>
+
+  <!-- Contact Page -->
+  <div class="contact-page">
+    <div class="bg-gradient-top"></div>
+    <div class="bg-blob1"></div>
+    <div class="bg-blob2"></div>
+    <div class="film-strip film-strip-top" id="filmStripTop"></div>
+    <div class="film-strip film-strip-bottom" id="filmStripBottom"></div>
+
+    <div class="contact-container">
+      <div class="contact-header">
+        <h1><span>Contact</span><span>Us</span></h1>
+        <p>Have questions about movie bookings or special events? Our team is here to help you!</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Form Section -->
+        <div class="card-wrapper">
+          <div class="card-glow"></div>
+          <div class="card">
+            <div class="card-badge"><i class="fas fa-ticket-alt"></i> BOOKING SUPPORT</div>
+            <h2 class="card-title"><i class="fas fa-message"></i> Send us a Message</h2>
+            <form id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="fullname" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="email" placeholder="your.email@example.com" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="phone" placeholder="Your phone number" pattern="[0-9]{10}" maxlength="10" required>
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <select id="subject" required>
+                  <option value="">Select a subject</option>
+                  <option value="Ticket Booking">Ticket Booking</option>
+                  <option value="Group Events">Group Events</option>
+                  <option value="Membership Inquiry">Membership Inquiry</option>
+                  <option value="Technical Issue">Technical Issue</option>
+                  <option value="Refund Request">Refund Request</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message *</label>
+                <textarea id="message" rows="4" placeholder="Please describe your inquiry in detail..."></textarea>
+              </div>
+              <button type="submit" class="submit-btn">Send via WhatsApp <i class="fas fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Info Section -->
+        <div>
+          <div class="card-wrapper">
+            <div class="card-glow"></div>
+            <div class="card">
+              <div class="card-badge"><i class="fas fa-popcorn"></i> CINEMA INFO</div>
+              <h2 class="card-title">Contact Information</h2>
+              <div class="info-item">
+                <div class="info-icon"><i class="fas fa-phone"></i></div>
+                <div>
+                  <div class="info-title">Booking Hotline</div>
+                  <div class="info-text">+91 8299431275</div>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                  <div class="info-title">Email Address</div>
+                  <div class="info-text">bookings@cineplex.com<br>support@cineplex.com</div>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon"><i class="fas fa-map-pin"></i></div>
+                <div>
+                  <div class="info-title">Main Theater Location</div>
+                  <div class="info-text">123 Cinema Street, Film City, Mumbai, FC 400001</div>
+                  <div class="sub-location">+4 other locations across the city</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Card -->
+          <div class="emergency-wrapper">
+            <div class="emergency-glow"></div>
+            <div class="emergency-card">
+              <div class="emergency-title"><i class="fas fa-phone"></i> Urgent Show-Related Issues</div>
+              <p class="emergency-text">For urgent issues during a movie screening (sound, projection, etc.)</p>
+              <div>
+                <span class="emergency-hotline">HOTLINE: +91 8299431275</span>
+                <span class="emergency-note">Available during showtimes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>CineVerse</h4>
+          <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="movies.html">Movies</a></li>
+            <li><a href="releases.html">Releases</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Genres</h4>
+          <ul class="footer-links">
+            <li><a href="movies.html">Horror</a></li>
+            <li><a href="movies.html">Thriller</a></li>
+            <li><a href="movies.html">Action</a></li>
+            <li><a href="movies.html">Drama</a></li>
+            <li><a href="movies.html">Comedy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+          <p><i class="fas fa-phone"></i> +91 8299431275</p>
+          <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+        </div>
+      </div>
+      <div class="legal">
+        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tạo film strip segments
+    function createFilmStrip() {
+      const topStrip = document.getElementById('filmStripTop');
+      const bottomStrip = document.getElementById('filmStripBottom');
+      
+      for (let i = 0; i < 20; i++) {
+        const segment = document.createElement('div');
+        segment.className = 'film-segment';
+        topStrip.appendChild(segment.cloneNode(true));
+        bottomStrip.appendChild(segment.cloneNode(true));
+      }
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Form submission - WhatsApp
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      if (!phone || phone.length !== 10) {
+        alert('⚠️ Please enter a valid 10-digit phone number.');
+        return;
+      }
+      
+      const whatsappMsg = `Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0APhone: ${encodeURIComponent(phone)}%0ASubject: ${encodeURIComponent(subject)}%0AMessage: ${encodeURIComponent(message)}`;
+      window.open(`https://wa.me/8299431275?text=${whatsappMsg}`, '_blank');
+      alert('📱 Message sent via WhatsApp!');
+      this.reset();
+    });
+
+    // Initialize
+    createFilmStrip();
+  </script>
+</body>
+</html>
