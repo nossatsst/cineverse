@@ -72,137 +72,232 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
-        <div class="logo-text">CineVerse</div>
+  <!-- ===== NAVBAR (Thanh điều hướng chính) ===== -->
+<nav class="navbar" id="navbar">
+  
+  <!-- Container giúp căn chỉnh layout (center + giới hạn chiều rộng) -->
+  <div class="nav-container">
+    
+    <!-- ===== LOGO ===== -->
+    <!-- Bao gồm icon và tên thương hiệu -->
+    <div class="logo">
+      <div class="logo-icon">
+        <!-- Icon máy quay phim (Font Awesome) -->
+        <i class="fas fa-clapperboard"></i>
       </div>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="movies.html" class="nav-link active">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="releases.html" class="nav-link">Releases<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="contact.html" class="nav-link">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
-      </div>
-      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
+      <!-- Tên website -->
+      <div class="logo-text">CineVerse</div>
     </div>
-  </nav>
 
-  <!-- Movies Page -->
-  <main class="movies-page">
-    <div class="container">
-      <!-- Filter Buttons -->
-      <div class="filter-buttons" id="filterButtons">
-        <button class="filter-btn active" data-category="all">All Movies</button>
-        <button class="filter-btn" data-category="Action">Action</button>
-        <button class="filter-btn" data-category="Horror">Horror</button>
-        <button class="filter-btn" data-category="Comedy">Comedy</button>
-        <button class="filter-btn" data-category="Adventure">Adventure</button>
-      </div>
+    <!-- ===== MENU ĐIỀU HƯỚNG ===== -->
+    <div class="nav-links">
+      
+      <!-- Mỗi link gồm:
+           - text hiển thị
+           - hiệu ứng CSS (pill-border + pill-underline) -->
+      <a href="index.html" class="nav-link">
+        Home
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
 
-      <!-- Movies Grid -->
-      <div class="movie-grid" id="moviesGrid"></div>
+      <!-- Trang hiện tại có class 'active' -->
+      <a href="movies.html" class="nav-link active">
+        Movies
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="releases.html" class="nav-link">
+        Releases
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="contact.html" class="nav-link">
+        Contact
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="bookings.html" class="nav-link">
+        Bookings
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
     </div>
-  </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>CineVerse</h4>
-          <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="movies.html">Movies</a></li>
-            <li><a href="releases.html">Releases</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="login.html">Login</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Genres</h4>
-          <ul class="footer-links">
-            <li><a href="movies.html">Horror</a></li>
-            <li><a href="movies.html">Thriller</a></li>
-            <li><a href="movies.html">Action</a></li>
-            <li><a href="movies.html">Drama</a></li>
-            <li><a href="movies.html">Comedy</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact Us</h4>
-          <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
-          <p><i class="fas fa-phone"></i> +91 8299431275</p>
-          <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
-        </div>
-      </div>
-      <div class="legal">
-        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
-      </div>
+    <!-- ===== NÚT ĐĂNG NHẬP ===== -->
+    <!-- Nội dung sẽ được cập nhật bằng JS (login / user info) -->
+    <button class="login-btn" id="authBtn">
+      <i class="fas fa-user"></i> Login
+    </button>
+
+  </div>
+</nav>
+
+  <!-- ===== TRANG DANH SÁCH PHIM ===== -->
+<main class="movies-page">
+  
+  <div class="container">
+    
+    <!-- ===== BỘ LỌC PHIM THEO THỂ LOẠI ===== -->
+    <!-- Dùng để filter phim bằng JS thông qua data-category -->
+    <div class="filter-buttons" id="filterButtons">
+      
+      <!-- Nút mặc định (hiển thị tất cả phim) -->
+      <button class="filter-btn active" data-category="all">All Movies</button>
+      
+      <!-- Các nút lọc theo thể loại -->
+      <button class="filter-btn" data-category="Action">Action</button>
+      <button class="filter-btn" data-category="Horror">Horror</button>
+      <button class="filter-btn" data-category="Comedy">Comedy</button>
+      <button class="filter-btn" data-category="Adventure">Adventure</button>
     </div>
-  </footer>
+
+    <!-- ===== DANH SÁCH PHIM ===== -->
+    <!-- Nội dung sẽ được render động bằng JavaScript -->
+    <div class="movie-grid" id="moviesGrid"></div>
+
+  </div>
+</main>
+
+
+<!-- ===== FOOTER (CHÂN TRANG) ===== -->
+<footer class="footer">
+  
+  <div class="container">
+    
+    <!-- Layout dạng grid chia nhiều cột -->
+    <div class="footer-grid">
+      
+      <!-- Cột 1: Giới thiệu website -->
+      <div class="footer-col">
+        <h4>CineVerse</h4>
+        <p>
+          Experience the dark side of cinema with the latest news, reviews, and exclusive content.
+        </p>
+      </div>
+
+      <!-- Cột 2: Menu điều hướng nhanh -->
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="movies.html">Movies</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3: Danh sách thể loại phim -->
+      <div class="footer-col">
+        <h4>Genres</h4>
+        <ul class="footer-links">
+          <li><a href="movies.html">Horror</a></li>
+          <li><a href="movies.html">Thriller</a></li>
+          <li><a href="movies.html">Action</a></li>
+          <li><a href="movies.html">Drama</a></li>
+          <li><a href="movies.html">Comedy</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 4: Thông tin liên hệ -->
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+        <p><i class="fas fa-phone"></i> +91 8299431275</p>
+        <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+      </div>
+
+    </div>
+
+    <!-- Thông tin pháp lý / bản quyền -->
+    <div class="legal">
+      <p>
+        Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy
+      </p>
+    </div>
+
+  </div>
+</footer>
 
   <!-- Script kết nối backend -->
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Biến lưu dữ liệu phim
     let moviesData = [];
 
-    // Render movies based on category
+    // ===== RENDER DANH SÁCH PHIM =====
+    // Hiển thị phim theo thể loại được chọn
     function renderMovies(category) {
       const grid = document.getElementById('moviesGrid');
-      if (!grid) return;
+      if (!grid) return; // nếu không tìm thấy container thì dừng
       
       let filtered = moviesData;
       if (category !== 'all') {
         filtered = moviesData.filter(movie => movie.category === category);
       }
       
+      // Nếu không có phim → hiển thị thông báo
       if (filtered.length === 0) {
         grid.innerHTML = '<div style="text-align:center; padding:60px;">Không có phim nào</div>';
         return;
       }
       
+      // Render danh sách phim thành HTML
       grid.innerHTML = filtered.map(movie => `
+        <!-- Mỗi phim là 1 card, click sẽ chuyển sang trang chi tiết -->
         <a href="movie-detail.html?id=${movie.id}" class="movie-card">
+          
           <div class="movie-card-inner">
-            <img src="${movie.image}" alt="${movie.title}" class="movie-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(movie.title)}'">
+            
+            <!-- Ảnh phim (lazy load để tối ưu hiệu năng) -->
+            <img 
+              src="${movie.image}" 
+              alt="${movie.title}" 
+              class="movie-img" 
+              loading="lazy"
+              onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(movie.title)}'">
+
+            <!-- Thông tin phim -->
             <div class="movie-info">
               <h3 class="movie-title">${movie.title}</h3>
               <div class="movie-category">${movie.category}</div>
             </div>
+
           </div>
         </a>
       `).join('');
     }
 
-    // Load movies từ API
+    // ===== LOAD DANH SÁCH PHIM TỪ API =====
     async function loadMovies() {
       try {
+        // Gọi API lấy danh sách phim
         moviesData = await api.getMovies();
+
         renderMovies('all');
+
       } catch (error) {
         console.error('Error loading movies:', error);
-        // Nếu API lỗi, dùng dữ liệu mẫu
+
+        // Nếu API lỗi → dùng dữ liệu giả (mock data)
         moviesData = [
           { id: "1", title: "Dhurandhar", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1773906581802-13826.jfif" },
           { id: "2", title: "HOV", category: "Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1772121075437-43848.jpeg" },
           { id: "3", title: "Jolly LLb", category: "Comedy", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763490901238-12829.png" }
         ];
+
         renderMovies('all');
       }
     }
 
-    // Filter buttons functionality
+    // ===== XỬ LÝ FILTER BUTTON =====
     function initFilters() {
       const buttons = document.querySelectorAll('.filter-btn');
+
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.classList.remove('active'));
@@ -213,34 +308,47 @@
       });
     }
 
-    // Update login button
+    // ===== CẬP NHẬT NÚT LOGIN =====
     function updateAuthButton() {
       const user = getCurrentUser();
       const authBtn = document.getElementById('authBtn');
+
       if (authBtn) {
         if (user) {
+          // Nếu đã đăng nhập → hiển thị tên user
           authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
+
+          // Điều hướng theo role (admin / user)
           authBtn.onclick = () => {
-            window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+            window.location.href =
+              user.role === 'admin'
+              ? 'admin/dashboard.html'
+              : 'user/dashboard.html';
           };
+
         } else {
+          // Nếu chưa đăng nhập
           authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
           authBtn.onclick = () => window.location.href = 'login.html';
         }
       }
     }
 
-    // Navbar scroll effect
+    // ===== HIỆU ỨNG NAVBAR KHI SCROLL =====
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
+
+      if (window.scrollY > 50)
+        navbar.classList.add('scrolled');
+      else
+        navbar.classList.remove('scrolled');
     });
 
-    // Initialize
-    loadMovies();
-    initFilters();
-    updateAuthButton();
-  </script>
+    // ===== KHỞI TẠO TRANG =====
+    loadMovies();        // load dữ liệu phim
+    initFilters();       // gắn sự kiện filter
+    updateAuthButton();  // cập nhật trạng thái login
+
+</script>
 </body>
 </html>

@@ -255,150 +255,254 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
-        <div class="logo-text">CineVerse</div>
+  <!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    
+    <!-- Logo (icon + tên website) -->
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-clapperboard"></i>
       </div>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="movies.html" class="nav-link">Movies</a>
-        <a href="releases.html" class="nav-link">Releases</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-        <a href="bookings.html" class="nav-link">Bookings</a>
-      </div>
-      <button class="login-btn" onclick="window.location.href='login.html'"><i class="fas fa-user"></i> Login</button>
+      <div class="logo-text">CineVerse</div>
     </div>
-  </nav>
 
-  <!-- Seat Selector Content -->
-  <div style="min-height: 100vh; background: linear-gradient(to bottom, #0a0c10, #000); padding-top: 100px; padding-bottom: 60px;">
-    <div class="container">
-      <!-- Header -->
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <button onclick="window.location.href='movies.html'" style="display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: #f87171; cursor: pointer; padding: 12px 16px; border-radius: 12px; transition: all 0.3s;">
-            <i class="fas fa-arrow-left"></i> Back
-          </button>
-        </div>
-        <div style="flex: 1; text-align: center;">
-          <h1 id="movieTitle" style="font-size: 2rem; font-weight: 700; letter-spacing: 0.06em; background: linear-gradient(135deg, #fff, #f5c518); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Jolly LLb</h1>
-          <div id="showtimeInfo" style="font-size: 0.875rem; color: #6b7280; margin-top: 6px;">Fri, 21 Nov, 2025, 05:15 pm</div>
-        </div>
-        <div style="min-width: 100px;">
-          <div style="background: linear-gradient(90deg, #111, #222); color: #ef4444; padding: 6px 12px; border-radius: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fas fa-film"></i> Audi 3
-          </div>
+    <!-- Menu điều hướng -->
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="movies.html" class="nav-link">Movies</a>
+      <a href="releases.html" class="nav-link">Releases</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="bookings.html" class="nav-link">Bookings</a>
+    </div>
+
+    <!-- Nút đăng nhập (chuyển hướng trực tiếp sang login.html) -->
+    <button class="login-btn" onclick="window.location.href='login.html'">
+      <i class="fas fa-user"></i> Login
+    </button>
+
+  </div>
+</nav>
+
+
+<!-- ===== SEAT SELECTOR PAGE ===== -->
+<!-- Khu vực chính chọn ghế (full chiều cao màn hình + background tối) -->
+<div style="min-height: 100vh; background: linear-gradient(to bottom, #0a0c10, #000); padding-top: 100px; padding-bottom: 60px;">
+  
+  <div class="container">
+
+    <!-- ===== HEADER (Thông tin phim + điều hướng) ===== -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;">
+      
+      <!-- Nút quay lại trang movies -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button onclick="window.location.href='movies.html'"
+          style="display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: #f87171; cursor: pointer; padding: 12px 16px; border-radius: 12px; transition: all 0.3s;">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+      </div>
+
+      <!-- Thông tin phim + thời gian chiếu -->
+      <div style="flex: 1; text-align: center;">
+        <h1 id="movieTitle"
+          style="font-size: 2rem; font-weight: 700; letter-spacing: 0.06em; background: linear-gradient(135deg, #fff, #f5c518); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">
+          Jolly LLb
+        </h1>
+
+        <!-- JS sẽ cập nhật nội dung này -->
+        <div id="showtimeInfo"
+          style="font-size: 0.875rem; color: #6b7280; margin-top: 6px;">
+          Fri, 21 Nov, 2025, 05:15 pm
         </div>
       </div>
 
-      <!-- Curved Screen -->
-      <div style="margin-bottom: 32px; text-align: center;">
-        <div style="background: linear-gradient(180deg, #1f2937, #111827); max-width: 900px; margin: 0 auto; padding: 20px; border-radius: 20px 20px 12px 12px; transform: perspective(120px) rotateX(6deg);">
-          <div style="font-weight: 600; letter-spacing: 2px; color: #9ca3af;">CURVED SCREEN</div>
-          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 8px;">Please face the screen — enjoy the show</div>
+      <!-- Thông tin phòng chiếu -->
+      <div style="min-width: 100px;">
+        <div style="background: linear-gradient(90deg, #111, #222); color: #ef4444; padding: 6px 12px; border-radius: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+          <i class="fas fa-film"></i> Audi 3
         </div>
       </div>
+    </div>
 
-      <!-- Seat Map -->
-      <div style="background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(17,24,39,0.9)); border-radius: 24px; padding: 32px; border: 1px solid rgba(220,38,38,0.1);">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <h2 style="font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #fff, #9ca3af); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Select Your Seats</h2>
-          <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #ef4444, transparent); margin: 8px auto 0;"></div>
+
+    <!-- ===== MÀN HÌNH RẠP (Curved Screen UI) ===== -->
+    <!-- Hiệu ứng mô phỏng màn hình cong trong rạp -->
+    <div style="margin-bottom: 32px; text-align: center;">
+      <div style="background: linear-gradient(180deg, #1f2937, #111827); max-width: 900px; margin: 0 auto; padding: 20px; border-radius: 20px 20px 12px 12px; transform: perspective(120px) rotateX(6deg);">
+        <div style="font-weight: 600; letter-spacing: 2px; color: #9ca3af;">CURVED SCREEN</div>
+        <div style="font-size: 0.75rem; color: #6b7280; margin-top: 8px;">
+          Please face the screen — enjoy the show
         </div>
+      </div>
+    </div>
 
-        <div id="seatMapContainer"></div>
 
-        <!-- Booking Summary & Pricing -->
-        <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px;">
-          <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-ticket-alt"></i> Booking Summary</h3>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
-              <span style="color: #9ca3af;">Selected Seats:</span>
-              <span id="selectedCount" style="font-weight: 700; color: #f87171; font-size: 1.125rem;">0</span>
-            </div>
-            <div id="emptyState" style="text-align: center; padding: 24px; color: #6b7280;">
-              <div style="font-size: 1rem; margin-bottom: 4px;">No seats selected</div>
-              <div style="font-size: 0.875rem;">Select seats from the grid to continue</div>
-            </div>
-            <div id="selectedSeatsContainer" style="display: none; margin-top: 16px;">
-              <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px;">
-                <div style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 8px;">Selected Seats:</div>
-                <div id="selectedSeatsList" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+    <!-- ===== KHU VỰC CHỌN GHẾ ===== -->
+    <div style="background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(17,24,39,0.9)); border-radius: 24px; padding: 32px; border: 1px solid rgba(220,38,38,0.1);">
+      
+      <!-- Tiêu đề -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #fff, #9ca3af); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">
+          Select Your Seats
+        </h2>
+        <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #ef4444, transparent); margin: 8px auto 0;"></div>
+      </div>
+
+      <!-- Container render sơ đồ ghế (JS xử lý) -->
+      <div id="seatMapContainer"></div>
+
+
+      <!-- ===== BOOKING SUMMARY + PRICING ===== -->
+      <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px;">
+        
+        <!-- ===== BOOKING SUMMARY ===== -->
+        <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
+          
+          <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-ticket-alt"></i> Booking Summary
+          </h3>
+
+          <!-- Số ghế đã chọn -->
+          <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
+            <span style="color: #9ca3af;">Selected Seats:</span>
+            <span id="selectedCount" style="font-weight: 700; color: #f87171; font-size: 1.125rem;">0</span>
+          </div>
+
+          <!-- Trạng thái khi chưa chọn ghế -->
+          <div id="emptyState" style="text-align: center; padding: 24px; color: #6b7280;">
+            <div>No seats selected</div>
+            <div style="font-size: 0.875rem;">Select seats from the grid to continue</div>
+          </div>
+
+          <!-- Danh sách ghế đã chọn (JS sẽ hiển thị) -->
+          <div id="selectedSeatsContainer" style="display: none; margin-top: 16px;">
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px;">
+              <div style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 8px;">
+                Selected Seats:
               </div>
-              <div style="background: linear-gradient(90deg, rgba(220,38,38,0.2), transparent); padding: 12px; border-radius: 12px; margin-top: 12px; display: flex; justify-content: space-between;">
-                <span style="color: #9ca3af;">Total Amount:</span>
-                <span id="totalAmount" style="font-weight: 700; color: #f5c518; font-size: 1.25rem;">₹0</span>
-              </div>
+              <div id="selectedSeatsList" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
             </div>
-            <div style="display: flex; gap: 12px; margin-top: 20px;">
-              <button id="clearBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: #374151; border: none; color: white; cursor: pointer; transition: all 0.3s;">Clear</button>
-              <button id="confirmBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: linear-gradient(135deg, #dc2626, #991b1b); border: none; color: white; font-weight: 700; cursor: pointer; transition: all 0.3s;">Confirm Booking</button>
+
+            <!-- Tổng tiền -->
+            <div style="background: linear-gradient(90deg, rgba(220,38,38,0.2), transparent); padding: 12px; border-radius: 12px; margin-top: 12px; display: flex; justify-content: space-between;">
+              <span style="color: #9ca3af;">Total Amount:</span>
+              <span id="totalAmount" style="font-weight: 700; color: #f5c518; font-size: 1.25rem;">₹0</span>
             </div>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-credit-card"></i> Pricing Info</h3>
-            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span>Standard</span>
-                <span style="color: #f87171; font-weight: 700;">₹159</span>
-              </div>
-            </div>
-            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span>Recliner</span>
-                <span style="color: #4ade80; font-weight: 700;">₹239</span>
-              </div>
-            </div>
-            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 16px; text-align: center;">All prices include taxes. No hidden charges.</div>
+
+          <!-- Nút thao tác -->
+          <div style="display: flex; gap: 12px; margin-top: 20px;">
+            <button id="clearBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: #374151; border: none; color: white; cursor: pointer;">Clear</button>
+            <button id="confirmBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: linear-gradient(135deg, #dc2626, #991b1b); border: none; color: white; font-weight: 700; cursor: pointer;">
+              Confirm Booking
+            </button>
           </div>
         </div>
+
+
+        <!-- ===== PRICING INFO ===== -->
+        <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
+          
+          <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-credit-card"></i> Pricing Info
+          </h3>
+
+          <!-- Giá ghế thường -->
+          <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Standard</span>
+              <span style="color: #f87171; font-weight: 700;">₹159</span>
+            </div>
+          </div>
+
+          <!-- Giá ghế VIP -->
+          <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Recliner</span>
+              <span style="color: #4ade80; font-weight: 700;">₹239</span>
+            </div>
+          </div>
+
+          <!-- Ghi chú -->
+          <div style="font-size: 0.75rem; color: #6b7280; margin-top: 16px; text-align: center;">
+            All prices include taxes. No hidden charges.
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>CineVerse</h4>
-          <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="movies.html">Movies</a></li>
-            <li><a href="releases.html">Releases</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="login.html">Login</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Genres</h4>
-          <ul class="footer-links">
-            <li><a href="movies.html">Horror</a></li>
-            <li><a href="movies.html">Thriller</a></li>
-            <li><a href="movies.html">Action</a></li>
-            <li><a href="movies.html">Drama</a></li>
-            <li><a href="movies.html">Comedy</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact Us</h4>
-          <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
-          <p><i class="fas fa-phone"></i> +91 8299431275</p>
-          <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
-        </div>
+  <!-- ===== FOOTER (CHÂN TRANG WEBSITE) ===== -->
+<footer class="footer">
+  
+  <!-- Container chính của footer -->
+  <div class="footer-container">
+    
+    <!-- Layout dạng grid chia thành nhiều cột -->
+    <div class="footer-grid">
+      
+      <!-- ===== CỘT 1: GIỚI THIỆU WEBSITE ===== -->
+      <div class="footer-col">
+        <h4>CineVerse</h4>
+        <p>
+          Experience the dark side of cinema with the latest news, reviews, and exclusive content.
+        </p>
       </div>
-      <div class="legal">
-        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
+
+      <!-- ===== CỘT 2: MENU ĐIỀU HƯỚNG ===== -->
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="movies.html">Movies</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
       </div>
+
+      <!-- ===== CỘT 3: DANH SÁCH THỂ LOẠI ===== -->
+      <div class="footer-col">
+        <h4>Genres</h4>
+        <ul class="footer-links">
+          <!-- Các link hiện tại chỉ điều hướng về movies.html -->
+          <li><a href="movies.html">Horror</a></li>
+          <li><a href="movies.html">Thriller</a></li>
+          <li><a href="movies.html">Action</a></li>
+          <li><a href="movies.html">Drama</a></li>
+          <li><a href="movies.html">Comedy</a></li>
+        </ul>
+      </div>
+
+      <!-- ===== CỘT 4: THÔNG TIN LIÊN HỆ ===== -->
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+
+        <!-- Email -->
+        <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+
+        <!-- Số điện thoại -->
+        <p><i class="fas fa-phone"></i> +91 8299431275</p>
+
+        <!-- Địa chỉ -->
+        <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+      </div>
+
     </div>
-  </footer>
+
+    <!-- ===== PHẦN PHÁP LÝ / BẢN QUYỀN ===== -->
+    <div class="legal">
+      <p>
+        Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy
+      </p>
+    </div>
+
+  </div>
+</footer>
 
   <!-- Script duy nhất - đã xóa script trùng lặp, giữ nguyên icon -->
     <script src="js/api.js"></script>
@@ -479,167 +583,308 @@
     }
     
     // Lấy cấu hình theo phòng
-    const seatConfig = getSeatConfig(auditorium);
-    const SEAT_ROWS = seatConfig.rows;
-    const OCCUPIED_SEATS = seatConfig.occupiedSeats;
-    let selectedSeats = [];
-    
-    function renderSeatMap() {
-      const container = document.getElementById('seatMapContainer');
-      if (!container) return;
-      let html = '<div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">';
+    // ===== LẤY CẤU HÌNH GHẾ =====
+// Lấy dữ liệu cấu hình ghế theo phòng chiếu (auditorium)
+const seatConfig = getSeatConfig(auditorium);
+
+// Danh sách các hàng ghế (A, B, C,...)
+const SEAT_ROWS = seatConfig.rows;
+
+// Danh sách ghế đã được đặt (không thể chọn)
+const OCCUPIED_SEATS = seatConfig.occupiedSeats;
+
+// Danh sách ghế người dùng đang chọn
+let selectedSeats = [];
+
+
+// ===== RENDER SƠ ĐỒ GHẾ =====
+function renderSeatMap() {
+
+  // Lấy container để hiển thị sơ đồ ghế
+  const container = document.getElementById('seatMapContainer');
+  if (!container) return;
+
+  // Khởi tạo HTML layout chính (flex dọc)
+  let html = '<div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">';
       
-      SEAT_ROWS.forEach(row => {
-        html += `
-          <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; width: 100%;">
-            <div style="width: 45px; font-weight: 700; color: #f87171; text-align: center;">${row.label}</div>
-            <div class="seat-grid" style="flex: 1; max-width: 720px;">
-        `;
+  // Duyệt từng hàng ghế
+  SEAT_ROWS.forEach(row => {
+    html += `
+      <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; width: 100%;">
         
-        for (let i = 1; i <= row.seats; i++) {
-          const seatId = `${row.label}${i}`;
-          const isOccupied = OCCUPIED_SEATS.includes(seatId);
-          const isSelected = selectedSeats.includes(seatId);
-          
-          let bgStyle = '';
-          let iconHtml = '';
-          
-          if (isOccupied) {
-            bgStyle = 'background: #374151; opacity: 0.4; cursor: not-allowed;';
-            iconHtml = row.type === 'recliner' 
-              ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
-              : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
-          } else if (isSelected) {
-            if (row.type === 'recliner') {
-              bgStyle = 'background: linear-gradient(135deg, #22c55e, #166534);';
-            } else {
-              bgStyle = 'background: linear-gradient(135deg, #dc2626, #991b1b);';
-            }
-            iconHtml = row.type === 'recliner' 
-              ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
-              : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
-          } else {
-            if (row.type === 'recliner') {
-              bgStyle = 'background: #166534;';
-              iconHtml = '<i class="fas fa-couch" style="font-size: 12px;"></i>';
-            } else {
-              bgStyle = 'background: #1f2937;';
-              iconHtml = '<i class="fas fa-chair" style="font-size: 10px;"></i>';
-            }
-          }
-          
-          html += `<button class="seat-btn" style="${bgStyle}" ${!isOccupied ? `onclick="toggleSeat('${row.label}', ${i})"` : 'disabled'}>
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-              ${iconHtml}
-              <div class="seat-num" style="font-size: 0.7rem; margin-top: 2px; font-weight: bold;">${i}</div>
-            </div>
-          </button>`;
-        }
+        <!-- Nhãn hàng ghế (A, B, C,...) -->
+        <div style="width: 45px; font-weight: 700; color: #f87171; text-align: center;">
+          ${row.label}
+        </div>
+
+        <!-- Grid chứa các ghế -->
+        <div class="seat-grid" style="flex: 1; max-width: 720px;">
+    `;
         
-        html += `</div><div style="width: 70px; font-size: 0.7rem; color: #6b7280; text-transform: capitalize;">${row.type}</div></div>`;
-      });
+    // Duyệt từng ghế trong hàng
+    for (let i = 1; i <= row.seats; i++) {
+
+      // Tạo ID ghế (VD: A1, A2,...)
+      const seatId = `${row.label}${i}`;
+
+      // Kiểm tra trạng thái ghế
+      const isOccupied = OCCUPIED_SEATS.includes(seatId);   // đã đặt
+      const isSelected = selectedSeats.includes(seatId);    // đang chọn
       
-      html += '</div>';
-      container.innerHTML = html;
-      updateSummary();
-    }
-    
-    window.toggleSeat = (row, num) => {
-      const seatId = `${row}${num}`;
-      if (OCCUPIED_SEATS.includes(seatId)) return;
-      if (selectedSeats.includes(seatId)) {
-        selectedSeats = selectedSeats.filter(s => s !== seatId);
-      } else {
-        selectedSeats.push(seatId);
-      }
-      renderSeatMap();
-    };
-    
-    function updateSummary() {
-      const count = selectedSeats.length;
-      document.getElementById('selectedCount').innerHTML = count;
+      let bgStyle = '';   // style nền ghế
+      let iconHtml = '';  // icon hiển thị
       
-      if (count === 0) {
-        document.getElementById('emptyState').style.display = 'block';
-        document.getElementById('selectedSeatsContainer').style.display = 'none';
-      } else {
-        document.getElementById('emptyState').style.display = 'none';
-        document.getElementById('selectedSeatsContainer').style.display = 'block';
+      // ===== TRẠNG THÁI GHẾ =====
+
+      if (isOccupied) {
+        // Ghế đã được đặt → disable
+        bgStyle = 'background: #374151; opacity: 0.4; cursor: not-allowed;';
         
-        const container = document.getElementById('selectedSeatsList');
-        container.innerHTML = selectedSeats.map(seat => `<span style="background:rgba(239,68,68,0.2); padding:4px 12px; border-radius:20px;">${seat}</span>`).join('');
+        iconHtml = row.type === 'recliner' 
+          ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
+          : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
+
+      } else if (isSelected) {
+        // Ghế đang được chọn
         
-        let total = 0;
-        selectedSeats.forEach(seat => {
-          const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
-          total += row?.price || 0;
-        });
-        document.getElementById('totalAmount').innerHTML = `₹${total}`;
-      }
-    }
-    
-    function clearAllSeats() {
-      selectedSeats = [];
-      renderSeatMap();
-    }
-    
-    async function confirmBooking() {
-      if (selectedSeats.length === 0) {
-        alert('Vui lòng chọn ghế!');
-        return;
-      }
-      
-      if (!requireAuth()) return;
-      
-      let total = 0;
-      selectedSeats.forEach(seat => {
-        const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
-        total += row?.price || 0;
-      });
-      
-      const bookingData = {
-        showtimeId: showtimeId,
-        movieId: movieId,
-        movie: movieName,
-        date: new Date().toISOString(),
-        auditorium: auditorium,
-        seats: selectedSeats,
-        total: total
-      };
-      
-      try {
-        const result = await api.createBooking(bookingData);
-        alert(`Đặt vé thành công!\nPhim: ${movieName}\nPhòng: ${auditorium}\nGhế: ${selectedSeats.join(', ')}\nTổng: ₹${total}\nMã vé: ${result.id}`);
-        window.location.href = `checkout-demo.html?movie=${encodeURIComponent(movieName)}&total=${total}&seats=${selectedSeats.join(',')}&bookingId=${result.id}`;
-      } catch (error) {
-        alert('Đặt vé thất bại: ' + error.message);
-      }
-    }
-    
-    function updateAuthButton() {
-      const user = getCurrentUser();
-      const authBtn = document.querySelector('.login-btn');
-      if (authBtn) {
-        if (user) {
-          authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
-          authBtn.onclick = () => window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+        if (row.type === 'recliner') {
+          // Ghế VIP
+          bgStyle = 'background: linear-gradient(135deg, #22c55e, #166534);';
         } else {
-          authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
-          authBtn.onclick = () => window.location.href = 'login.html';
+          // Ghế thường
+          bgStyle = 'background: linear-gradient(135deg, #dc2626, #991b1b);';
+        }
+
+        iconHtml = row.type === 'recliner' 
+          ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
+          : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
+
+      } else {
+        // Ghế còn trống
+        
+        if (row.type === 'recliner') {
+          bgStyle = 'background: #166534;';
+          iconHtml = '<i class="fas fa-couch" style="font-size: 12px;"></i>';
+        } else {
+          bgStyle = 'background: #1f2937;';
+          iconHtml = '<i class="fas fa-chair" style="font-size: 10px;"></i>';
         }
       }
+      
+      // ===== TẠO HTML CHO MỖI GHẾ =====
+      html += `
+        <button class="seat-btn"
+          style="${bgStyle}"
+          ${!isOccupied ? `onclick="toggleSeat('${row.label}', ${i})"` : 'disabled'}>
+
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            
+            <!-- Icon ghế -->
+            ${iconHtml}
+
+            <!-- Số ghế -->
+            <div class="seat-num" style="font-size: 0.7rem; margin-top: 2px; font-weight: bold;">
+              ${i}
+            </div>
+
+          </div>
+        </button>
+      `;
     }
     
-    document.getElementById('clearBtn').addEventListener('click', clearAllSeats);
-    document.getElementById('confirmBtn').addEventListener('click', confirmBooking);
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
-    });
+    // Thêm loại ghế (standard / recliner) bên phải hàng
+    html += `
+      </div>
+      <div style="width: 70px; font-size: 0.7rem; color: #6b7280; text-transform: capitalize;">
+        ${row.type}
+      </div>
+    </div>`;
+  });
+      
+  html += '</div>';
+
+  // Gắn HTML vào DOM
+  container.innerHTML = html;
+
+  // Cập nhật phần tổng kết (số ghế, giá tiền,...)
+  updateSummary();
+}
     
-    updateAuthButton();
-    renderSeatMap();
+    // ===== CHỌN / BỎ CHỌN GHẾ =====
+// Gắn vào window để gọi được từ onclick trong HTML
+window.toggleSeat = (row, num) => {
+
+  // Tạo ID ghế (VD: A1, B2,...)
+  const seatId = `${row}${num}`;
+
+  // Nếu ghế đã có người đặt → không cho chọn
+  if (OCCUPIED_SEATS.includes(seatId)) return;
+
+  // Nếu ghế đã được chọn → bỏ chọn
+  if (selectedSeats.includes(seatId)) {
+    selectedSeats = selectedSeats.filter(s => s !== seatId);
+  } else {
+    // Nếu chưa chọn → thêm vào danh sách
+    selectedSeats.push(seatId);
+  }
+
+  // Render lại sơ đồ ghế sau khi thay đổi
+  renderSeatMap();
+};
+
+
+// ===== CẬP NHẬT THÔNG TIN ĐẶT GHẾ =====
+function updateSummary() {
+
+  // Số lượng ghế đã chọn
+  const count = selectedSeats.length;
+  document.getElementById('selectedCount').innerHTML = count;
+      
+  if (count === 0) {
+    // Nếu chưa chọn ghế → hiển thị trạng thái rỗng
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('selectedSeatsContainer').style.display = 'none';
+
+  } else {
+    // Nếu đã chọn ghế → hiển thị danh sách và tổng tiền
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('selectedSeatsContainer').style.display = 'block';
+        
+    // Hiển thị danh sách ghế đã chọn
+    const container = document.getElementById('selectedSeatsList');
+    container.innerHTML = selectedSeats
+      .map(seat => `
+        <span style="background:rgba(239,68,68,0.2); padding:4px 12px; border-radius:20px;">
+          ${seat}
+        </span>
+      `).join('');
+        
+    // ===== TÍNH TỔNG TIỀN =====
+    let total = 0;
+
+    selectedSeats.forEach(seat => {
+      // Lấy hàng ghế dựa trên ký tự đầu (A, B,...)
+      const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
+
+      // Cộng giá tiền của hàng ghế
+      total += row?.price || 0;
+    });
+
+    // Hiển thị tổng tiền
+    document.getElementById('totalAmount').innerHTML = `₹${total}`;
+  }
+}
+
+
+// ===== XÓA TOÀN BỘ GHẾ ĐÃ CHỌN =====
+function clearAllSeats() {
+  selectedSeats = [];     // reset danh sách
+  renderSeatMap();        // render lại UI
+}
+
+
+// ===== XÁC NHẬN ĐẶT VÉ =====
+async function confirmBooking() {
+
+  // Kiểm tra có chọn ghế chưa
+  if (selectedSeats.length === 0) {
+    alert('Vui lòng chọn ghế!');
+    return;
+  }
+      
+  // Kiểm tra đăng nhập
+  if (!requireAuth()) return;
+      
+  // ===== TÍNH TỔNG TIỀN =====
+  let total = 0;
+
+  selectedSeats.forEach(seat => {
+    const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
+    total += row?.price || 0;
+  });
+      
+  // ===== TẠO DỮ LIỆU ĐẶT VÉ =====
+  const bookingData = {
+    showtimeId: showtimeId,
+    movieId: movieId,
+    movie: movieName,
+    date: new Date().toISOString(),
+    auditorium: auditorium,
+    seats: selectedSeats,
+    total: total
+  };
+      
+  try {
+    // Gọi API tạo booking
+    const result = await api.createBooking(bookingData);
+
+    // Thông báo thành công
+    alert(`Đặt vé thành công!
+Phim: ${movieName}
+Phòng: ${auditorium}
+Ghế: ${selectedSeats.join(', ')}
+Tổng: ₹${total}
+Mã vé: ${result.id}`);
+
+    // Chuyển sang trang thanh toán demo
+    window.location.href =
+      `checkout-demo.html?movie=${encodeURIComponent(movieName)}
+      &total=${total}
+      &seats=${selectedSeats.join(',')}
+      &bookingId=${result.id}`;
+
+  } catch (error) {
+    alert('Đặt vé thất bại: ' + error.message);
+  }
+}
+
+
+// ===== CẬP NHẬT NÚT ĐĂNG NHẬP =====
+function updateAuthButton() {
+
+  const user = getCurrentUser();
+  const authBtn = document.querySelector('.login-btn');
+
+  if (authBtn) {
+    if (user) {
+      // Nếu đã đăng nhập → hiển thị tên
+      authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
+
+      // Điều hướng theo role
+      authBtn.onclick = () =>
+        window.location.href =
+          user.role === 'admin'
+          ? 'admin/dashboard.html'
+          : 'user/dashboard.html';
+
+    } else {
+      // Nếu chưa đăng nhập
+      authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
+      authBtn.onclick = () => window.location.href = 'login.html';
+    }
+  }
+}
+
+
+// ===== GẮN SỰ KIỆN =====
+document.getElementById('clearBtn')
+  .addEventListener('click', clearAllSeats);
+
+document.getElementById('confirmBtn')
+  .addEventListener('click', confirmBooking);
+
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+
+  if (window.scrollY > 50)
+    navbar.classList.add('scrolled');
+  else
+    navbar.classList.remove('scrolled');
+});
+
+
+updateAuthButton(); 
+renderSeatMap();   
   </script>
 </body>
 </html>
