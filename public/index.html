@@ -1,40 +1,59 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <!-- ==================== HEAD: META & LIÊN KẾT ==================== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>CineVerse | Movie Booking Website</title>
-  <!-- Google Fonts -->
+  
+  <!-- Google Fonts - Inter, Dancing Script, Monoton, Pacifico -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Pacifico&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
+  
+  <!-- Font Awesome 6 (icon) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <style>
+    /* ==================== RESET & TOÀN CỤC ==================== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; overflow-x: hidden; }
     .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
     
-    /* ========== NAVBAR ========== */
-    .navbar { position: fixed; left: 16px; right: 16px; top: 24px; z-index: 50; transition: all 0.3s; padding: 12px 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    /* ==================== NAVBAR (THANH ĐIỀU HƯỚNG CỐ ĐỊNH) ==================== */
+    .navbar { 
+      position: fixed; left: 16px; right: 16px; top: 24px; z-index: 50; 
+      transition: all 0.3s; padding: 12px 0; 
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); 
+      border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+    }
+    /* Hiệu ứng khi cuộn: thu nhỏ padding, tối nền hơn */
     .navbar.scrolled { padding: 8px 0; background: rgba(0,0,0,0.9); border-radius: 20px; }
     .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
+    
+    /* Logo */
     .logo { display: flex; align-items: center; gap: 12px; }
     .logo-icon { background: #000; padding: 10px; border-radius: 50%; border: 1px solid #dc2626; }
     .logo-icon i { font-size: 18px; color: #ef4444; }
     .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
+    
+    /* Các liên kết điều hướng */
     .nav-links { display: flex; gap: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 9999px; padding: 6px 12px; }
     .nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; position: relative; }
     .nav-link.active { color: white; }
     .nav-link:hover { color: #f5c518; }
+    
+    /* Hiệu ứng viền động khi hover/active */
     .pill-border { position: absolute; inset: -2px; border-radius: 9999px; pointer-events: none; background: linear-gradient(90deg, rgba(255,59,59,0.14), rgba(255,87,87,0.06)); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
     .nav-link:hover .pill-border, .nav-link.active .pill-border { transform: scaleX(1); }
     .pill-underline { height: 2px; width: 40%; border-radius: 999px; margin-top: 4px; background: linear-gradient(90deg, #ff6b6b, #ff3b3b); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
     .nav-link:hover .pill-underline, .nav-link.active .pill-underline { transform: scaleX(1); }
+    
+    /* Nút đăng nhập/đăng xuất */
     .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
     .login-btn i { font-size: 14px; }
     
-    /* ========== HERO ========== */
+    /* ==================== HERO (VIDEO + GIỚI THIỆU) ==================== */
     .hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; }
     .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.2), rgba(0,0,0,0.6)); }
@@ -45,17 +64,19 @@
     .rating { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
     .stars { display: flex; gap: 4px; color: #fbbf24; }
     .genre { color: #9ca3af; font-size: 0.875rem; }
+    
+    /* Nút trong hero */
     .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
     .btn-book { background: #dc2626; color: white; padding: 12px 28px; border-radius: 9999px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
     .btn-book:hover { background: #b91c1c; transform: translateY(-2px); }
     .btn-info { background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); color: white; padding: 12px 28px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
     .btn-info:hover { background: rgba(255,255,255,0.3); }
     
-    /* ========== SECTION ========== */
+    /* ==================== CÁC SECTION CHUNG ==================== */
     .section { padding: 60px 0; }
     .section-title { text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 40px; font-family: 'Dancing Script', cursive; }
     
-    /* Movie Grid */
+    /* Lưới phim */
     .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
     .movie-card { background: #12141c; border-radius: 16px; overflow: hidden; cursor: pointer; border: 1px solid #242632; transition: all 0.3s; text-decoration: none; display: block; color: inherit; }
     .movie-card:hover { transform: translateY(-5px); border-color: #f5c518; }
@@ -64,15 +85,19 @@
     .movie-title { font-weight: 700; margin-bottom: 4px; font-family: 'Pacifico', cursive; font-size: 0.9rem; }
     .movie-category { font-size: 0.7rem; color: #9ca3af; }
     
-    /* Trailers Section */
+    /* ==================== TRAILERS SECTION ==================== */
     .trailers-section { background: linear-gradient(to bottom, #111827, #0a0c10); padding: 60px 0; }
     .trailers-layout { display: flex; flex-direction: column; gap: 32px; }
     @media (min-width: 768px) { .trailers-layout { flex-direction: row; } }
+    
+    /* Danh sách trailer bên trái */
     .trailers-list { flex: 0.4; background: white; border-radius: 12px; padding: 24px; color: #111827; }
     .trailers-list h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .carousel-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .carousel-buttons { display: flex; gap: 8px; }
     .carousel-btn { padding: 8px; border-radius: 50%; background: #f3f4f6; border: none; cursor: pointer; }
+    
+    /* Carousel ngang */
     .trailer-carousel { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 8px; scrollbar-width: none; }
     .trailer-carousel::-webkit-scrollbar { display: none; }
     .trailer-thumb { flex: 0 0 200px; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; transition: all 0.3s; }
@@ -80,10 +105,14 @@
     .trailer-thumb img { width: 100%; height: 110px; object-fit: cover; }
     .trailer-thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 8px; }
     .trailer-thumb-overlay h4 { color: white; font-size: 0.75rem; font-weight: 600; }
+    
+    /* Danh sách trending */
     .trending-list { margin-top: 24px; }
     .trending-item { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 8px; cursor: pointer; }
     .trending-item:hover { background: #fef2f2; }
     .trending-item img { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; }
+    
+    /* Trailer nổi bật bên phải */
     .featured-trailer { flex: 0.6; background: white; border-radius: 12px; overflow: hidden; color: #111827; }
     .trailer-video { position: relative; background: #1a1a2e; }
     .trailer-video img { width: 100%; height: 280px; object-fit: cover; }
@@ -98,7 +127,7 @@
     .credit-item { text-align: center; }
     .credit-item img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
     
-    /* News Section */
+    /* ==================== NEWS SECTION ==================== */
     .news-section { background: #f3f4f6; padding: 60px 0; color: #111827; }
     .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
     .news-logo { font-family: 'Monoton', cursive; font-size: 2rem; color: #dc2626; }
@@ -106,8 +135,12 @@
     .breaking-news { background: linear-gradient(to right, #fef2f2, white, #fef2f2); border-radius: 9999px; padding: 4px 16px; display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
     .breaking-badge { color: #dc2626; font-weight: 600; font-size: 0.75rem; }
     .breaking-text { flex: 1; font-size: 0.875rem; color: #4b5563; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    
+    /* Lưới tin tức 2 cột (main + sidebar) */
     .news-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
     @media (min-width: 768px) { .news-grid { grid-template-columns: 2fr 1fr; } }
+    
+    /* Bài báo chính */
     .main-news-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
     .main-news-img { position: relative; height: 320px; }
     .main-news-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -115,18 +148,22 @@
     .news-badge { background: #dc2626; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 12px; width: fit-content; }
     .main-news-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
     .news-meta { display: flex; gap: 16px; font-size: 0.75rem; margin-top: 12px; }
+    
+    /* Các bài báo phụ (dạng list dọc) */
     .sub-news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 24px; }
     .sub-news-card { background: white; border-radius: 16px; overflow: hidden; display: flex; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     .sub-news-img { width: 100px; height: 100px; }
     .sub-news-img img { width: 100%; height: 100%; object-fit: cover; }
     .sub-news-content { padding: 12px; flex: 1; }
     .sub-news-title { font-weight: 600; font-size: 0.875rem; margin-bottom: 4px; }
+    
+    /* Form đăng ký nhận tin */
     .subscribe-card { background: white; border-radius: 16px; padding: 24px; margin-top: 24px; border: 1px solid #fee2e2; }
     .subscribe-form { display: flex; gap: 12px; margin-top: 16px; }
     .subscribe-form input { flex: 1; padding: 12px; border: 1px solid #e5e7eb; border-radius: 12px; outline: none; }
     .subscribe-form button { background: #dc2626; color: white; padding: 12px 24px; border: none; border-radius: 12px; cursor: pointer; }
     
-    /* Footer */
+    /* ==================== FOOTER ==================== */
     .footer { background: #050608; margin-top: 60px; padding: 50px 0 30px; border-top: 1px solid #1f212e; }
     .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
     .footer-col h4 { color: #f5c518; margin-bottom: 15px; font-size: 1rem; }
@@ -136,6 +173,7 @@
     .footer-links li { margin-bottom: 8px; }
     .legal { text-align: center; padding-top: 30px; font-size: 0.7rem; color: #5a5e77; border-top: 1px solid #1a1c26; margin-top: 30px; }
     
+    /* ==================== RESPONSIVE ==================== */
     @media (max-width: 768px) {
       .navbar { left: 8px; right: 8px; top: 8px; border-radius: 20px; }
       .nav-links { display: none; }
@@ -148,13 +186,15 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- ==================== HEADER: NAVBAR ==================== -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <div class="logo">
+        <!-- Icon và text logo -->
         <div class="logo-icon"><i class="picture/logo.jpg"></i></div>
         <div class="logo-text">CineVerse</div>
       </div>
+      <!-- Các liên kết chính -->
       <div class="nav-links">
         <a href="index.html" class="nav-link active">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
         <a href="movies.html" class="nav-link">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
@@ -162,12 +202,14 @@
         <a href="contact.html" class="nav-link">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
         <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
       </div>
+      <!-- Nút login (sẽ được JS cập nhật động) -->
       <button class="login-btn" onclick="window.location.href='login.html'"><i class="fas fa-user"></i> Login</button>
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- ==================== HERO SECTION ==================== -->
   <section class="hero">
+    <!-- Video nền-->
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-woods-1299-large.mp4" type="video/mp4">
     </video>
@@ -191,18 +233,20 @@
     </div>
   </section>
 
-  <!-- Featured Movies -->
+  <!-- ==================== FEATURED MOVIES SECTION ==================== -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">Featured Movies</h2>
+      <!-- Grid hiển thị phim nổi bật, nội dung được JS inject -->
       <div class="movie-grid" id="featuredGrid"></div>
     </div>
   </section>
 
-  <!-- Trailers Section -->
+  <!-- ==================== TRAILERS SECTION ==================== -->
   <section class="trailers-section">
     <div class="container">
       <div class="trailers-layout">
+        <!-- Cột trái: danh sách trailer -->
         <div class="trailers-list">
           <h2><i class="fas fa-clapperboard" style="color:#dc2626"></i> Latest Trailers</h2>
           <div class="carousel-controls">
@@ -212,17 +256,18 @@
             </div>
             <span class="trailer-count" id="trailerCount">3 trailers</span>
           </div>
+          <!-- Carousel chứa các thumbnail trailer -->
           <div class="trailer-carousel" id="trailerCarousel"></div>
+          <!-- Danh sách trending bên dưới -->
           <div class="trending-list" id="trendingList"></div>
         </div>
-        <div class="featured-trailer" id="featuredTrailer">
-          <!-- Featured trailer will be injected here -->
-        </div>
+        <!-- Cột phải: trailer được chọn sẽ hiển thị tại đây -->
+        <div class="featured-trailer" id="featuredTrailer"></div>
       </div>
     </div>
   </section>
 
-  <!-- News Section -->
+  <!-- ==================== NEWS SECTION ==================== -->
   <section class="news-section">
     <div class="container">
       <div class="news-header">
@@ -232,16 +277,18 @@
         </div>
         <button class="btn-book" onclick="alert('Latest news coming soon!')"><i class="fas fa-image"></i> Latest News</button>
       </div>
+      <!-- Tin nóng (breaking news) -->
       <div class="breaking-news">
         <span class="breaking-badge">Featured</span>
         <span class="breaking-text">Midnight Premiere Shocks Audiences — Visuals Break the Internet — A surprise midnight premiere left fans stunned with groundbreaking VFX and an unforgettable score.</span>
         <i class="fas fa-sparkles" style="color:#dc2626"></i>
       </div>
+      <!-- Grid tin tức (bài chính + các bài phụ) -->
       <div class="news-grid" id="newsGrid"></div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ==================== FOOTER ==================== -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -282,8 +329,10 @@
     </div>
   </footer>
 
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // Featured Movies - Kết nối đến movies.html
+    // ==================== DỮ LIỆU MẪU (FALLBACK) ====================
+    // Mảng chứa thông tin 6 phim nổi bật (dùng khi chưa có API)
     const featuredMovies = [
       { id: "69bbaa95fff8f4edfcad1cdd", title: "Dhurandhar", category: "Action", poster: "🎬", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1773906581802-13826.jfif" },
       { id: "69a06bf32d3466bab1c90e08", title: "HOV", category: "Adventure", poster: "🎬", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1772121075437-43848.jpeg" },
@@ -293,7 +342,7 @@
       { id: "691caa5286ce69e85cf8f2d1", title: "Until Dawn", category: "Horror", poster: "🎬", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763486290718-6833.png" }
     ];
 
-    // Render featured movies
+    // Hàm hiển thị danh sách phim nổi bật từ dữ liệu mẫu
     function renderFeaturedMovies() {
       const grid = document.getElementById('featuredGrid');
       if (!grid) return;
@@ -308,13 +357,14 @@
       `).join('');
     }
 
+    // ==================== DỮ LIỆU TRAILER MẪU ====================
     const trailers = [
       { id: 1, title: "Joker", genre: "Horror", thumbnail: "https://via.placeholder.com/220x124?text=Joker", videoId: "dQw4w9WgXcQ", director: "kareena", producer: "anil", singer: "ashok" },
       { id: 2, title: "Coolie", genre: "Adventure, Action", thumbnail: "https://via.placeholder.com/220x124?text=Coolie", videoId: "dQw4w9WgXcQ" },
       { id: 3, title: "Rampage", genre: "Action, Adventure", thumbnail: "https://via.placeholder.com/220x124?text=Rampage", videoId: "dQw4w9WgXcQ" }
     ];
 
-    // Render trailers carousel
+    // Hiển thị carousel và danh sách trending
     function renderTrailers() {
       const carousel = document.getElementById('trailerCarousel');
       if (!carousel) return;
@@ -340,14 +390,16 @@
         `).join('');
       }
       
+      // Mặc định chọn trailer đầu tiên
       selectTrailer(1);
     }
 
-    // Select trailer
+    // Hiển thị trailer được chọn vào khu vực featured
     function selectTrailer(id) {
       const trailer = trailers.find(t => t.id === id);
       if (!trailer) return;
       
+      // Highlight thumbnail tương ứng
       document.querySelectorAll('.trailer-thumb').forEach(el => {
         el.classList.remove('active');
         if (el.dataset.id == id) el.classList.add('active');
@@ -382,17 +434,19 @@
       }
     }
 
+    // Mở trailer trên YouTube
     function playTrailer(videoId) {
       window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
     }
 
-    // News data
+    // ==================== DỮ LIỆU TIN TỨC MẪU ====================
     const newsItems = [
       { category: "Premiere", title: "Midnight Premiere Shocks Audiences — Visuals Break the Internet", desc: "A surprise midnight premiere left fans stunned with groundbreaking VFX and an unforgettable score.", time: "2h ago", date: "Sep 14, 2025", img: "https://via.placeholder.com/800x400" },
       { category: "Box Office", title: "Box Office Early Estimates Predict Massive Opening", desc: "Early pre-sales and industry tracking estimate a massive opening weekend.", time: "1d ago", date: "Sep 13, 2025", img: "https://via.placeholder.com/100x100" },
       { category: "Design", title: "Costume Designer on Creating a Dystopian Wardrobe", desc: "From fabric to silhouette, the costume designer explains how subtle choices shaped characters' journeys.", time: "3h ago", date: "Sep 14, 2025", img: "https://via.placeholder.com/100x100" }
     ];
 
+    // Hiển thị tin tức: bài chính + các bài phụ + form đăng ký
     function renderNews() {
       const grid = document.getElementById('newsGrid');
       if (!grid) return;
@@ -437,7 +491,7 @@
       `;
     }
 
-    // Navbar scroll effect
+    // ==================== HIỆU ỨNG CUỘN CHO NAVBAR ====================
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
@@ -447,16 +501,21 @@
       }
     });
 
-    // Initialize
-    renderFeaturedMovies();
-    renderTrailers();
-    renderNews();
+    // ==================== KHỞI TẠO BAN ĐẦU ====================
+    renderFeaturedMovies();   // Hiển thị phim nổi bật (dữ liệu mẫu)
+    renderTrailers();         // Hiển thị trailer
+    renderNews();             // Hiển thị tin tức
   </script>
-    <!-- Kết nối Backend -->
+  
+  <!-- ==================== KẾT NỐI BACKEND & XÁC THỰC ==================== -->
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Cập nhật nút login/logout
+    /**
+     * Cập nhật giao diện nút login/logout dựa trên trạng thái đăng nhập
+     * - Nếu chưa đăng nhập: hiển thị "Login", chuyển đến login.html
+     * - Nếu đã đăng nhập: hiển thị tên người dùng, chuyển đến dashboard (admin/user)
+     */
     function updateAuthButton() {
       const user = getCurrentUser();
       const authBtn = document.querySelector('.login-btn');
@@ -473,7 +532,12 @@
       }
     }
     
-    // Load featured movies từ API
+    /**
+     * Tải danh sách phim đang chiếu từ API và cập nhật vào featuredGrid
+     * - Gọi api.getMovies với tham số status='now_showing'
+     * - Lấy 6 phim đầu tiên, hiển thị bằng ảnh thật (thay thế icon 🎬)
+     * - Nếu lỗi, chỉ log ra console (không ảnh hưởng giao diện đã có)
+     */
     async function loadFeaturedMovies() {
       try {
         const movies = await api.getMovies({ status: 'now_showing' });
@@ -497,10 +561,9 @@
       }
     }
     
+    // Cập nhật nút login và tải phim từ API (ghi đè dữ liệu mẫu nếu thành công)
     updateAuthButton();
     loadFeaturedMovies();
   </script>
-</body>
-</html>
 </body>
 </html>
