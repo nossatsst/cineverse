@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ==================== HEAD: META & LIÊN KẾT ==================== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Select Seats - CineVerse</title>
+  
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 (icon) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* ==================== RESET & TOÀN CỤC ==================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; overflow-x: hidden; min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0c10;
-      color: #eef2ff;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    /* Seat grid styles */
+    /* ==================== LƯỚI GHẾ ==================== */
+    /* Grid hiển thị 8 cột ghế, mỗi cột có chiều rộng tối thiểu 3.2rem, tối đa 5rem */
     .seat-grid {
       display: grid;
       gap: 0.75rem;
       grid-template-columns: repeat(8, minmax(3.2rem, 5rem));
     }
 
+    /* Nút ghế - thiết kế chung */
     .seat-btn {
       width: 100%;
       height: 3.5rem;
@@ -46,63 +39,32 @@
       transition: all 0.2s;
       border: none;
     }
+    .seat-btn:hover:not(:disabled) { transform: scale(1.05); }
+    .seat-btn:disabled { cursor: not-allowed; }
 
-    .seat-btn:hover:not(:disabled) {
-      transform: scale(1.05);
-    }
-
-    .seat-btn:disabled {
-      cursor: not-allowed;
-    }
-
-    /* Tablet */
+    /* Responsive cho máy tính bảng */
     @media (max-width: 1024px) {
-      .seat-grid {
-        grid-template-columns: repeat(8, minmax(2.6rem, 4rem));
-        gap: 0.6rem;
-      }
-      .seat-btn {
-        height: 3rem;
-      }
+      .seat-grid { grid-template-columns: repeat(8, minmax(2.6rem, 4rem)); gap: 0.6rem; }
+      .seat-btn { height: 3rem; }
     }
 
-    /* Mobile */
+    /* Responsive cho điện thoại */
     @media (max-width: 640px) {
-      .seat-grid {
-        grid-template-columns: repeat(8, minmax(1.4rem, 1fr));
-        gap: 0.45rem;
-      }
-      .seat-btn {
-        height: 2.2rem;
-        font-size: 0.625rem;
-        border-radius: 0.5rem;
-      }
-      .seat-icon {
-        transform: scale(0.85);
-      }
-      .seat-num {
-        font-size: 0.6rem;
-      }
+      .seat-grid { grid-template-columns: repeat(8, minmax(1.4rem, 1fr)); gap: 0.45rem; }
+      .seat-btn { height: 2.2rem; font-size: 0.625rem; border-radius: 0.5rem; }
+      .seat-num { font-size: 0.6rem; }
     }
 
-    /* Small mobile */
+    /* Responsive cho điện thoại nhỏ */
     @media (max-width: 420px) {
-      .seat-grid {
-        grid-template-columns: repeat(8, minmax(1.1rem, 1fr));
-        gap: 0.35rem;
-      }
-      .seat-btn {
-        height: 1.9rem;
-        font-size: 0.55rem;
-      }
+      .seat-grid { grid-template-columns: repeat(8, minmax(1.1rem, 1fr)); gap: 0.35rem; }
+      .seat-btn { height: 1.9rem; font-size: 0.55rem; }
     }
 
-    /* Navbar */
+    /* ==================== NAVBAR (THANH ĐIỀU HƯỚNG) ==================== */
     .navbar {
       position: fixed;
-      left: 16px;
-      right: 16px;
-      top: 24px;
+      left: 16px; right: 16px; top: 24px;
       z-index: 50;
       transition: all 0.3s;
       padding: 12px 0;
@@ -110,152 +72,41 @@
       backdrop-filter: blur(8px);
       border-radius: 24px;
     }
+    /* Hiệu ứng khi cuộn: thu nhỏ padding, tối nền hơn */
+    .navbar.scrolled { padding: 8px 0; background: rgba(0, 0, 0, 0.9); border-radius: 20px; }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
 
-    .navbar.scrolled {
-      padding: 8px 0;
-      background: rgba(0, 0, 0, 0.9);
-      border-radius: 20px;
-    }
+    /* Logo */
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { background: #000; padding: 10px; border-radius: 50%; border: 1px solid #dc2626; }
+    .logo-icon i { font-size: 18px; color: #ef4444; }
+    .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
 
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    /* Các liên kết điều hướng */
+    .nav-links { display: flex; gap: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 9999px; padding: 6px 12px; }
+    .nav-link { padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; }
+    .nav-link:hover { color: #f5c518; }
+    .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    /* ==================== FOOTER (CHÂN TRANG) ==================== */
+    .footer { background: #050608; margin-top: 60px; padding: 40px 0 20px; border-top: 1px solid #1f212e; }
+    .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
+    .footer-col h4 { color: #f5c518; margin-bottom: 15px; }
+    .footer-col p, .footer-col a { color: #888; font-size: 0.85rem; text-decoration: none; line-height: 1.8; }
+    .footer-links { list-style: none; }
+    .legal { text-align: center; padding-top: 30px; font-size: 0.7rem; color: #5a5e77; border-top: 1px solid #1a1c26; margin-top: 30px; }
 
-    .logo-icon {
-      background: #000;
-      padding: 10px;
-      border-radius: 50%;
-      border: 1px solid #dc2626;
-    }
-
-    .logo-icon i {
-      font-size: 18px;
-      color: #ef4444;
-    }
-
-    .logo-text {
-      font-size: 1.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ef4444, #fca5a5);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-family: 'Pacifico', cursive;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 9999px;
-      padding: 6px 12px;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      text-decoration: none;
-      color: #d1d5db;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-
-    .nav-link:hover {
-      color: #f5c518;
-    }
-
-    .login-btn {
-      background: linear-gradient(135deg, #374151, #1f2937);
-      border: 1px solid rgba(220, 38, 38, 0.2);
-      padding: 8px 20px;
-      border-radius: 9999px;
-      color: white;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* Footer */
-    .footer {
-      background: #050608;
-      margin-top: 60px;
-      padding: 40px 0 20px;
-      border-top: 1px solid #1f212e;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .footer-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .footer-col h4 {
-      color: #f5c518;
-      margin-bottom: 15px;
-    }
-
-    .footer-col p, .footer-col a {
-      color: #888;
-      font-size: 0.85rem;
-      text-decoration: none;
-      line-height: 1.8;
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .legal {
-      text-align: center;
-      padding-top: 30px;
-      font-size: 0.7rem;
-      color: #5a5e77;
-      border-top: 1px solid #1a1c26;
-      margin-top: 30px;
-    }
-
+    /* Responsive cho mobile */
     @media (max-width: 768px) {
-      .navbar {
-        left: 8px;
-        right: 8px;
-        top: 8px;
-        border-radius: 20px;
-      }
-      .nav-links {
-        display: none;
-      }
-      .footer-grid {
-        flex-direction: column;
-        text-align: center;
-      }
+      .navbar { left: 8px; right: 8px; top: 8px; border-radius: 20px; }
+      .nav-links { display: none; }
+      .footer-grid { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- ==================== HEADER: NAVBAR ==================== -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <div class="logo">
@@ -269,24 +120,28 @@
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="bookings.html" class="nav-link">Bookings</a>
       </div>
+      <!-- Nút login (sẽ được JS cập nhật động) -->
       <button class="login-btn" onclick="window.location.href='login.html'"><i class="fas fa-user"></i> Login</button>
     </div>
   </nav>
 
-  <!-- Seat Selector Content -->
+  <!-- ==================== NỘI DUNG CHÍNH: CHỌN GHẾ ==================== -->
   <div style="min-height: 100vh; background: linear-gradient(to bottom, #0a0c10, #000); padding-top: 100px; padding-bottom: 60px;">
     <div class="container">
-      <!-- Header -->
+      <!-- ===== HEADER: THÔNG TIN PHIM ===== -->
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;">
+        <!-- Nút quay lại -->
         <div style="display: flex; align-items: center; gap: 12px;">
           <button onclick="window.location.href='movies.html'" style="display: inline-flex; align-items: center; gap: 8px; background: none; border: none; color: #f87171; cursor: pointer; padding: 12px 16px; border-radius: 12px; transition: all 0.3s;">
             <i class="fas fa-arrow-left"></i> Back
           </button>
         </div>
+        <!-- Tên phim -->
         <div style="flex: 1; text-align: center;">
           <h1 id="movieTitle" style="font-size: 2rem; font-weight: 700; letter-spacing: 0.06em; background: linear-gradient(135deg, #fff, #f5c518); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Jolly LLb</h1>
           <div id="showtimeInfo" style="font-size: 0.875rem; color: #6b7280; margin-top: 6px;">Fri, 21 Nov, 2025, 05:15 pm</div>
         </div>
+        <!-- Badge phòng chiếu -->
         <div style="min-width: 100px;">
           <div style="background: linear-gradient(90deg, #111, #222); color: #ef4444; padding: 6px 12px; border-radius: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
             <i class="fas fa-film"></i> Audi 3
@@ -294,7 +149,7 @@
         </div>
       </div>
 
-      <!-- Curved Screen -->
+      <!-- ===== MÀN HÌNH (CURVED SCREEN) ===== -->
       <div style="margin-bottom: 32px; text-align: center;">
         <div style="background: linear-gradient(180deg, #1f2937, #111827); max-width: 900px; margin: 0 auto; padding: 20px; border-radius: 20px 20px 12px 12px; transform: perspective(120px) rotateX(6deg);">
           <div style="font-weight: 600; letter-spacing: 2px; color: #9ca3af;">CURVED SCREEN</div>
@@ -302,27 +157,31 @@
         </div>
       </div>
 
-      <!-- Seat Map -->
+      <!-- ===== SƠ ĐỒ GHẾ ===== -->
       <div style="background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(17,24,39,0.9)); border-radius: 24px; padding: 32px; border: 1px solid rgba(220,38,38,0.1);">
         <div style="text-align: center; margin-bottom: 24px;">
           <h2 style="font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #fff, #9ca3af); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Cinzel', serif;">Select Your Seats</h2>
           <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #ef4444, transparent); margin: 8px auto 0;"></div>
         </div>
 
+        <!-- Container để JS inject sơ đồ ghế -->
         <div id="seatMapContainer"></div>
 
-        <!-- Booking Summary & Pricing -->
+        <!-- ===== TỔNG KẾT ĐẶT VÉ & GIÁ ===== -->
         <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px;">
+          <!-- Bảng tổng kết đặt vé -->
           <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
             <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-ticket-alt"></i> Booking Summary</h3>
             <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px;">
               <span style="color: #9ca3af;">Selected Seats:</span>
               <span id="selectedCount" style="font-weight: 700; color: #f87171; font-size: 1.125rem;">0</span>
             </div>
+            <!-- Trạng thái khi chưa chọn ghế -->
             <div id="emptyState" style="text-align: center; padding: 24px; color: #6b7280;">
               <div style="font-size: 1rem; margin-bottom: 4px;">No seats selected</div>
               <div style="font-size: 0.875rem;">Select seats from the grid to continue</div>
             </div>
+            <!-- Hiển thị khi đã chọn ghế -->
             <div id="selectedSeatsContainer" style="display: none; margin-top: 16px;">
               <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px;">
                 <div style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 8px;">Selected Seats:</div>
@@ -333,11 +192,14 @@
                 <span id="totalAmount" style="font-weight: 700; color: #f5c518; font-size: 1.25rem;">₹0</span>
               </div>
             </div>
+            <!-- Nút hành động -->
             <div style="display: flex; gap: 12px; margin-top: 20px;">
               <button id="clearBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: #374151; border: none; color: white; cursor: pointer; transition: all 0.3s;">Clear</button>
               <button id="confirmBtn" style="flex: 1; padding: 12px; border-radius: 40px; background: linear-gradient(135deg, #dc2626, #991b1b); border: none; color: white; font-weight: 700; cursor: pointer; transition: all 0.3s;">Confirm Booking</button>
             </div>
           </div>
+
+          <!-- Bảng giá vé -->
           <div style="background: rgba(0,0,0,0.3); padding: 24px; border-radius: 16px;">
             <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-credit-card"></i> Pricing Info</h3>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
@@ -359,7 +221,7 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- ==================== FOOTER ==================== -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-grid">
@@ -400,11 +262,13 @@
     </div>
   </footer>
 
-  <!-- Script duy nhất - đã xóa script trùng lặp, giữ nguyên icon -->
-    <script src="js/api.js"></script>
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <!-- Kết nối API và xác thực -->
+  <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Lấy thông tin từ URL
+    // ==================== LẤY THÔNG TIN TỪ URL ====================
+    // Đọc các tham số từ URL (movie, time, price, movieId, showtimeId, auditorium)
     const urlParams = new URLSearchParams(window.location.search);
     const movieName = urlParams.get('movie') || 'Jolly LLb';
     const showTime = urlParams.get('time') || '05:15 PM';
@@ -413,17 +277,18 @@
     const showtimeId = urlParams.get('showtimeId') || '';
     const auditorium = urlParams.get('auditorium') || 'Audi 3';
     
-    // Cập nhật tiêu đề
+    // Cập nhật tiêu đề phim và thông tin suất chiếu
     const movieTitleEl = document.getElementById('movieTitle');
     const showtimeInfoEl = document.getElementById('showtimeInfo');
     if (movieTitleEl) movieTitleEl.innerText = movieName;
     if (showtimeInfoEl) showtimeInfoEl.innerHTML = `<i class="far fa-calendar-alt"></i> ${showTime} | ${movieName}`;
     
-    // Cập nhật badge hiển thị phòng
+    // Cập nhật badge hiển thị tên phòng
     const auditoriumBadge = document.querySelector('.min-width\\:100px div');
     if (auditoriumBadge) auditoriumBadge.innerHTML = `<i class="fas fa-film"></i> ${auditorium}`;
     
-    // Cấu hình ghế theo từng phòng
+    // ==================== CẤU HÌNH GHẾ THEO PHÒNG ====================
+    // Hàm trả về cấu hình ghế (số hàng, số ghế, giá, ghế đã đặt) dựa trên tên phòng
     function getSeatConfig(auditoriumName) {
       const configs = {
         'Audi 3': {
@@ -434,7 +299,7 @@
             { label: "D", type: "recliner", seats: 8, price: ticketPrice + 80 },
             { label: "E", type: "recliner", seats: 8, price: ticketPrice + 80 }
           ],
-          occupiedSeats: ["A1", "A2", "D5", "D6", "E1"]
+          occupiedSeats: ["A1", "A2", "D5", "D6", "E1"]  // Ghế đã có người đặt
         },
         'Phòng A1': {
           rows: [
@@ -475,15 +340,16 @@
           occupiedSeats: []
         }
       };
-      return configs[auditoriumName] || configs['Audi 3'];
+      return configs[auditoriumName] || configs['Audi 3'];  // Mặc định Audi 3
     }
     
-    // Lấy cấu hình theo phòng
+    // Lấy cấu hình theo tên phòng từ URL
     const seatConfig = getSeatConfig(auditorium);
-    const SEAT_ROWS = seatConfig.rows;
-    const OCCUPIED_SEATS = seatConfig.occupiedSeats;
-    let selectedSeats = [];
+    const SEAT_ROWS = seatConfig.rows;           // Danh sách hàng ghế
+    const OCCUPIED_SEATS = seatConfig.occupiedSeats; // Ghế đã đặt
+    let selectedSeats = [];                      // Ghế người dùng đang chọn
     
+    // ==================== RENDER SƠ ĐỒ GHẾ ====================
     function renderSeatMap() {
       const container = document.getElementById('seatMapContainer');
       if (!container) return;
@@ -496,20 +362,23 @@
             <div class="seat-grid" style="flex: 1; max-width: 720px;">
         `;
         
+        // Tạo các nút ghế cho từng hàng (từ 1 đến số ghế trong hàng)
         for (let i = 1; i <= row.seats; i++) {
           const seatId = `${row.label}${i}`;
-          const isOccupied = OCCUPIED_SEATS.includes(seatId);
-          const isSelected = selectedSeats.includes(seatId);
+          const isOccupied = OCCUPIED_SEATS.includes(seatId);   // Ghế đã bị đặt?
+          const isSelected = selectedSeats.includes(seatId);    // Ghế đang được chọn?
           
           let bgStyle = '';
           let iconHtml = '';
           
+          // Xác định màu sắc và icon dựa trên trạng thái ghế
           if (isOccupied) {
             bgStyle = 'background: #374151; opacity: 0.4; cursor: not-allowed;';
             iconHtml = row.type === 'recliner' 
               ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
               : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
           } else if (isSelected) {
+            // Ghế đang được chọn: màu xanh cho recliner, màu đỏ cho standard
             if (row.type === 'recliner') {
               bgStyle = 'background: linear-gradient(135deg, #22c55e, #166534);';
             } else {
@@ -519,6 +388,7 @@
               ? '<i class="fas fa-couch" style="font-size: 12px;"></i>' 
               : '<i class="fas fa-chair" style="font-size: 10px;"></i>';
           } else {
+            // Ghế trống: màu xanh cho recliner, màu xám cho standard
             if (row.type === 'recliner') {
               bgStyle = 'background: #166534;';
               iconHtml = '<i class="fas fa-couch" style="font-size: 12px;"></i>';
@@ -541,34 +411,40 @@
       
       html += '</div>';
       container.innerHTML = html;
-      updateSummary();
+      updateSummary();  // Cập nhật bảng tổng kết
     }
     
+    // ==================== CHỌN/BỎ CHỌN GHẾ ====================
     window.toggleSeat = (row, num) => {
       const seatId = `${row}${num}`;
-      if (OCCUPIED_SEATS.includes(seatId)) return;
+      if (OCCUPIED_SEATS.includes(seatId)) return;  // Không cho chọn ghế đã đặt
       if (selectedSeats.includes(seatId)) {
-        selectedSeats = selectedSeats.filter(s => s !== seatId);
+        selectedSeats = selectedSeats.filter(s => s !== seatId);  // Bỏ chọn
       } else {
-        selectedSeats.push(seatId);
+        selectedSeats.push(seatId);  // Chọn ghế
       }
-      renderSeatMap();
+      renderSeatMap();  // Render lại sơ đồ
     };
     
+    // ==================== CẬP NHẬT BẢNG TỔNG KẾT ====================
     function updateSummary() {
       const count = selectedSeats.length;
       document.getElementById('selectedCount').innerHTML = count;
       
       if (count === 0) {
+        // Chưa có ghế nào được chọn
         document.getElementById('emptyState').style.display = 'block';
         document.getElementById('selectedSeatsContainer').style.display = 'none';
       } else {
+        // Đã có ghế được chọn
         document.getElementById('emptyState').style.display = 'none';
         document.getElementById('selectedSeatsContainer').style.display = 'block';
         
+        // Hiển thị danh sách ghế đã chọn
         const container = document.getElementById('selectedSeatsList');
         container.innerHTML = selectedSeats.map(seat => `<span style="background:rgba(239,68,68,0.2); padding:4px 12px; border-radius:20px;">${seat}</span>`).join('');
         
+        // Tính tổng tiền
         let total = 0;
         selectedSeats.forEach(seat => {
           const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
@@ -578,25 +454,30 @@
       }
     }
     
+    // ==================== XÓA TẤT CẢ GHẾ ĐÃ CHỌN ====================
     function clearAllSeats() {
       selectedSeats = [];
       renderSeatMap();
     }
     
+    // ==================== XÁC NHẬN ĐẶT VÉ ====================
     async function confirmBooking() {
       if (selectedSeats.length === 0) {
         alert('Vui lòng chọn ghế!');
         return;
       }
       
+      // Kiểm tra đăng nhập
       if (!requireAuth()) return;
       
+      // Tính tổng tiền
       let total = 0;
       selectedSeats.forEach(seat => {
         const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
         total += row?.price || 0;
       });
       
+      // Tạo dữ liệu đặt vé
       const bookingData = {
         showtimeId: showtimeId,
         movieId: movieId,
@@ -608,14 +489,17 @@
       };
       
       try {
+        // Gọi API tạo booking
         const result = await api.createBooking(bookingData);
         alert(`Đặt vé thành công!\nPhim: ${movieName}\nPhòng: ${auditorium}\nGhế: ${selectedSeats.join(', ')}\nTổng: ₹${total}\nMã vé: ${result.id}`);
+        // Chuyển sang trang thanh toán
         window.location.href = `checkout-demo.html?movie=${encodeURIComponent(movieName)}&total=${total}&seats=${selectedSeats.join(',')}&bookingId=${result.id}`;
       } catch (error) {
         alert('Đặt vé thất bại: ' + error.message);
       }
     }
     
+    // ==================== CẬP NHẬT NÚT LOGIN/LOGOUT ====================
     function updateAuthButton() {
       const user = getCurrentUser();
       const authBtn = document.querySelector('.login-btn');
@@ -630,16 +514,20 @@
       }
     }
     
+    // ==================== GÁN SỰ KIỆN CHO NÚT ====================
     document.getElementById('clearBtn').addEventListener('click', clearAllSeats);
     document.getElementById('confirmBtn').addEventListener('click', confirmBooking);
+    
+    // ==================== HIỆU ỨNG CUỘN CHO NAVBAR ====================
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
     });
     
-    updateAuthButton();
-    renderSeatMap();
+    // ==================== KHỞI TẠO ====================
+    updateAuthButton();  // Cập nhật nút login
+    renderSeatMap();     // Vẽ sơ đồ ghế
   </script>
 </body>
 </html>

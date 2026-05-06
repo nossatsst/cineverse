@@ -70,7 +70,8 @@
       "occupiedSeats": [
         "A1",
         "A2",
-        "C4"
+        "C4",
+        "A3"
       ]
     },
     {
@@ -166,6 +167,21 @@
       "total": 159,
       "status": "confirmed",
       "bookingDate": "2026-05-06T05:43:36.958Z"
+    },
+    {
+      "id": "BKG1778057810908",
+      "userId": "admin_001",
+      "showtimeId": "st_001",
+      "movieId": "movie_001",
+      "movie": "Jolly LLB",
+      "date": "2026-05-06T08:56:50.868Z",
+      "auditorium": "Phòng A1",
+      "seats": [
+        "A3"
+      ],
+      "total": 159,
+      "status": "confirmed",
+      "bookingDate": "2026-05-06T08:56:50.908Z"
     }
   ]
 }
