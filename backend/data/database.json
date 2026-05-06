@@ -37,7 +37,10 @@
       "price": 159,
       "status": "now_showing",
       "director": "Subhash Kapoor",
-      "cast": ["Akshay Kumar", "Huma Qureshi"]
+      "cast": [
+        "Akshay Kumar",
+        "Huma Qureshi"
+      ]
     },
     {
       "id": "movie_002",
@@ -50,7 +53,10 @@
       "price": 159,
       "status": "now_showing",
       "director": "S. S. Rajamouli",
-      "cast": ["Ram Charan", "Jr NTR"]
+      "cast": [
+        "Ram Charan",
+        "Jr NTR"
+      ]
     }
   ],
   "showtimes": [
@@ -61,7 +67,11 @@
       "date": "2025-05-07",
       "time": "10:30",
       "auditorium": "Phòng A1",
-      "occupiedSeats": ["A1", "A2"]
+      "occupiedSeats": [
+        "A1",
+        "A2",
+        "C4"
+      ]
     },
     {
       "id": "st_002",
@@ -70,7 +80,9 @@
       "date": "2025-05-07",
       "time": "14:30",
       "auditorium": "Phòng A2",
-      "occupiedSeats": ["C1"]
+      "occupiedSeats": [
+        "C1"
+      ]
     },
     {
       "id": "st_003",
@@ -97,7 +109,9 @@
       "date": "2025-05-07",
       "time": "15:30",
       "auditorium": "Phòng B2",
-      "occupiedSeats": ["D5"]
+      "occupiedSeats": [
+        "D5"
+      ]
     },
     {
       "id": "st_006",
@@ -137,6 +151,21 @@
       "total": 159,
       "status": "confirmed",
       "bookingDate": "2026-05-05T17:45:25.868Z"
+    },
+    {
+      "id": "BKG1778046216958",
+      "userId": "user_001",
+      "showtimeId": "st_001",
+      "movieId": "movie_001",
+      "movie": "Jolly LLB",
+      "date": "2026-05-06T05:43:36.877Z",
+      "auditorium": "Phòng A1",
+      "seats": [
+        "C4"
+      ],
+      "total": 159,
+      "status": "confirmed",
+      "bookingDate": "2026-05-06T05:43:36.958Z"
     }
   ]
 }

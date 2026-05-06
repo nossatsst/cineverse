@@ -6,7 +6,7 @@ const SECRET_KEY = 'CINEVERSE_SECRET_KEY_2024';
 
 const login = (req, res) => {
     try {
-        const { email, password } = req.body;  // Đổi username thành email
+        const { email, password } = req.body;
         const db = readDB();
         
         // Tìm user theo email
