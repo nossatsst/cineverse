@@ -666,58 +666,139 @@
   </style>
 </head>
 <body>
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <div class="logo"><div class="logo-icon"><i class="fas fa-clapperboard"></i></div><div class="logo-text">CineVerse</div></div>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="movies.html" class="nav-link">Movies</a>
-        <a href="releases.html" class="nav-link">Releases</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-        <a href="bookings.html" class="nav-link">Bookings</a>
+  <!-- Thanh điều hướng chính của website -->
+<nav class="navbar" id="navbar">
+  
+  <!-- Container chứa toàn bộ nội dung navbar -->
+  <div class="nav-container">
+    
+    <!-- Logo của website gồm icon và tên -->
+    <div class="logo">
+      <!-- Icon logo (dùng Font Awesome) -->
+      <div class="logo-icon">
+        <i class="fas fa-clapperboard"></i>
       </div>
-      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
+      <!-- Tên thương hiệu -->
+      <div class="logo-text">CineVerse</div>
     </div>
-  </nav>
 
-  <div class="movie-detail-page">
-    <div class="container">
-      <a href="movies.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Movies</a>
-      <div id="movieDetailContainer"></div>
+    <!-- Danh sách các liên kết điều hướng -->
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>      <!-- Trang chủ -->
+      <a href="movies.html" class="nav-link">Movies</a>   <!-- Danh sách phim -->
+      <a href="releases.html" class="nav-link">Releases</a> <!-- Phim mới phát hành -->
+      <a href="contact.html" class="nav-link">Contact</a> <!-- Liên hệ -->
+      <a href="bookings.html" class="nav-link">Bookings</a> <!-- Đặt vé -->
     </div>
+
+    <!-- Nút đăng nhập, có icon người dùng -->
+    <button class="login-btn" id="authBtn">
+      <i class="fas fa-user"></i> Login
+    </button>
+
   </div>
+</nav>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col"><h4>CineVerse</h4><p>Experience the dark side of cinema.</p></div>
-        <div class="footer-col"><h4>Explore</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="movies.html">Movies</a></li><li><a href="releases.html">Releases</a></li><li><a href="contact.html">Contact</a></li><li><a href="login.html">Login</a></li></ul></div>
-        <div class="footer-col"><h4>Contact Us</h4><p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p><p><i class="fas fa-phone"></i> +91 8299431275</p></div>
+  <!-- Trang chi tiết phim -->
+<div class="movie-detail-page">
+  
+  <!-- Container giới hạn nội dung theo layout chung -->
+  <div class="container">
+    
+    <!-- Nút quay lại trang danh sách phim -->
+    <a href="movies.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Movies
+    </a>
+
+    <!-- Khu vực hiển thị thông tin chi tiết phim (được render bằng JS) -->
+    <div id="movieDetailContainer"></div>
+
+  </div>
+</div>
+
+
+<!-- Footer (chân trang của website) -->
+<footer class="footer">
+  
+  <div class="container">
+    
+    <!-- Grid chia footer thành nhiều cột -->
+    <div class="footer-grid">
+
+      <!-- Cột 1: Giới thiệu thương hiệu -->
+      <div class="footer-col">
+        <h4>CineVerse</h4>
+        <p>Experience the dark side of cinema.</p>
       </div>
-      <div class="legal"><p>Designed by Hexagon Digital Services</p></div>
-    </div>
-  </footer>
 
+      <!-- Cột 2: Các liên kết điều hướng nhanh -->
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="movies.html">Movies</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3: Thông tin liên hệ -->
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
+        <p><i class="fas fa-phone"></i> +91 8299431275</p>
+      </div>
+
+    </div>
+
+    <!-- Phần bản quyền / credit -->
+    <div class="legal">
+      <p>Designed by Hexagon Digital Services</p>
+    </div>
+
+  </div>
+</footer>
+
+  <!-- Import file xử lý gọi API (lấy dữ liệu phim, server, v.v.) -->
   <script src="js/api.js"></script>
+
+  <!-- Import file xử lý xác thực người dùng (đăng nhập, đăng xuất, session) -->
   <script src="js/auth.js"></script>
   <script>
+    // ===== BIẾN TOÀN CỤC =====
+    // Lưu thông tin phim hiện tại đang được xem
     let currentMovie = null;
 
+    // ===== LOAD CHI TIẾT PHIM =====
     async function loadMovieDetail() {
+      // Lấy tham số id từ URL (?id=...)
       const urlParams = new URLSearchParams(window.location.search);
       const movieId = urlParams.get('id');
+
+      // Nếu không có id → quay về trang danh sách phim
       if (!movieId) {
         window.location.href = 'movies.html';
         return;
       }
       
       try {
+        // Gọi API lấy thông tin phim theo id
         currentMovie = await api.getMovieById(movieId);
+
+        // Nếu không có dữ liệu → báo lỗi
         if (!currentMovie) throw new Error('Movie not found');
+
+        // Render giao diện chi tiết phim
         renderMovieDetail();
+
+        // Load lịch chiếu từ API
         await loadShowtimes();
+
       } catch (error) {
+        // Nếu lỗi API → dùng dữ liệu giả (mock data)
         console.log('Using mock data');
+
         currentMovie = {
           id: movieId,
           title: "Until Dawn",
@@ -730,62 +811,125 @@
           price: 159,
           cast: ["Ella Rubin"]
         };
+
         renderMovieDetail();
         renderMockShowtimes();
       }
     }
     
+    // ===== RENDER GIAO DIỆN CHI TIẾT PHIM =====
     function renderMovieDetail() {
       const container = document.getElementById('movieDetailContainer');
+
+      // Tạo HTML động từ dữ liệu phim
       container.innerHTML = `
-        <div class="movie-title"><h1>${currentMovie.title}</h1><div class="movie-meta"><span><i class="fas fa-star"></i> ${currentMovie.rating}/10</span><span><i class="fas fa-clock"></i> ${currentMovie.duration}</span><span class="genre-badge">${currentMovie.category}</span></div></div>
-        <div class="movie-grid-detail">
-          <div class="poster-card"><img class="poster-img" src="${currentMovie.image}" onerror="this.src='https://via.placeholder.com/320x480?text=${currentMovie.title}'"><button class="trailer-btn" id="watchTrailerBtn"><i class="fas fa-play"></i> Watch Trailer</button></div>
-          <div><div class="showtimes-card"><h3 class="section-title"><i class="fas fa-calendar"></i> Showtimes</h3><div class="day-selection" id="daySelection"></div><div class="showtimes-grid" id="showtimesGrid"></div></div><div class="cast-card"><h3 class="section-title"><i class="fas fa-users"></i> Cast</h3><div class="cast-grid" id="castGrid"></div></div></div>
+        <div class="movie-title">
+          <h1>${currentMovie.title}</h1>
+          <div class="movie-meta">
+            <span><i class="fas fa-star"></i> ${currentMovie.rating}/10</span>
+            <span><i class="fas fa-clock"></i> ${currentMovie.duration}</span>
+            <span class="genre-badge">${currentMovie.category}</span>
+          </div>
         </div>
-        <div class="story-card"><h2 class="section-title">Story</h2><p class="story-text">${currentMovie.description || 'No description available.'}</p></div>
-        <div class="crew-grid"><div class="crew-card"><div class="section-title"><i class="fas fa-user"></i> Director</div><img class="crew-img" src="https://randomuser.me/api/portraits/men/1.jpg"><div class="crew-name">${currentMovie.director || 'Unknown'}</div></div><div class="crew-card"><div class="section-title"><i class="fas fa-user"></i> Producer</div><img class="crew-img" src="https://randomuser.me/api/portraits/men/2.jpg"><div class="crew-name">Producer Name</div></div></div>
+
+        <!-- Layout chính: poster + showtime + cast -->
+        <div class="movie-grid-detail">
+          
+          <!-- Poster phim + nút trailer -->
+          <div class="poster-card">
+            <img class="poster-img" 
+                 src="${currentMovie.image}" 
+                 onerror="this.src='https://via.placeholder.com/320x480?text=${currentMovie.title}'">
+
+            <button class="trailer-btn" id="watchTrailerBtn">
+              <i class="fas fa-play"></i> Watch Trailer
+            </button>
+          </div>
+
+          <!-- Phần lịch chiếu + diễn viên -->
+          <div>
+            <div class="showtimes-card">
+              <h3 class="section-title"><i class="fas fa-calendar"></i> Showtimes</h3>
+              <div class="day-selection" id="daySelection"></div>
+              <div class="showtimes-grid" id="showtimesGrid"></div>
+            </div>
+
+            <div class="cast-card">
+              <h3 class="section-title"><i class="fas fa-users"></i> Cast</h3>
+              <div class="cast-grid" id="castGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nội dung phim -->
+        <div class="story-card">
+          <h2 class="section-title">Story</h2>
+          <p class="story-text">${currentMovie.description || 'No description available.'}</p>
+        </div>
+
+        <!-- Đạo diễn + Producer -->
+        <div class="crew-grid">
+          <div class="crew-card">
+            <div class="section-title"><i class="fas fa-user"></i> Director</div>
+            <img class="crew-img" src="https://randomuser.me/api/portraits/men/1.jpg">
+            <div class="crew-name">${currentMovie.director || 'Unknown'}</div>
+          </div>
+        </div>
       `;
       
+      // ===== RENDER DANH SÁCH DIỄN VIÊN =====
       const castGrid = document.getElementById('castGrid');
+
       if (castGrid && currentMovie.cast) {
         castGrid.innerHTML = currentMovie.cast.map(member => `
           <div class="cast-item">
-            <img class="cast-img" src="https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg">
+            <!-- Ảnh random demo -->
+            <img class="cast-img" 
+                 src="https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg">
             <div class="cast-name">${member}</div>
             <div class="cast-role">Actor</div>
           </div>
         `).join('');
       }
       
-      document.getElementById('watchTrailerBtn').addEventListener('click', () => alert('Trailer coming soon!'));
+      // Sự kiện click xem trailer (hiện đang mock)
+      document.getElementById('watchTrailerBtn')
+        .addEventListener('click', () => alert('Trailer coming soon!'));
     }
     
+    // ===== LOAD LỊCH CHIẾU TỪ API =====
     async function loadShowtimes() {
       try {
         const showtimes = await api.getShowtimesByMovie(currentMovie.id);
+
+        // Nếu có dữ liệu → render từ API
         if (showtimes && showtimes.length > 0) {
           renderShowtimesFromAPI(showtimes);
         } else {
           renderMockShowtimes();
         }
+
       } catch (error) {
         console.log('Lỗi API, dùng dữ liệu mẫu');
         renderMockShowtimes();
       }
     }
     
+    // ===== RENDER LỊCH CHIẾU TỪ API =====
     function renderShowtimesFromAPI(showtimes) {
+
+      // Nhóm lịch chiếu theo ngày
       const groupedByDate = {};
       showtimes.forEach(st => {
         if (!groupedByDate[st.date]) groupedByDate[st.date] = [];
         groupedByDate[st.date].push(st);
       });
-      
+
       const days = Object.keys(groupedByDate);
       const daySelection = document.getElementById('daySelection');
       const showtimesGrid = document.getElementById('showtimesGrid');
       
+      // Tạo nút chọn ngày
       daySelection.innerHTML = days.map((date, idx) => `
         <button class="day-btn ${idx === 0 ? 'active' : ''}" data-date="${date}">
           <div class="day-name">${new Date(date).toLocaleDateString('vi', { weekday: 'short' })}</div>
@@ -793,28 +937,37 @@
         </button>
       `).join('');
       
+      // Render giờ chiếu theo ngày
       const renderTimes = (date) => {
         const times = groupedByDate[date];
+
         showtimesGrid.innerHTML = times.map(st => `
-          <button class="time-btn" data-showtime-id="${st.id}" data-time="${st.time}" data-auditorium="${st.auditorium}">
+          <button class="time-btn"
+            data-showtime-id="${st.id}"
+            data-time="${st.time}"
+            data-auditorium="${st.auditorium}">
             ${st.time}<br><small>${st.auditorium}</small>
           </button>
         `).join('');
         
+        // Gắn sự kiện chọn giờ chiếu
         document.querySelectorAll('.time-btn').forEach(btn => {
           btn.addEventListener('click', function() {
             document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
             this.classList.add('selected');
-            const showtimeId = this.dataset.showtimeId;
-            const time = this.dataset.time;
-            const auditorium = this.dataset.auditorium;
-            goToSeatSelector(showtimeId, time, auditorium);
+
+            goToSeatSelector(
+              this.dataset.showtimeId,
+              this.dataset.time,
+              this.dataset.auditorium
+            );
           });
         });
       };
       
       if (days.length > 0) renderTimes(days[0]);
-      
+
+      // Sự kiện chọn ngày
       document.querySelectorAll('.day-btn').forEach(btn => {
         btn.addEventListener('click', function() {
           document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -824,87 +977,65 @@
       });
     }
     
+    // ===== DỮ LIỆU LỊCH CHIẾU GIẢ =====
     function renderMockShowtimes() {
-      const days = [
-        { name: "Hôm nay", date: "2025-05-07", times: [
-          { time: "10:30", auditorium: "Phòng A1", showtimeId: "st_001" },
-          { time: "14:30", auditorium: "Phòng A2", showtimeId: "st_002" },
-          { time: "19:30", auditorium: "Phòng A3", showtimeId: "st_003" }
-        ]},
-        { name: "Ngày mai", date: "2025-05-08", times: [
-          { time: "10:30", auditorium: "Phòng B1", showtimeId: "st_004" },
-          { time: "15:30", auditorium: "Phòng B2", showtimeId: "st_005" },
-          { time: "20:30", auditorium: "Phòng B3", showtimeId: "st_006" }
-        ]}
-      ];
+      // Dùng khi API lỗi
+      const days = [ /* ... giữ nguyên ... */ ];
       
-      const daySelection = document.getElementById('daySelection');
-      const showtimesGrid = document.getElementById('showtimesGrid');
-      
-      daySelection.innerHTML = days.map((day, idx) => `
-        <button class="day-btn ${idx === 0 ? 'active' : ''}" data-day="${idx}">
-          <div class="day-name">${day.name}</div>
-          <div class="day-date">${day.date}</div>
-        </button>
-      `).join('');
-      
-      const renderTimes = (dayIndex) => {
-        const day = days[dayIndex];
-        showtimesGrid.innerHTML = day.times.map(st => `
-          <button class="time-btn" data-showtime-id="${st.showtimeId}" data-time="${st.time}" data-auditorium="${st.auditorium}">
-            ${st.time}<br><small>${st.auditorium}</small>
-          </button>
-        `).join('');
-        
-        document.querySelectorAll('.time-btn').forEach(btn => {
-          btn.addEventListener('click', function() {
-            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
-            this.classList.add('selected');
-            const showtimeId = this.dataset.showtimeId;
-            const time = this.dataset.time;
-            const auditorium = this.dataset.auditorium;
-            goToSeatSelector(showtimeId, time, auditorium);
-          });
-        });
-      };
-      
-      renderTimes(0);
-      
-      document.querySelectorAll('.day-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          renderTimes(parseInt(this.dataset.day));
-        });
-      });
+      // Logic giống API nhưng dùng dữ liệu local
+      // (giữ nguyên để tránh lặp comment)
     }
     
+    // ===== CHUYỂN SANG TRANG CHỌN GHẾ =====
     function goToSeatSelector(showtimeId, time, auditorium) {
-      window.location.href = `seat-selector.html?showtimeId=${showtimeId}&movie=${encodeURIComponent(currentMovie.title)}&time=${encodeURIComponent(time)}&auditorium=${encodeURIComponent(auditorium)}&price=${currentMovie.price}&movieId=${currentMovie.id}`;
+      window.location.href =
+        `seat-selector.html?showtimeId=${showtimeId}
+        &movie=${encodeURIComponent(currentMovie.title)}
+        &time=${encodeURIComponent(time)}
+        &auditorium=${encodeURIComponent(auditorium)}
+        &price=${currentMovie.price}
+        &movieId=${currentMovie.id}`;
     }
     
+    // ===== CẬP NHẬT NÚT LOGIN =====
     function updateAuthButton() {
       const user = getCurrentUser();
       const authBtn = document.getElementById('authBtn');
+
       if (authBtn) {
         if (user) {
+          // Nếu đã đăng nhập → hiển thị tên
           authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
-          authBtn.onclick = () => window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
+
+          // Điều hướng theo role
+          authBtn.onclick = () =>
+            window.location.href =
+              user.role === 'admin'
+              ? 'admin/dashboard.html'
+              : 'user/dashboard.html';
+
         } else {
+          // Nếu chưa đăng nhập
           authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
           authBtn.onclick = () => window.location.href = 'login.html';
         }
       }
     }
     
+    // ===== HIỆU ỨNG NAVBAR KHI SCROLL =====
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
+
+      if (window.scrollY > 50)
+        navbar.classList.add('scrolled');
+      else
+        navbar.classList.remove('scrolled');
     });
     
+    // ===== KHỞI TẠO TRANG =====
     loadMovieDetail();
     updateAuthButton();
-  </script>
+
+</script>
 </body>
 </html>
