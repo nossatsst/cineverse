@@ -18,7 +18,7 @@ function getHeaders() {
 }
 
 const api = {
-    // Auth
+    // ==================== AUTH ====================
     login: async (email, password) => {
         const res = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
@@ -50,7 +50,42 @@ const api = {
         return data;
     },
     
-    // Movies
+    // ==================== ĐỔI MẬT KHẨU (THÊM MỚI) ====================
+    changePassword: async (oldPassword, newPassword) => {
+        const res = await fetch(`${API_URL}/auth/change-password`, {
+            method: 'PUT',
+            headers: getHeaders(),
+            body: JSON.stringify({ oldPassword, newPassword })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        return data;
+    },
+    
+    // ==================== QUÊN MẬT KHẨU (THÊM MỚI) ====================
+    forgotPassword: async (email) => {
+        const res = await fetch(`${API_URL}/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        return data;
+    },
+    
+    resetPassword: async (token, newPassword) => {
+        const res = await fetch(`${API_URL}/auth/reset-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, newPassword })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        return data;
+    },
+    
+    // ==================== MOVIES ====================
     getMovies: async (params = {}) => {
         const query = new URLSearchParams(params).toString();
         const res = await fetch(`${API_URL}/movies${query ? `?${query}` : ''}`);
@@ -94,7 +129,7 @@ const api = {
         return data;
     },
     
-    // Bookings
+    // ==================== BOOKINGS ====================
     getMyBookings: async () => {
         const res = await fetch(`${API_URL}/bookings/my`, { headers: getHeaders() });
         return res.json();
@@ -126,7 +161,7 @@ const api = {
         return data;
     },
     
-    // Users (Admin)
+    // ==================== USERS (ADMIN) ====================
     getAllUsers: async () => {
         const res = await fetch(`${API_URL}/users`, { headers: getHeaders() });
         return res.json();
@@ -153,13 +188,13 @@ const api = {
         return data;
     },
     
-    // Admin Stats
+    // ==================== ADMIN STATS ====================
     getAdminStats: async () => {
         const res = await fetch(`${API_URL}/admin/stats`, { headers: getHeaders() });
         return res.json();
     },
     
-    // Showtimes API
+    // ==================== SHOWTIMES ====================
     getShowtimesByMovie: async (movieId) => {
         const res = await fetch(`${API_URL}/showtimes/movie/${movieId}`);
         return res.json();
@@ -167,6 +202,35 @@ const api = {
     
     getShowtimeById: async (id) => {
         const res = await fetch(`${API_URL}/showtimes/${id}`);
+        return res.json();
+    },
+    
+    // ==================== REVIEWS (THÊM MỚI) ====================
+    getReviewsByMovie: async (movieId) => {
+        const res = await fetch(`${API_URL}/reviews/movie/${movieId}`);
+        return res.json();
+    },
+    
+    addReview: async (reviewData) => {
+        const res = await fetch(`${API_URL}/reviews`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify(reviewData)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        return data;
+    },
+    
+    // ==================== COUPONS (THÊM MỚI) ====================
+    validateCoupon: async (code) => {
+        const res = await fetch(`${API_URL}/coupons/validate/${code}`);
+        return res.json();
+    },
+    
+    // ==================== QR CODE (THÊM MỚI) ====================
+    generateQRCode: async (bookingId) => {
+        const res = await fetch(`${API_URL}/qrcode/${bookingId}`, { headers: getHeaders() });
         return res.json();
     }
 };
