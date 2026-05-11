@@ -33,8 +33,19 @@
     
     /* Logo */
     .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon { background: #000; padding: 10px; border-radius: 50%; border: 1px solid #dc2626; }
-    .logo-icon i { font-size: 18px; color: #ef4444; }
+      .logo-icon { background: linear-gradient(135deg, #1a1a1a, #0f0f0f);padding: 6px; border-radius: 50%; border: 2px solid #dc2626;transition: all 0.3s ease;box-shadow: 0 0 8px rgba(220,38,38,0.3);display: flex;align-items: center;justify-content: center;}
+.logo-icon:hover {
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(220,38,38,0.5);
+  transform: scale(1.05);
+}
+.logo-icon img {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
     .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
     
     /* Các liên kết điều hướng */
@@ -191,7 +202,8 @@
     <div class="nav-container">
       <div class="logo">
         <!-- Icon và text logo -->
-        <div class="logo-icon"><i class="picture/logo.jpg"></i></div>
+        <div class="logo-icon">
+  <img src="picture/logo.jpg" alt="CineVerse Logo"></div>
         <div class="logo-text">CineVerse</div>
       </div>
       <!-- Các liên kết chính -->

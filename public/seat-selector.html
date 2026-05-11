@@ -461,43 +461,40 @@
     }
     
     // ==================== XÁC NHẬN ĐẶT VÉ ====================
-    async function confirmBooking() {
-      if (selectedSeats.length === 0) {
-        alert('Vui lòng chọn ghế!');
-        return;
-      }
-      
-      // Kiểm tra đăng nhập
-      if (!requireAuth()) return;
-      
-      // Tính tổng tiền
-      let total = 0;
-      selectedSeats.forEach(seat => {
-        const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
-        total += row?.price || 0;
-      });
-      
-      // Tạo dữ liệu đặt vé
-      const bookingData = {
-        showtimeId: showtimeId,
-        movieId: movieId,
-        movie: movieName,
-        date: new Date().toISOString(),
-        auditorium: auditorium,
-        seats: selectedSeats,
-        total: total
-      };
-      
-      try {
-        // Gọi API tạo booking
-        const result = await api.createBooking(bookingData);
-        alert(`Đặt vé thành công!\nPhim: ${movieName}\nPhòng: ${auditorium}\nGhế: ${selectedSeats.join(', ')}\nTổng: ₹${total}\nMã vé: ${result.id}`);
-        // Chuyển sang trang thanh toán
-        window.location.href = `checkout-demo.html?movie=${encodeURIComponent(movieName)}&total=${total}&seats=${selectedSeats.join(',')}&bookingId=${result.id}`;
-      } catch (error) {
-        alert('Đặt vé thất bại: ' + error.message);
-      }
-    }
+   async function confirmBooking() {
+  if (selectedSeats.length === 0) {
+    alert('Vui lòng chọn ghế!');
+    return;
+  }
+  
+  if (!requireAuth()) return;
+  
+  let total = 0;
+  selectedSeats.forEach(seat => {
+    const row = SEAT_ROWS.find(r => r.label === seat.charAt(0));
+    total += row?.price || 0;
+  });
+  
+  const bookingData = {
+    showtimeId: showtimeId,
+    movieId: movieId,
+    movie: movieName,
+    date: new Date().toISOString(),
+    auditorium: auditorium,
+    seats: selectedSeats,
+    total: total
+  };
+  
+  try {
+    // Tạo booking để lấy ID
+    const result = await api.createBooking(bookingData);
+    
+    // Chuyển sang trang thanh toán kèm thông tin
+    window.location.href = `checkout.html?movie=${encodeURIComponent(movieName)}&total=${total}&seats=${selectedSeats.join(',')}&bookingId=${result.id}`;
+  } catch (error) {
+    alert('Đặt vé thất bại: ' + error.message);
+  }
+}
     
     // ==================== CẬP NHẬT NÚT LOGIN/LOGOUT ====================
     function updateAuthButton() {
