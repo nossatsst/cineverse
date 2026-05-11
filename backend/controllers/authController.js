@@ -82,5 +82,87 @@ const getMe = (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+const changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        const db = readDB();
+        const userIndex = db.users.findIndex(u => u.id === req.user.id);
+        
+        if (userIndex === -1) {
+            return res.status(404).json({ error: 'Không tìm thấy người dùng' });
+        }
+        
+        const user = db.users[userIndex];
+        const isValid = bcrypt.compareSync(oldPassword, user.password);
+        
+        if (!isValid) {
+            return res.status(401).json({ error: 'Mật khẩu cũ không đúng' });
+        }
+        
+        if (newPassword.length < 6) {
+            return res.status(400).json({ error: 'Mật khẩu mới phải có ít nhất 6 ký tự' });
+        }
+        
+        user.password = bcrypt.hashSync(newPassword, 10);
+        db.users[userIndex] = user;
+        writeDB(db);
+        
+        res.json({ message: 'Đổi mật khẩu thành công' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const db = readDB();
+        const user = db.users.find(u => u.email === email);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'Email không tồn tại trong hệ thống' });
+        }
+        
+        // Tạo token reset
+        const resetToken = jwt.sign(
+            { id: user.id, email: user.email },
+            SECRET_KEY,
+            { expiresIn: '1h' }
+        );
+        
+        // Lưu token (trong thực tế nên lưu vào database)
+        // Ở đây tạm thời trả về token để test
+        res.json({ 
+            message: 'Link đặt lại mật khẩu đã được gửi!',
+            resetToken: resetToken  // Trong thực tế, gửi email chứa link
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
-module.exports = { login, register, getMe };
+const resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+        const decoded = jwt.verify(token, SECRET_KEY);
+        const db = readDB();
+        const userIndex = db.users.findIndex(u => u.id === decoded.id);
+        
+        if (userIndex === -1) {
+            return res.status(404).json({ error: 'Người dùng không tồn tại' });
+        }
+        
+        if (newPassword.length < 6) {
+            return res.status(400).json({ error: 'Mật khẩu phải có ít nhất 6 ký tự' });
+        }
+        
+        db.users[userIndex].password = bcrypt.hashSync(newPassword, 10);
+        writeDB(db);
+        
+        res.json({ message: 'Đặt lại mật khẩu thành công' });
+    } catch (error) {
+        res.status(500).json({ error: 'Token không hợp lệ hoặc đã hết hạn' });
+    }
+};
+
+module.exports = { login, register, getMe, changePassword, forgotPassword, resetPassword };
+

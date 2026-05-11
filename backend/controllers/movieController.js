@@ -1,14 +1,45 @@
 const { readDB, writeDB } = require('../config/database');
 
-const getMovies = async (req, res) => {
+const getMovies = (req, res) => {
     try {
         const db = readDB();
-        res.json(db.movies);
+        let movies = db.movies || [];
+        const { search, category, minPrice, maxPrice, sortBy } = req.query;
+        
+        // Tìm kiếm theo tên
+        if (search) {
+            movies = movies.filter(m => 
+                m.title.toLowerCase().includes(search.toLowerCase())
+            );
+        }
+        
+        // Lọc theo thể loại
+        if (category && category !== 'all') {
+            movies = movies.filter(m => m.category === category);
+        }
+        
+        // Lọc theo giá
+        if (minPrice) {
+            movies = movies.filter(m => m.price >= parseInt(minPrice));
+        }
+        if (maxPrice) {
+            movies = movies.filter(m => m.price <= parseInt(maxPrice));
+        }
+        
+        // Sắp xếp
+        if (sortBy === 'price_asc') {
+            movies.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price_desc') {
+            movies.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'rating') {
+            movies.sort((a, b) => b.rating - a.rating);
+        }
+        
+        res.json(movies);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
-
 const getMovieById = async (req, res) => {
     try {
         const db = readDB();
