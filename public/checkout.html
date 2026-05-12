@@ -7,7 +7,37 @@
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f7f7f7; color: #1a1a1a; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f7f7f7; color: #1a1a1a; padding: 20px; position: relative; min-height: 100vh; }
+        
+        /* Logo ở góc trên bên trái */
+        .corner-logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: #000;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid #dc2626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .corner-logo:hover {
+            transform: scale(1.05);
+            border-color: #ef4444;
+        }
+        .corner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+        }
+        
         .checkout-container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); overflow: hidden; }
         .header { padding: 16px 24px; border-bottom: 1px solid #e6e6e6; display: flex; justify-content: space-between; align-items: center; }
         .main-content { display: flex; flex-wrap: wrap; }
@@ -23,97 +53,105 @@
         .status-message { margin-top: 16px; text-align: center; padding: 12px; border-radius: 8px; }
         .success { background-color: #e0f2e9; color: #0a5c3e; }
         .error { background-color: #fee2e2; color: #b91c1c; }
-        @media (max-width: 760px) { .order-summary { border-right: none; border-bottom: 1px solid #eaeaea; } }
+        @media (max-width: 760px) { 
+            .order-summary { border-right: none; border-bottom: 1px solid #eaeaea; }
+            .corner-logo { top: 16px; left: 16px; width: 44px; height: 44px; }
+        }
     </style>
 </head>
 <body>
-<div class="checkout-container">
-    <div class="header">
-        <div class="business-info"><a href="#" onclick="history.back()" style="text-decoration:none;">← Quay lại</a></div>
-        <div class="sandbox-badge">Sandbox Test</div>
+    <!-- Logo ở góc trên bên trái -->
+    <div class="corner-logo" onclick="window.location.href='index.html'">
+        <img src="picture/logo.jpg" alt="Logo">
     </div>
-    <div class="main-content">
-        <div class="order-summary">
-            <h2 class="product-name" id="movieName">Jolly LLb</h2>
-            <div class="product-seats" id="seatInfo">Seats: --</div>
-            <div class="product-price" id="totalAmount">0 ₹</div>
-            <div style="font-size: 13px;">Đã bao gồm thuế</div>
-        </div>
-        <div class="payment-form-section">
-            <h3 style="margin-bottom: 20px;">Thông tin thanh toán</h3>
-            <form id="payment-form">
-                <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="ban@example.com" required></div>
-                <div class="form-group"><label>Thông tin thẻ</label><div id="card-element" class="StripeElement"></div><div id="card-errors" class="error-message"></div></div>
-                <div class="form-group"><label>Tên chủ thẻ</label><input type="text" id="billing-name" placeholder="NGUYEN VAN A"></div>
-                <button id="submit-button" class="pay-button" type="submit">Thanh toán ngay</button>
-                <div id="payment-status" class="status-message" style="display: none;"></div>
-                <div style="font-size: 12px; text-align: center; margin-top: 20px;">🔐 Thử nghiệm: Dùng thẻ <strong>4242 4242 4242 4242</strong> (ngày/tháng tương lai, CVC 123)</div>
-            </form>
-        </div>
-    </div>
-    <div class="footer"><span>Powered by <strong>Stripe Sandbox</strong></span></div>
-</div>
 
-<script src="js/api.js"></script>
-<script src="js/auth.js"></script>
-<script>
-    // Lấy thông tin từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const movie = urlParams.get('movie') || 'Movie';
-    const total = parseInt(urlParams.get('total')) || 159;
-    const seats = urlParams.get('seats') || 'A1';
-    const bookingId = urlParams.get('bookingId');
-    
-    // Cập nhật giao diện
-    document.getElementById('movieName').innerText = movie;
-    document.getElementById('seatInfo').innerHTML = `Seats: ${seats}`;
-    document.getElementById('totalAmount').innerHTML = `${total.toLocaleString('en-IN')} ₹`;
-    
-    // Khởi tạo Stripe
-    const stripe = Stripe('pk_test_51RcjSlRvJk8vUWZMHPy3tFpRrchHo7cviQz1DuRiZnsZnmqrps3r0x62kGFGBCv37bRWH1NsTbqAa3kWC1P9roWJ00PcYN7G9Q');
-    const elements = stripe.elements();
-    const cardElement = elements.create('card', { hidePostalCode: true });
-    cardElement.mount('#card-element');
-    
-    const form = document.getElementById('payment-form');
-    const submitButton = document.getElementById('submit-button');
-    const paymentStatusDiv = document.getElementById('payment-status');
-    
-    // Xử lý thanh toán
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        submitButton.disabled = true;
-        submitButton.textContent = 'Đang xử lý...';
+    <div class="checkout-container">
+        <div class="header">
+            <div class="business-info"><a href="#" onclick="history.back()" style="text-decoration:none;">← Quay lại</a></div>
+            <div class="sandbox-badge">Sandbox Test</div>
+        </div>
+        <div class="main-content">
+            <div class="order-summary">
+                <h2 class="product-name" id="movieName">Jolly LLb</h2>
+                <div class="product-seats" id="seatInfo">Seats: --</div>
+                <div class="product-price" id="totalAmount">0 ₹</div>
+                <div style="font-size: 13px;">Đã bao gồm thuế</div>
+            </div>
+            <div class="payment-form-section">
+                <h3 style="margin-bottom: 20px;">Thông tin thanh toán</h3>
+                <form id="payment-form">
+                    <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="ban@example.com" required></div>
+                    <div class="form-group"><label>Thông tin thẻ</label><div id="card-element" class="StripeElement"></div><div id="card-errors" class="error-message"></div></div>
+                    <div class="form-group"><label>Tên chủ thẻ</label><input type="text" id="billing-name" placeholder="NGUYEN VAN A"></div>
+                    <button id="submit-button" class="pay-button" type="submit">Thanh toán ngay</button>
+                    <div id="payment-status" class="status-message" style="display: none;"></div>
+                    <div style="font-size: 12px; text-align: center; margin-top: 20px;">🔐 Thử nghiệm: Dùng thẻ <strong>4242 4242 4242 4242</strong> (ngày/tháng tương lai, CVC 123)</div>
+                </form>
+            </div>
+        </div>
+        <div class="footer"><span>Powered by <strong>Stripe Sandbox</strong></span></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Lấy thông tin từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const movie = urlParams.get('movie') || 'Movie';
+        const total = parseInt(urlParams.get('total')) || 159;
+        const seats = urlParams.get('seats') || 'A1';
+        const bookingId = urlParams.get('bookingId');
         
-        const email = document.getElementById('email').value;
-        const name = document.getElementById('billing-name').value;
+        // Cập nhật giao diện
+        document.getElementById('movieName').innerText = movie;
+        document.getElementById('seatInfo').innerHTML = `Seats: ${seats}`;
+        document.getElementById('totalAmount').innerHTML = `${total.toLocaleString('en-IN')} ₹`;
         
-        const { paymentMethod, error } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement,
-            billing_details: { name: name, email: email },
+        // Khởi tạo Stripe
+        const stripe = Stripe('pk_test_51RcjSlRvJk8vUWZMHPy3tFpRrchHo7cviQz1DuRiZnsZnmqrps3r0x62kGFGBCv37bRWH1NsTbqAa3kWC1P9roWJ00PcYN7G9Q');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card', { hidePostalCode: true });
+        cardElement.mount('#card-element');
+        
+        const form = document.getElementById('payment-form');
+        const submitButton = document.getElementById('submit-button');
+        const paymentStatusDiv = document.getElementById('payment-status');
+        
+        // Xử lý thanh toán
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            submitButton.disabled = true;
+            submitButton.textContent = 'Đang xử lý...';
+            
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('billing-name').value;
+            
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: { name: name, email: email },
+            });
+            
+            setTimeout(() => {
+                if (error) {
+                    paymentStatusDiv.innerHTML = `Lỗi: ${error.message}`;
+                    paymentStatusDiv.classList.add('error');
+                    paymentStatusDiv.style.display = 'block';
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Thanh toán ngay';
+                } else {
+                    paymentStatusDiv.innerHTML = ` Thanh toán thành công! Cảm ơn bạn. Mã GD: ${paymentMethod.id.substring(0,8)}...`;
+                    paymentStatusDiv.classList.add('success');
+                    paymentStatusDiv.style.display = 'block';
+                    submitButton.textContent = 'Hoàn tất, chuyển hướng...';
+                    
+                    // Chuyển hướng về trang bookings
+                    setTimeout(() => { 
+                        window.location.href = 'bookings.html'; 
+                    }, 2000);
+                }
+            }, 1500);
         });
-        
-        setTimeout(() => {
-            if (error) {
-                paymentStatusDiv.innerHTML = `Lỗi: ${error.message}`;
-                paymentStatusDiv.classList.add('error');
-                paymentStatusDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Thanh toán ngay';
-            } else {
-                paymentStatusDiv.innerHTML = `✅ Thanh toán thành công! Cảm ơn bạn. Mã GD: ${paymentMethod.id.substring(0,8)}...`;
-                paymentStatusDiv.classList.add('success');
-                paymentStatusDiv.style.display = 'block';
-                submitButton.textContent = 'Hoàn tất, chuyển hướng...';
-                
-                // Chuyển hướng về trang bookings
-                setTimeout(() => { 
-                    window.location.href = 'bookings.html'; 
-                }, 2000);
-            }
-        }, 1500);
-    });
-</script>
+    </script>
 </body>
 </html>
