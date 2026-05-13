@@ -24,20 +24,19 @@
     .logo-icon i { font-size: 18px; color: #ef4444; }
     .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
     .nav-links { display: flex; gap: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 9999px; padding: 6px 12px; }
-    .nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; position: relative; }
-    .nav-link.active { color: white; background: rgba(220,38,38,0.2); }
-    .nav-link:hover { color: #f5c518; }
-    .pill-border { position: absolute; inset: -2px; border-radius: 9999px; pointer-events: none; background: linear-gradient(90deg, rgba(255,59,59,0.14), rgba(255,87,87,0.06)); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
-    .nav-link:hover .pill-border, .nav-link.active .pill-border { transform: scaleX(1); }
-    .pill-underline { height: 2px; width: 40%; border-radius: 999px; margin-top: 4px; background: linear-gradient(90deg, #ff6b6b, #ff3b3b); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
-    .nav-link:hover .pill-underline, .nav-link.active .pill-underline { transform: scaleX(1); }
-    .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .nav-link { padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; }
+    .nav-link.active, .nav-link:hover { color: #f5c518; background: rgba(220,38,38,0.2); }
+    .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-weight: 600; cursor: pointer; }
     
     /* ========== MOVIES PAGE ========== */
     .movies-page { min-height: 100vh; padding-top: 100px; background: linear-gradient(to bottom, #111827, #0a0c10); }
     .filter-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 40px; }
     .filter-btn { padding: 12px 24px; border-radius: 9999px; background: #1f2937; color: #9ca3af; border: none; cursor: pointer; font-weight: 500; transition: all 0.3s; }
     .filter-btn.active, .filter-btn:hover { background: #dc2626; color: white; box-shadow: 0 4px 15px rgba(220,38,38,0.3); }
+    
+    .search-section { margin-bottom: 24px; text-align: center; }
+    .search-section input { padding: 12px 20px; width: 300px; border-radius: 40px; border: 1px solid #dc2626; background: #1f2937; color: white; }
+    .search-section select { padding: 12px; border-radius: 40px; background: #1f2937; color: white; margin-left: 12px; }
     
     .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; }
     .movie-card { text-decoration: none; color: inherit; }
@@ -52,11 +51,9 @@
     /* Footer */
     .footer { background: #050608; margin-top: 60px; padding: 50px 0 30px; border-top: 1px solid #1f212e; }
     .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
-    .footer-col h4 { color: #f5c518; margin-bottom: 15px; font-size: 1rem; }
-    .footer-col p, .footer-col a { color: #888; font-size: 0.85rem; text-decoration: none; line-height: 1.8; }
+    .footer-col h4 { color: #f5c518; margin-bottom: 15px; }
+    .footer-col p, .footer-col a { color: #888; font-size: 0.85rem; text-decoration: none; }
     .footer-col a:hover { color: #f5c518; }
-    .footer-links { list-style: none; }
-    .footer-links li { margin-bottom: 8px; }
     .legal { text-align: center; padding-top: 30px; font-size: 0.7rem; color: #5a5e77; border-top: 1px solid #1a1c26; margin-top: 30px; }
     
     @media (max-width: 768px) {
@@ -64,10 +61,7 @@
       .nav-links { display: none; }
       .movies-page { padding-top: 80px; }
       .movie-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
-    }
-    @media (min-width: 769px) and (max-width: 1023px) {
-      .nav-links a span { display: none; }
-      .nav-links a i { margin: 0; }
+      .search-section input { width: 200px; }
     }
   </style>
 </head>
@@ -80,123 +74,31 @@
         <div class="logo-text">CineVerse</div>
       </div>
       <div class="nav-links">
-        <a href="index.html" class="nav-link">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="movies.html" class="nav-link active">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="releases.html" class="nav-link">Releases<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="contact.html" class="nav-link">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="movies.html" class="nav-link active">Movies</a>
+        <a href="releases.html" class="nav-link">Releases</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="bookings.html" class="nav-link">Bookings</a>
       </div>
       <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
     </div>
-<<<<<<< Updated upstream
   </nav>
-=======
-
-    <!-- ===== MENU ĐIỀU HƯỚNG ===== -->
-    <div class="nav-links">
-      
-      <!-- Mỗi link gồm:
-           - text hiển thị
-           - hiệu ứng CSS (pill-border + pill-underline) -->
-      <a href="index.html" class="nav-link">
-        Home
-        <span class="pill-border"></span>
-        <span class="pill-underline"></span>
-      </a>
-
-      <!-- Trang hiện tại có class 'active' -->
-      <a href="movies.html" class="nav-link active">
-        Movies
-        <span class="pill-border"></span>
-        <span class="pill-underline"></span>
-      </a>
-
-      <a href="releases.html" class="nav-link">
-        Releases
-        <span class="pill-border"></span>
-        <span class="pill-underline"></span>
-      </a>
-
-      <a href="contact.html" class="nav-link">
-        Contact
-        <span class="pill-border"></span>
-        <span class="pill-underline"></span>
-      </a>
-
-      <a href="bookings.html" class="nav-link">
-        Bookings
-        <span class="pill-border"></span>
-        <span class="pill-underline"></span>
-      </a>
-    </div>
-
-    <!-- ===== NÚT ĐĂNG NHẬP ===== -->
-    <!-- Nội dung sẽ được cập nhật bằng JS (login / user info) -->
-    <button class="login-btn" id="authBtn">
-      <i class="fas fa-user"></i> Login
-    </button>
-
-  </div>
-</nav>
-
-  <!-- ===== TRANG DANH SÁCH PHIM ===== -->
-<main class="movies-page">
-  
-  <div class="container">
-    
-    <!-- ===== BỘ LỌC PHIM THEO THỂ LOẠI ===== -->
-    <!-- Dùng để filter phim bằng JS thông qua data-category -->
-    <div class="filter-buttons" id="filterButtons">
-      
-      <!-- Nút mặc định (hiển thị tất cả phim) -->
-      <button class="filter-btn active" data-category="all">All Movies</button>
-      
-      <!-- Các nút lọc theo thể loại -->
-      <button class="filter-btn" data-category="Action">Action</button>
-      <button class="filter-btn" data-category="Horror">Horror</button>
-      <button class="filter-btn" data-category="Comedy">Comedy</button>
-      <button class="filter-btn" data-category="Adventure">Adventure</button>
-    </div>
-
-    <!-- ===== DANH SÁCH PHIM ===== -->
-    <!-- Nội dung sẽ được render động bằng JavaScript -->
-    <div class="movie-grid" id="moviesGrid"></div>
-
-  </div>
-</main>
-
-
-<!-- ===== FOOTER (CHÂN TRANG) ===== -->
-<footer class="footer">
-  
-  <div class="container">
-    
-    <!-- Layout dạng grid chia nhiều cột -->
-    <div class="footer-grid">
-      
-      <!-- Cột 1: Giới thiệu website -->
-      <div class="footer-col">
-        <h4>CineVerse</h4>
-        <p>
-          Experience the dark side of cinema with the latest news, reviews, and exclusive content.
-        </p>
->>>>>>> Stashed changes
 
   <!-- Movies Page -->
   <main class="movies-page">
     <div class="container">
+      <!-- Search & Sort -->
+      <div class="search-section">
+        <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm phim...">
+        <select id="sortSelect">
+          <option value="">Sắp xếp</option>
+          <option value="price_asc">Giá tăng dần</option>
+          <option value="price_desc">Giá giảm dần</option>
+          <option value="rating">Đánh giá cao nhất</option>
+        </select>
+      </div>
+      
       <!-- Filter Buttons -->
-       <!-- Thêm vào phần filter-buttons -->
-<div class="search-section" style="margin-bottom: 24px; text-align: center;">
-    <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm phim..." 
-           style="padding: 12px 20px; width: 300px; border-radius: 40px; border: 1px solid #dc2626; background: #1f2937; color: white;">
-    <select id="sortSelect" style="padding: 12px; border-radius: 40px; background: #1f2937; color: white; margin-left: 12px;">
-        <option value="">Sắp xếp</option>
-        <option value="price_asc">Giá tăng dần</option>
-        <option value="price_desc">Giá giảm dần</option>
-        <option value="rating">Đánh giá cao nhất</option>
-    </select>
-</div>
       <div class="filter-buttons" id="filterButtons">
         <button class="filter-btn active" data-category="all">All Movies</button>
         <button class="filter-btn" data-category="Action">Action</button>
@@ -246,19 +148,17 @@
         </div>
       </div>
       <div class="legal">
-        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service | Cookie Policy</p>
+        <p>Designed by Hexagon Digital Services | Privacy Policy | Terms of Service</p>
       </div>
     </div>
   </footer>
 
-  <!-- Script kết nối backend -->
+  <!-- Scripts -->
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Biến lưu dữ liệu phim
     let moviesData = [];
 
-    // Render movies based on category
     function renderMovies(category) {
       const grid = document.getElementById('moviesGrid');
       if (!grid) return;
@@ -276,7 +176,7 @@
       grid.innerHTML = filtered.map(movie => `
         <a href="movie-detail.html?id=${movie.id}" class="movie-card">
           <div class="movie-card-inner">
-            <img src="${movie.image}" alt="${movie.title}" class="movie-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(movie.title)}'">
+            <img src="${movie.image}" alt="${movie.title}" class="movie-img" loading="lazy" onerror="this.src='https://placehold.co/300x450?text=${movie.title}'">
             <div class="movie-info">
               <h3 class="movie-title">${movie.title}</h3>
               <div class="movie-category">${movie.category}</div>
@@ -286,14 +186,12 @@
       `).join('');
     }
 
-    // Load movies từ API
     async function loadMovies() {
       try {
         moviesData = await api.getMovies();
         renderMovies('all');
       } catch (error) {
         console.error('Error loading movies:', error);
-        // Nếu API lỗi, dùng dữ liệu mẫu
         moviesData = [
           { id: "1", title: "Dhurandhar", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1773906581802-13826.jfif" },
           { id: "2", title: "HOV", category: "Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1772121075437-43848.jpeg" },
@@ -303,29 +201,24 @@
       }
     }
 
-    // Filter buttons functionality
     function initFilters() {
       const buttons = document.querySelectorAll('.filter-btn');
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          const category = btn.getAttribute('data-category');
-          renderMovies(category);
+          renderMovies(btn.getAttribute('data-category'));
         });
       });
     }
 
-    // Update login button
     function updateAuthButton() {
       const user = getCurrentUser();
       const authBtn = document.getElementById('authBtn');
       if (authBtn) {
         if (user) {
           authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
-          authBtn.onclick = () => {
-            window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
-          };
+          authBtn.onclick = () => window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
         } else {
           authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
           authBtn.onclick = () => window.location.href = 'login.html';
@@ -333,14 +226,12 @@
       }
     }
 
-    // Navbar scroll effect
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
     });
 
-    // Initialize
     loadMovies();
     initFilters();
     updateAuthButton();
