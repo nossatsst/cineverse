@@ -1,5 +1,5 @@
 const express = require('express');
-const { getMovies, getMovieById, createMovie, updateMovie, deleteMovie } = require('../controllers/movieController');
+const { getMovies, getMovieById, createMovie,updateMovie, deleteMovie } = require('../controllers/movieController');
 const { verifyToken, isAdmin } = require('../middleware/auth');
 
 const router = express.Router();
