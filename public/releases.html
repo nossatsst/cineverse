@@ -4,108 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Releases Soon - CineVerse</title>
-  
- 
-
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Pacifico&display=swap" rel="stylesheet">
-  
-  <!-- FILE: Font Awesome  -->
-  <!-- FUNCTION: Thư viện icon miễn phí, cung cấp các icon như clapperboard, envelope, phone, map-marker-alt... -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
   <style>
-    /* MODULE: RESET CSS  */
-    /* Xóa margin/padding mặc định của trình duyệt để giao diện đồng nhất */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    /*  MODULE: Body  */
-  
     body { font-family: 'Inter', sans-serif; background: #0a0c10; color: #eef2ff; overflow-x: hidden; }
-    
-    /*  CLASS: container  */
-  
     .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
     
-    /*  MODULE: NAVBAR */
-    /* CLASS: navbar - Thanh điều hướng cố định ở trên cùng*/
+    /* ========== NAVBAR ========== */
     .navbar { position: fixed; left: 16px; right: 16px; top: 24px; z-index: 50; transition: all 0.3s; padding: 12px 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    
-    /* CLASS: navbar.scrolled - Hiệu ứng khi cuộn trang, navbar thu nhỏ lại */
     .navbar.scrolled { padding: 8px 0; background: rgba(0,0,0,0.9); border-radius: 20px; }
-    
-    /* CLASS: nav-container - Khung chứa các thành phần trong navbar, căn giữa và dàn đều */
     .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
-    
-    /*  MODULE: Logo  */
     .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon { background: #000; width: 52px; height: 52px; border-radius: 50%; border: 1px solid #dc2626; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .logo-icon img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+    .logo-icon { background: #000; padding: 10px; border-radius: 50%; border: 1px solid #dc2626; }
+    .logo-icon i { font-size: 18px; color: #ef4444; }
     .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ef4444, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
-    
-   
-    /* CLASS: nav-links - Danh sách các link điều hướng (Home, Movies, Releases, Contact, Bookings) */
     .nav-links { display: flex; gap: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 9999px; padding: 6px 12px; }
-    
-.nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; position: relative; }
-    
-    
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 9999px; text-decoration: none; color: #d1d5db; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; position: relative; }
     .nav-link.active { color: white; background: rgba(220,38,38,0.2); }
-    
-    
     .nav-link:hover { color: #f5c518; }
-    
-    
     .pill-border { position: absolute; inset: -2px; border-radius: 9999px; pointer-events: none; background: linear-gradient(90deg, rgba(255,59,59,0.14), rgba(255,87,87,0.06)); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
     .nav-link:hover .pill-border, .nav-link.active .pill-border { transform: scaleX(1); }
-    
-    
     .pill-underline { height: 2px; width: 40%; border-radius: 999px; margin-top: 4px; background: linear-gradient(90deg, #ff6b6b, #ff3b3b); transform: scaleX(0); transform-origin: left center; transition: transform 0.28s ease; }
     .nav-link:hover .pill-underline, .nav-link.active .pill-underline { transform: scaleX(1); }
-    
-    /* CLASS: login-btn - Nút đăng nhập/logout */
     .login-btn { background: linear-gradient(135deg, #374151, #1f2937); border: 1px solid rgba(220,38,38,0.2); padding: 8px 20px; border-radius: 9999px; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
     
-    /*  MODULE: RELEASES PAGE (NỘI DUNG CHÍNH) */
-    /* CLASS: releases-page - Phần nội dung chính của trang */
+    /* ========== RELEASES PAGE ========== */
     .releases-page { min-height: 100vh; padding-top: 100px; background: linear-gradient(to bottom right, #111827, #0a0c10); }
-    
-    
     .releases-header { text-align: center; margin-bottom: 48px; margin-top: 24px; }
-    
-    /* CLASS: releases-title - Tiêu đề chính "RELEASES SOON"  */
     .releases-title { font-size: 3rem; font-weight: 700; background: linear-gradient(to right, #f87171, #ef4444, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
     @media (min-width: 768px) { .releases-title { font-size: 3.5rem; } }
-    
-    /* CLASS: releases-subtitle - Phụ đề bên dưới tiêu đề */
     .releases-subtitle { margin-top: 16px; font-size: 1.25rem; color: #9ca3af; }
     
-    /* CLASS: movie-grid */
-    /*  Grid hiển thị danh sách phim - responsive theo kích thước màn hình */
     .movie-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
     @media (min-width: 768px) { .movie-grid { grid-template-columns: repeat(4, 1fr); } }
     @media (min-width: 1024px) { .movie-grid { grid-template-columns: repeat(5, 1fr); } }
     
-    /* CLASS: movie-card */
-    /*  Card hiển thị từng bộ phim */
-    .movie-card { transition: all 0.5s; cursor: pointer; }
+    .movie-card { transition: all 0.5s; }
     .movie-card:hover { z-index: 10; }
-    
-    
     .movie-img-container { position: relative; overflow: hidden; border-radius: 12px; }
-    
-    
-.movie-img { width: 100%; height: 288px; object-fit: cover; transition: transform 0.7s; }
-    
+    .movie-img { width: 100%; height: 288px; object-fit: cover; transition: transform 0.7s; }
     .movie-card:hover .movie-img { transform: scale(1.05); }
-    
-    
     .movie-info { margin-top: 12px; text-align: center; font-family: 'Pacifico', cursive; }
     .movie-title { font-weight: 600; font-size: 1.125rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .movie-category { font-size: 0.875rem; color: #9ca3af; margin-top: 4px; }
     
-    /* MODULE: FOOTER (CHÂN TRANG) */
+    /* Footer */
     .footer { background: #050608; margin-top: 60px; padding: 50px 0 30px; border-top: 1px solid #1f212e; }
     .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
     .footer-col h4 { color: #f5c518; margin-bottom: 15px; font-size: 1rem; }
@@ -115,16 +63,13 @@
     .footer-links li { margin-bottom: 8px; }
     .legal { text-align: center; padding-top: 30px; font-size: 0.7rem; color: #5a5e77; border-top: 1px solid #1a1c26; margin-top: 30px; }
     
-  
     @media (max-width: 768px) {
       .navbar { left: 8px; right: 8px; top: 8px; border-radius: 20px; }
-      .nav-links { display: none; }  /* Ẩn menu trên mobile */
+      .nav-links { display: none; }
       .releases-page { padding-top: 80px; }
       .movie-img { height: 200px; }
       .movie-title { font-size: 0.9rem; }
     }
-    
-   
     @media (min-width: 769px) and (max-width: 1023px) {
       .nav-links a span { display: none; }
       .nav-links a i { margin: 0; }
@@ -132,60 +77,51 @@
   </style>
 </head>
 <body>
-  <!--  MODULE: Navbar  -->
-  <!-- FILE: releases.html - Thanh điều hướng cố định -->
+  <!-- Navbar -->
   <nav class="navbar" id="navbar">
     <div class="nav-container">
-      <!-- Logo -->
       <div class="logo">
-        <div class="logo-icon"><img src="picture/logo.jpg" alt="Logo"></div>
+        <div class="logo-icon"><i class="fas fa-clapperboard"></i></div>
         <div class="logo-text">CineVerse</div>
       </div>
-      <!-- Các link điều hướng -->
       <div class="nav-links">
-        <!-- Trang chủ -->
         <a href="index.html" class="nav-link">Home<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <!-- LINK: Danh sách phim -->
         <a href="movies.html" class="nav-link">Movies<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <!-- Trang releases  -->
         <a href="releases.html" class="nav-link active">Releases<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <!--  Liên hệ -->
         <a href="contact.html" class="nav-link">Contact<span class="pill-border"></span><span class="pill-underline"></span></a>
-        <!-- Đặt vé/xem bookings -->
         <a href="bookings.html" class="nav-link">Bookings<span class="pill-border"></span><span class="pill-underline"></span></a>
       </div>
+<<<<<<< Updated upstream
+      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
+    </div>
+=======
 
       <!-- Nút lologin -->
 <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>    </div>
 
-      <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
-    </div>
 
+>>>>>>> Stashed changes
   </nav>
 
-  <!-- = MODULE: Main Content (Releases Page)  -->
+  <!-- Releases Page -->
   <main class="releases-page">
     <div class="container">
-     
       <div class="releases-header">
         <h1 class="releases-title">RELEASES SOON</h1>
         <p class="releases-subtitle">Latest Movies • Now Showing</p>
       </div>
-      
       <div class="movie-grid" id="releasesGrid"></div>
     </div>
   </main>
 
-  <!--  MODULE: Footer = -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <!-- Giới thiệu -->
         <div class="footer-col">
           <h4>CineVerse</h4>
           <p>Experience the dark side of cinema with the latest news, reviews, and exclusive content.</p>
         </div>
-        <!-- Link khám phá -->
         <div class="footer-col">
           <h4>Explore</h4>
           <ul class="footer-links">
@@ -196,7 +132,6 @@
             <li><a href="bookings.html">Login</a></li>
           </ul>
         </div>
-        <!--  Thể loại phim -->
         <div class="footer-col">
           <h4>Genres</h4>
           <ul class="footer-links">
@@ -207,7 +142,6 @@
             <li><a href="movies.html">Comedy</a></li>
           </ul>
         </div>
-        <!-- Thông tin liên hệ -->
         <div class="footer-col">
           <h4>Contact Us</h4>
           <p><i class="fas fa-envelope"></i> contact@hexagonsservices.com</p>
@@ -221,34 +155,26 @@
     </div>
   </footer>
 
-  <!--  JAVASCRIPT: XỬ LÝ DỮ LIỆU VÀ TƯƠNG TÁC = -->
   <script>
-    //  MODULE: Dữ liệu phim (Releases Data)
-    // FILE: releases.html (inline script)
-  
+    // Releases data - dựa theo source code gốc
     const releasesData = [
       { id: 1, title: "Spider-Man: Brand New Day", category: "Action, Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477308559-53262.avif" },
       { id: 2, title: "Peddi", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477180077-12019.avif" },
       { id: 3, title: "Border 2", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477143813-84033.avif" },
-{ id: 4, title: "The Paradise", category: "Action, Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477100172-93134.avif" },
+      { id: 4, title: "The Paradise", category: "Action, Adventure", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477100172-93134.avif" },
       { id: 5, title: "The Raja Saab", category: "Comedy, Horror", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763477056301-36909.avif" },
       { id: 6, title: "Toxic", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763476950709-84884.avif" },
       { id: 7, title: "Tere Ishk Mein", category: "Action", image: "https://moviebooking-backend-37gi.onrender.com/uploads/movie-1763476935834-37966.avif" }
     ];
 
-    //  FUNCTION: renderReleases 
-   
+    // Render releases grid
     function renderReleases() {
-     
       const grid = document.getElementById('releasesGrid');
-      if (!grid) return; 
-      
+      if (!grid) return;
       
       grid.innerHTML = releasesData.map(movie => `
         <div class="movie-card" onclick="alert('Movie: ${movie.title}')">
           <div class="movie-img-container">
-            <!-- loading="lazy": Ảnh chỉ load khi người dùng scroll đến, tối ưu hiệu năng -->
-            <!-- onerror: Nếu ảnh lỗi, thay bằng ảnh placeholder từ via.placeholder.com -->
             <img src="${movie.image}" alt="${movie.title}" class="movie-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(movie.title)}'">
           </div>
           <div class="movie-info">
@@ -259,9 +185,7 @@
       `).join('');
     }
 
-    //  FUNCTION: Navbar Scroll Effect 
-    // Xử lý hiệu ứng navbar khi người dùng cuộn trang
-    
+    // Navbar scroll effect
     window.addEventListener('scroll', () => {
       const navbar = document.getElementById('navbar');
       if (window.scrollY > 50) {
@@ -271,38 +195,8 @@
       }
     });
 
+    // Initialize
     renderReleases();
-  </script>
-    <!-- Kết nối Backend & Xác thực -->
-  <script src="js/api.js"></script>
-  <script src="js/auth.js"></script>
-  <script>
-    // Cập nhật nút login/logout
-    function updateAuthButton() {
-      const user = getCurrentUser();
-      const authBtn = document.querySelector('.login-btn');
-      if (authBtn) {
-        if (user) {
-          authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.fullName || user.username}`;
-          authBtn.onclick = () => {
-            window.location.href = user.role === 'admin' ? 'admin/dashboard.html' : 'user/dashboard.html';
-          };
-        } else {
-          authBtn.innerHTML = '<i class="fas fa-user"></i> Login';
-          authBtn.onclick = () => window.location.href = 'login.html';
-        }
-      }
-    }
-    
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 50) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
-    });
-    
-    // Khởi tạo
-    updateAuthButton();
   </script>
 </body>
   <!-- Kết nối Backend & Xác thực -->
