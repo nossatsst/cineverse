@@ -88,7 +88,99 @@
       </div>
       <button class="login-btn" id="authBtn"><i class="fas fa-user"></i> Login</button>
     </div>
+<<<<<<< Updated upstream
   </nav>
+=======
+
+    <!-- ===== MENU ĐIỀU HƯỚNG ===== -->
+    <div class="nav-links">
+      
+      <!-- Mỗi link gồm:
+           - text hiển thị
+           - hiệu ứng CSS (pill-border + pill-underline) -->
+      <a href="index.html" class="nav-link">
+        Home
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <!-- Trang hiện tại có class 'active' -->
+      <a href="movies.html" class="nav-link active">
+        Movies
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="releases.html" class="nav-link">
+        Releases
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="contact.html" class="nav-link">
+        Contact
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+
+      <a href="bookings.html" class="nav-link">
+        Bookings
+        <span class="pill-border"></span>
+        <span class="pill-underline"></span>
+      </a>
+    </div>
+
+    <!-- ===== NÚT ĐĂNG NHẬP ===== -->
+    <!-- Nội dung sẽ được cập nhật bằng JS (login / user info) -->
+    <button class="login-btn" id="authBtn">
+      <i class="fas fa-user"></i> Login
+    </button>
+
+  </div>
+</nav>
+
+  <!-- ===== TRANG DANH SÁCH PHIM ===== -->
+<main class="movies-page">
+  
+  <div class="container">
+    
+    <!-- ===== BỘ LỌC PHIM THEO THỂ LOẠI ===== -->
+    <!-- Dùng để filter phim bằng JS thông qua data-category -->
+    <div class="filter-buttons" id="filterButtons">
+      
+      <!-- Nút mặc định (hiển thị tất cả phim) -->
+      <button class="filter-btn active" data-category="all">All Movies</button>
+      
+      <!-- Các nút lọc theo thể loại -->
+      <button class="filter-btn" data-category="Action">Action</button>
+      <button class="filter-btn" data-category="Horror">Horror</button>
+      <button class="filter-btn" data-category="Comedy">Comedy</button>
+      <button class="filter-btn" data-category="Adventure">Adventure</button>
+    </div>
+
+    <!-- ===== DANH SÁCH PHIM ===== -->
+    <!-- Nội dung sẽ được render động bằng JavaScript -->
+    <div class="movie-grid" id="moviesGrid"></div>
+
+  </div>
+</main>
+
+
+<!-- ===== FOOTER (CHÂN TRANG) ===== -->
+<footer class="footer">
+  
+  <div class="container">
+    
+    <!-- Layout dạng grid chia nhiều cột -->
+    <div class="footer-grid">
+      
+      <!-- Cột 1: Giới thiệu website -->
+      <div class="footer-col">
+        <h4>CineVerse</h4>
+        <p>
+          Experience the dark side of cinema with the latest news, reviews, and exclusive content.
+        </p>
+>>>>>>> Stashed changes
 
   <!-- Movies Page -->
   <main class="movies-page">
