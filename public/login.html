@@ -32,6 +32,35 @@
       background: linear-gradient(135deg, #0f0f1a, #000);
     }
 
+    /* Logo ở góc trên bên trái */
+    .corner-logo {
+      position: fixed;
+      top: 24px;
+      left: 30px;
+      z-index: 100;
+      background: #000;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .corner-logo:hover {
+      transform: scale(1.05);
+      border-color: #ef4444;
+    }
+    .corner-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
     /* CLASS: login-container */
     /* Khung chứa toàn bộ form login, giới hạn chiều rộng tối đa 450px, căn giữa màn hình */
     .login-container {
@@ -97,7 +126,7 @@
     /* Phần tiêu đề của form login */
     .login-header {
       text-align: center;
-margin-bottom: 28px;
+      margin-bottom: 28px;
     }
 
     .login-header h2 {
@@ -227,10 +256,21 @@ margin-bottom: 28px;
       .login-header h2 {
         font-size: 24px;
       }
+      .corner-logo {
+        top: 16px;
+        left: 16px;
+        width: 44px;
+        height: 44px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Logo ở góc trên bên trái -->
+  <div class="corner-logo" onclick="window.location.href='index.html'">
+    <img src="picture/logo.jpg" alt="Logo">
+  </div>
+
   <div class="login-container">
     
    
@@ -283,7 +323,7 @@ margin-bottom: 28px;
                   <path d="m12.4 3.4 3.1 4"></path>
                   <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path>
                 </svg>
-</div>
+              </div>
             </div>
           </div>
 
@@ -385,7 +425,7 @@ margin-bottom: 28px;
             } catch (error) {
               
                 alert(error.message || 'Đăng nhập thất bại!');
-submitBtn.disabled = false;
+                submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
             }
         });

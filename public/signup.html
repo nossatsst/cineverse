@@ -33,6 +33,35 @@
       padding: 20px;
     }
 
+    /* Logo ở góc trên bên trái */
+    .corner-logo {
+      position: fixed;
+      top: 24px;
+      left: 30px;
+      z-index: 100;
+      background: #000;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .corner-logo:hover {
+      transform: scale(1.05);
+      border-color: #ef4444;
+    }
+    .corner-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
     /*  CLASS: signup-container  */
 
     /* Signup Contai ner */
@@ -107,7 +136,7 @@
 
     .signup-header h2 {
       font-size: 28px;
-font-family: 'Bebas Neue', cursive;
+      font-family: 'Bebas Neue', cursive;
       letter-spacing: 2px;
       color: white;
     }
@@ -216,10 +245,21 @@ font-family: 'Bebas Neue', cursive;
       .signup-header h2 {
         font-size: 24px;
       }
+      .corner-logo {
+        top: 16px;
+        left: 16px;
+        width: 44px;
+        height: 44px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Logo ở góc trên bên trái -->
+  <div class="corner-logo" onclick="window.location.href='index.html'">
+    <img src="picture/logo.jpg" alt="Logo">
+  </div>
+
   <div class="signup-container">
     <div class="signup-card">
       <div class="card-header-bar"></div>
@@ -230,7 +270,7 @@ font-family: 'Bebas Neue', cursive;
         <button class="back-btn" onclick="window.location.href='index.html'">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m12 19-7-7 7-7"></path>
-<path d="M19 12H5"></path>
+            <path d="M19 12H5"></path>
           </svg>
           BACK
         </button>
@@ -252,7 +292,7 @@ font-family: 'Bebas Neue', cursive;
 
         <!--  FORM: signupForm  -->
         <!-- FILE: signup.html - Form đăng ký tài khoản chính của hệ thống -->
-        <form id="signupForm">
+        <form id="registerForm">
           
         
           <div class="form-row">
@@ -300,7 +340,7 @@ font-family: 'Bebas Neue', cursive;
               </div>
             </div>
             
-<div class="form-group">
+            <div class="form-group">
               <label>PASSWORD</label>
               <div class="input-wrapper">
                 <input type="password" id="password" placeholder="Create a strong password" required>
@@ -327,7 +367,7 @@ font-family: 'Bebas Neue', cursive;
   <!-- FUNCTION: Kiểm tra các trường bắt buộc không được để trống trước khi chuyển hướng -->
   <script>
     
-    const signupForm = document.getElementById('signupForm');
+    const signupForm = document.getElementById('registerForm');
     if (signupForm) {
       // FUNCTION: addEventListener - Lắng nghe sự kiện submit trên form
       signupForm.addEventListener('submit', function(e) {
@@ -376,7 +416,7 @@ font-family: 'Bebas Neue', cursive;
       
       const submitBtn = this.querySelector('.submit-btn');
       const originalText = submitBtn.innerHTML;
-submitBtn.disabled = true;
+      submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ĐANG XỬ LÝ...';
       
       try {
